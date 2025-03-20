@@ -1,0 +1,3 @@
+<FilesMatch "\.(xlsx|xls)$">
+    Require all granted
+</FilesMatch>
