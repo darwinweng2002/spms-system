@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once 'db.php'; // Database connection
+require_once 'db.php';  // Database connection
 
 // Check if admin is logged in
 if (!isset($_SESSION['admin_id'])) {
@@ -8,7 +8,6 @@ if (!isset($_SESSION['admin_id'])) {
     exit;
 }
 
-// ✅ Handle Request Submission
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $requestor_name = trim($_POST['requestor_name']);
     $purpose = trim($_POST['purpose']);
@@ -29,9 +28,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         move_uploaded_file($_FILES["upload_letter"]["tmp_name"], $file_path);
     }
 
-    // ✅ Insert into Database
-    $stmt = $pdo->prepare("INSERT INTO request_letters (requestor_name, purpose, description, quantity, date_received, upload_letter, created_at) 
-                            VALUES (:requestor_name, :purpose, :description, :quantity, :date_received, :upload_letter, NOW())");
+    // ✅ Insert into `request_letters` Table
+    $stmt = $pdo->prepare("INSERT INTO request_letters 
+                           (requestor_name, purpose, description, quantity, date_received, upload_letter, created_at)
+                           VALUES (:requestor_name, :purpose, :description, :quantity, :date_received, :upload_letter, NOW())");
     $stmt->execute([
         'requestor_name' => $requestor_name,
         'purpose' => $purpose,
@@ -41,10 +41,32 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         'upload_letter' => $file_path
     ]);
 
+    $request_id = $pdo->lastInsertId();  // Retrieve the inserted request's ID
+
+    // ✅ Insert Requested Items into `request_items` Table
+    if (!empty($_POST['items'])) {
+        foreach ($_POST['items'] as $item) {
+            $item_name = trim($item['name']);
+            $item_description = trim($item['description']);
+            $item_quantity = (int) $item['quantity'];
+
+            $stmt = $pdo->prepare("INSERT INTO request_items 
+                                   (request_id, item_name, item_description, item_quantity)
+                                   VALUES (:request_id, :item_name, :item_description, :item_quantity)");
+            $stmt->execute([
+                'request_id' => $request_id,
+                'item_name' => $item_name,
+                'item_description' => $item_description,
+                'item_quantity' => $item_quantity
+            ]);
+        }
+    }
+
     header("Location: manage_request.php?success=1");
     exit;
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -220,6 +242,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <label>Date Received</label>
             <input type="date" id="date_received" name="date_received" required>
         </div>
+        <div id="items-container">
+            <h5>Requested Items</h5>
+            <div class="item-row d-flex gap-2 mb-2">
+                <input type="text" name="items[0][name]" placeholder="Item Name" class="form-control" required>
+                <input type="text" name="items[0][description]" placeholder="Description" class="form-control" required>
+                <input type="number" name="items[0][quantity]" placeholder="Quantity" class="form-control" required>
+                <button type="button" class="btn btn-danger remove-item">X</button>
+            </div>
+        </div>
+        
         <div>
             <label>Description</label>
             <input type="text" name="description" placeholder="Enter description" required>
@@ -228,6 +260,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <label>Quantity</label>
             <input type="text" name="quantity" placeholder="Quantity" required>
         </div>
+        <button type="button" class="btn btn-success mb-3" id="add-item">+ Add Item</button>
         <!-- ✅ File Upload with Preview -->
         <div class="file-input">
             <label for="file-upload">Choose File</label>
@@ -257,6 +290,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 filePreview.style.display = 'block'; // ✅ Show image preview
             }
             reader.readAsDataURL(file);
+        }
+    });
+    let itemIndex = 1;
+    document.getElementById('add-item').addEventListener('click', function() {
+        let container = document.getElementById('items-container');
+        let newRow = document.createElement('div');
+        newRow.classList.add('item-row', 'd-flex', 'gap-2', 'mb-2');
+        newRow.innerHTML = `
+            <input type="text" name="items[${itemIndex}][name]" placeholder="Item Name" class="form-control" required>
+            <input type="text" name="items[${itemIndex}][description]" placeholder="Description" class="form-control" required>
+            <input type="number" name="items[${itemIndex}][quantity]" placeholder="Quantity" class="form-control" required>
+            <button type="button" class="btn btn-danger remove-item">X</button>
+        `;
+        container.appendChild(newRow);
+        itemIndex++;
+    });
+
+    document.getElementById('items-container').addEventListener('click', function(event) {
+        if (event.target.classList.contains('remove-item')) {
+            event.target.parentElement.remove();
         }
     });
 </script>

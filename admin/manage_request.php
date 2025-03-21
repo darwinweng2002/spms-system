@@ -1,16 +1,16 @@
 <?php
 session_start();
-require_once 'db.php'; // Database connection
+require_once 'db.php';  // Database connection
 
-// ✅ Fetch Request Letters with Search
 $search = isset($_GET['search']) ? trim($_GET['search']) : '';
 
+// ✅ Fetch Request Letters with Search functionality
 if ($search) {
     $stmt = $pdo->prepare("SELECT * FROM request_letters 
-                         WHERE requestor_name LIKE :search 
-                         OR purpose LIKE :search 
-                         OR description LIKE :search 
-                         ORDER BY created_at DESC");
+                           WHERE requestor_name LIKE :search 
+                           OR purpose LIKE :search 
+                           OR description LIKE :search 
+                           ORDER BY created_at DESC");
     $stmt->execute(['search' => "%$search%"]);
 } else {
     $stmt = $pdo->query("SELECT * FROM request_letters ORDER BY created_at DESC");
@@ -30,67 +30,98 @@ $request_letters = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <style>
-        * { font-family: 'Poppins', sans-serif; margin: 0; padding: 0; box-sizing: border-box; }
-        .main-container { max-width: 1600px; margin: 100px auto; background: white; padding: 25px; border-radius: 10px; box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); }
-        h2 { text-align: center; margin-bottom: 20px; font-size: 24px; font-weight: 600; }
-        table { width: 1300px; border-collapse: collapse; background: white; border-radius: 10px; overflow: hidden; box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); }
-        th, td { padding: 12px; text-align: center; border: 1px solid #ddd; }
-        th { background: #007bff; color: white; font-size: 16px; }
-        tr:nth-child(even) { background-color: #f9f9f9; }
-        img { width: 80px; height: auto; border-radius: 5px; cursor: pointer; transition: transform 0.3s ease-in-out; }
-        img:hover { transform: scale(1.1); }
-        .btn-add { 
-    background: #007bff; 
-    color: white; 
-    padding: 10px 20px; 
-    border: none; 
-    border-radius: 5px; 
-    font-size: 16px; 
-    display: block; 
-    margin: 0 auto; 
-    text-align: center; 
-    transition: 0.3s; 
-}
+        * {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        .main-container {
+            max-width: 1600px;
+            margin: 100px 250px;
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            
+            overflow: hidden;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        th, td {
+            padding: 12px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+        th {
+            background: #007bff;
+            color: white;
+            font-size: 16px;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        img {
+            width: 80px;
+            height: auto;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: transform 0.3s ease-in-out;
+        }
+        img:hover {
+            transform: scale(1.1);
+        }
+        .btn-add {
+            background: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            display: block;
+            margin: 0 auto;
+            text-align: center;
+            transition: 0.3s;
+        }
+        .btn-add:hover {
+            background: #0056b3;
+        }
+        .requested-items ul {
+            list-style-type: disc;
+            margin-left: 20px;
+        }
+        .requested-items li {
+            text-align: left;
+        }
 
-.btn-add:hover { background: #0056b3; }
-
-/* 🔹 Update Button */
-.btn-update {
-    background: #28a745;  /* ✅ Match the green tone */
-    color: white;  /* ✅ Ensure text color is always white */
-    padding: 5px 10px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: 0.3s;
-     
-}
-
-.btn-update:hover {
-    background: #218838;  /* ✅ Slightly darker green on hover */
-    color: white;  /* ✅ Prevent text from turning black */
-}
-
-/* 🔹 Delete Button */
-.btn-danger {
-    background: #dc3545; 
-    color: white; 
-    border: none; 
-    padding: 5px 10px; 
-    border-radius: 5px; 
-    cursor: pointer; 
-    transition: 0.3s;
-
-}
-
-.btn-danger:hover {
-    background: #b02a37;
-    color: white;
-}
-
+        /* 🔹 Status Styles */
+        .status-approved, .status-denied, .status-pending {
+            display: inline-block;
+            width: 120px;  /* Fixed width for consistent display */
+            text-align: center;
+            padding: 8px 0;
+            border-radius: 5px;
+            font-weight: bold;
+            font-size: 14px;
+            color: white;
+        }
+        .status-approved { background: #28a745; }  /* Green for Approved */
+        .status-denied { background: #dc3545; }  /* Red for Denied */
+        .status-pending { background: #6c757d; }  /* Gray for Pending */
+        
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 28px;
+            font-weight: bold;
+        }
         footer {
             width: 100%;
             text-align: center;
@@ -106,170 +137,192 @@ $request_letters = $stmt->fetchAll(PDO::FETCH_ASSOC);
             height: 60px;
             width: auto;
         }
-        /* 🔹 Status Styles */
-/* 🔹 Status Label Styles */
-.status-approved,
-.status-denied,
-.status-pending {
-    display: inline-block;
-    width: 120px;  /* ✅ Set a fixed width */
-    text-align: center;  /* ✅ Center text */
-    padding: 8px 0;  /* ✅ Ensure same vertical padding */
-    border-radius: 5px;
-    font-weight: bold;
-    font-size: 14px;
-    color: white;
+        .requested-items-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 12px; /* Adds spacing between requested items */
 }
 
-/* 🔹 Status Colors */
-.status-approved { background: #28a745; }  /* Green */
-.status-denied { background: #dc3545; }  /* Red */
-.status-pending { background: #6c757d; }  /* Gray */
-.search-container {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        .search-input {
-            width: 60%;
-            padding: 8px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-        }
-        .search-btn {
-            background: #007bff;
-            color: #fff;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        .search-btn:hover {
-            background: #0056b3;
-        }
+.requested-item-card {
+    background: #ffffff;
+    padding: 12px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+    border-left: 4px solid #007bff; /* Blue left border for a clean accent */
+}
+
+.requested-item-card h4 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: bold;
+    color: #007bff; /* Highlight item name */
+}
+
+.requested-item-card .description {
+    font-size: 14px;
+    color: #555;
+    margin: 4px 0;
+}
+
+.requested-item-card .quantity {
+    font-size: 14px;
+    color: #333;
+}
 
     </style>
 </head>
-<body>
 
+<body>
 <?php require_once 'includes/side_nav.php'; ?>
 
 <div class="main-container">
     <h2>Manage Request Letters</h2>
-    <div class="search-container">
+
+    <div class="search-container text-center mb-4">
         <form method="GET" action="">
-            <input 
-                type="text" 
-                name="search" 
-                class="search-input" 
-                placeholder="Search by Requestor Name, Item/Supply, or Description..." 
-                value="<?= htmlspecialchars($search) ?>">
-            <button type="submit" class="search-btn">Search</button>
+            <input type="text" name="search" class="search-input form-control d-inline-block w-50"
+                   placeholder="Search"
+                   value="<?= htmlspecialchars($search) ?>">
+            <button type="submit" class="search-btn btn btn-primary">Search</button>
         </form>
     </div>
+
     <?php if (isset($_GET['success'])): ?>
-        <script> Swal.fire({ title: 'Success!', text: 'Request updated successfully!', icon: 'success', confirmButtonColor: '#007bff' }); </script>
+        <script>
+            Swal.fire({
+                title: 'Success!',
+                text: 'Request updated successfully!',
+                icon: 'success',
+                confirmButtonColor: '#007bff'
+            });
+        </script>
     <?php endif; ?>
 
     <a href="add_request.php" class="btn btn-add mb-3">+ Add Request</a>
 
     <table>
         <thead>
-            <tr>
-                <th>No.</th>
-                <th>Requestor Name</th> 
-                <th>Item/Supply Requested</th>
-                <th>Date Received</th>
-                <th>Description</th>
-                <th>Quantity</th>
-                <th>Request Letter</th>
-                <th>Status</th>
-                <th>Actions</th>
-            </tr>
+        <tr>
+            <th>No.</th>
+            <th>Requested By (Department/Position)</th>
+            
+            <th>Requested Items</th>  <!-- Nested Items List -->
+            <th>Date Received</th>
+            <th>Description</th>
+            <th>Stock Availability</th>
+            <th>Status</th>
+            <th>Remarks</th>
+            <th>Request Letter</th>
+              <!-- Status Column Added Back -->
+            <th>Actions</th>
+        </tr>
         </thead>
         <tbody>
-    <?php 
-    $counter = 1;
-    if (!empty($request_letters)): 
-        foreach ($request_letters as $request): ?>
+
+        <?php
+        $counter = 1;
+        foreach ($request_letters as $request):
+            $request_id = $request['id'];
+
+            // ✅ Fetch related requested items for each request
+            $item_stmt = $pdo->prepare("SELECT * FROM request_items WHERE request_id = ?");
+            $item_stmt->execute([$request_id]);
+            $items = $item_stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            // ✅ Determine status class
+            $status = htmlspecialchars($request['status']);
+            $status_class = '';
+            if ($status === 'Approved') {
+                $status_class = 'status-approved';
+            } elseif ($status === 'Denied') {
+                $status_class = 'status-denied';
+            } else {
+                $status_class = 'status-pending';
+            }
+            ?>
             <tr>
                 <td><?= $counter++ ?></td>
                 <td><?= htmlspecialchars($request['requestor_name']) ?></td>
-                <td><?= htmlspecialchars($request['purpose']) ?></td>
+               
+                <td class="requested-items">
+                <div class="requested-items-wrapper">
+                    <?php foreach ($items as $item): ?>
+                        <div class="requested-item-card">
+                            <h4><?= htmlspecialchars($item['item_name']) ?></h4>
+                            <p class="description"><?= htmlspecialchars($item['item_description']) ?></p>
+                            <span class="quantity">Quantity: <strong><?= htmlspecialchars($item['item_quantity']) ?></strong></span>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+            </td>
+
+
                 <td><?= htmlspecialchars($request['date_received']) ?></td>
                 <td><?= htmlspecialchars($request['description']) ?></td>
                 <td><?= htmlspecialchars($request['quantity']) ?></td>
                 <td>
-                    <?php 
-                    $image_path = htmlspecialchars($request['upload_letter']);
-                    if (!empty($image_path) && file_exists($image_path)): ?>
-                        <a href="<?= $image_path ?>" data-lightbox="request-letters" data-title="<?= htmlspecialchars($request['requestor_name']) ?>">
-                            <img src="<?= $image_path ?>?t=<?= time() ?>" alt="Request Letter">
-                        </a>
-                    <?php else: ?>
-                        <img src="uploads/default.png" alt="No Image">
-                    <?php endif; ?>
+                    <span class="<?= $status_class ?>"><?= $status ?></span>  <!-- Display status with color -->
                 </td>
+                <td><?= htmlspecialchars($request['purpose']) ?></td>
                 <td>
-                    <?php 
-                        $status = htmlspecialchars($request['status']); 
-                        $status_class = '';
+    <?php 
+    $image_path = htmlspecialchars($request['upload_letter']);  // Get the image path from the database
 
-                        if ($status === 'Approved') {
-                            $status_class = 'status-approved';
-                        } elseif ($status === 'Denied') {
-                            $status_class = 'status-denied';
-                        } else {
-                            $status_class = 'status-pending';
-                        }
-                    ?>
-                    <span class="<?= $status_class ?>"><?= $status ?></span>
-                </td>
+    // Check if the image file exists and display it, otherwise show a default image
+    if (!empty($image_path) && file_exists($image_path)): ?>
+        <a href="<?= $image_path ?>" data-lightbox="request-letters" data-title="<?= htmlspecialchars($request['requestor_name']) ?>">
+            <img src="<?= $image_path ?>?t=<?= time() ?>" alt="Request Letter Image" class="img-thumbnail">
+        </a>
+    <?php else: ?>
+        <img src="uploads/default.png" alt="No Image Available" class="img-thumbnail">
+    <?php endif; ?>
+</td>
                 <td>
-                    <a href="update_request.php?id=<?= $request['id'] ?>" class="btn btn-update">Update</a>
-                    <form action="delete_request.php" method="POST" class="delete-form" style="display:inline;">
-                        <input type="hidden" name="id" value="<?= $request['id'] ?>">
-                        <button type="submit" class="btn btn-danger">Delete</button>
-                    </form>
+                    <a href="update_request.php?id=<?= $request['id'] ?>" class="btn btn-success btn-sm">Update</a>
+                    <form action="delete_request.php" method="POST" class="delete-form d-inline-block">
+                    <input type="hidden" name="id" value="<?= $request['id'] ?>">
+                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                </form>
                 </td>
             </tr>
         <?php endforeach; ?>
-    <?php else: ?>
-        <tr>
-            <td colspan="9" style="text-align: center; padding: 20px; font-weight: bold; color: #dc3545;">
-                Results not found
-            </td>
-        </tr>
-    <?php endif; ?>
-</tbody>
 
+        <?php if (empty($request_letters)): ?>
+            <tr>
+                <td colspan="9" class="text-center text-danger font-weight-bold">No Requests Found</td>
+            </tr>
+        <?php endif; ?>
+
+        </tbody>
     </table>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const deleteForms = document.querySelectorAll('.delete-form');
+document.addEventListener('DOMContentLoaded', function () {
+    const deleteForms = document.querySelectorAll('.delete-form');  // Correct selector
 
-        deleteForms.forEach(form => {
-            form.addEventListener('submit', function (event) {
-                event.preventDefault(); // Prevent form submission
+    deleteForms.forEach(form => {
+        form.addEventListener('submit', function (event) {
+            event.preventDefault();  // Prevent form submission
 
-                Swal.fire({
-                    title: 'Are you sure?',
-                    text: "This request will be permanently deleted.",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#dc3545',
-                    cancelButtonColor: '#6c757d',
-                    confirmButtonText: 'Yes, delete it!',
-                    cancelButtonText: 'Cancel'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        this.submit(); // Submit the form if confirmed
-                    }
-                });
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "This request will be permanently deleted.",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#dc3545',
+                cancelButtonColor: '#6c757d',
+                confirmButtonText: 'Yes, delete it!',
+                cancelButtonText: 'Cancel'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    this.submit();  // Submit the form if user confirms
+                }
             });
         });
     });
+});
+
 
     document.addEventListener('DOMContentLoaded', function () {
     const searchInput = document.getElementById('searchInput');
@@ -293,10 +346,7 @@ $request_letters = $stmt->fetchAll(PDO::FETCH_ASSOC);
 });
 </script>
 
-
-<?php if (isset($_GET['success'])): ?>
-        <script> Swal.fire({ title: 'Success!', text: 'Request updated successfully!', icon: 'success', confirmButtonColor: '#007bff' }); </script>
-    <?php endif; ?>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <?php require_once 'includes/admin_footer.php'; ?>
 </body>
 </html>

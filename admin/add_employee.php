@@ -91,7 +91,7 @@ $employees = $pdo->query("SELECT * FROM employees ORDER BY last_name ASC")->fetc
             }
 
             button {
-                grid-column: span 2; /* Button spans both columns */
+                
                 padding: 12px;
                 background: #007bff;
                 color: white;
@@ -109,7 +109,7 @@ $employees = $pdo->query("SELECT * FROM employees ORDER BY last_name ASC")->fetc
 
             /* ✅ Employee Table */
             table {
-                width: 1450px;
+                width: 1400px;
                 border-collapse: collapse;
                 margin-top: 20px;
                 margin-left: 40px;

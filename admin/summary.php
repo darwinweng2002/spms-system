@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Excel-Like Table</title>
+    <title>Summary of Property Accountability Records</title>
     <style>
         h2 {
             text-align: center;
