@@ -150,33 +150,43 @@ if (!isset($_SESSION['admin_id'])) {
         }
 
         /* ✅ Buttons */
-        .btn-update {
-            background: #28a745;
-            color: white;
+        .update-btn {
             padding: 8px 12px;
-            border: none;
+            background: #28a745;
+            text-decoration: none;
+            color: white;
             border-radius: 5px;
-            cursor: pointer;
             font-size: 14px;
-            transition: 0.3s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            border: none;
+            cursor: pointer;
+            transition: 0.3s ease-in-out;
         }
 
-        .btn-update:hover {
+        .update-btn:hover {
             background: #218838;
         }
 
-        .btn-danger {
-            background: #dc3545;
-            color: white;
+        .delete-btn {
             padding: 8px 12px;
-            border: none;
+            background: #dc3545;
+            text-decoration: none;
+            color: white;
             border-radius: 5px;
-            cursor: pointer;
             font-size: 14px;
-            transition: 0.3s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            border: none;
+            cursor: pointer;
+            transition: 0.3s ease-in-out;
         }
 
-        .btn-danger:hover {
+        .delete-btn:hover {
             background: #b02a37;
         }
 
@@ -341,8 +351,8 @@ document.addEventListener("DOMContentLoaded", function () {
                         <td>${admin.position}</td>
                         <td>${admin.campus}</td>
                         <td>
-                            <button class="update-btn" data-id="${admin.id}" style="background: green; color: white; padding: 5px; border: none; border-radius: 3px; cursor: pointer;">Update</button>
-                            <button class="delete-btn" data-id="${admin.id}" style="background: red; color: white; padding: 5px; border: none; border-radius: 3px; cursor: pointer;">Delete</button>
+                            <button class="update-btn" data-id="${admin.id}" >Update</button>
+                            <button class="delete-btn" data-id="${admin.id}" ">Delete</button>
                         </td>
                     </tr>`;
             });

@@ -230,17 +230,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <!-- ✅ Add Request Form -->
     <form method="POST" enctype="multipart/form-data">
         <div>
-            <label>Name of Requestor</label>
+            <label>Requested By (Department/Position)</label>
             <input type="text" name="requestor_name" placeholder="Enter Requestor Name" required>
-        </div>
-
-        <div>
-            <label>Item/Supply Requesting</label>
-            <textarea name="purpose" placeholder="Enter Remarks" required></textarea>
-        </div>
-        <div>
-            <label>Date Received</label>
-            <input type="date" id="date_received" name="date_received" required>
         </div>
         <div id="items-container">
             <h5>Requested Items</h5>
@@ -251,17 +242,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <button type="button" class="btn btn-danger remove-item">X</button>
             </div>
         </div>
+       
+        <div>
+            <label>Date Received</label>
+            <input type="date" id="date_received" name="date_received" required>
+        </div>
+        
         
         <div>
             <label>Description</label>
             <input type="text" name="description" placeholder="Enter description" required>
         </div>
-        <div>
-            <label>Quantity</label>
-            <input type="text" name="quantity" placeholder="Quantity" required>
-        </div>
+       <!-- <div>
+            <label>Stock Availability</label>
+            <input type="text" name="quantity" placeholder="" required>
+        </div> -->
         <button type="button" class="btn btn-success mb-3" id="add-item">+ Add Item</button>
         <!-- ✅ File Upload with Preview -->
+        <div>
+            <label>Remarks</label>
+            <textarea name="purpose" placeholder="Enter Remarks" required></textarea>
+        </div>
         <div class="file-input">
             <label for="file-upload">Choose File</label>
             <input type="file" id="file-upload" name="upload_letter" accept="image/png, image/jpeg, image/jpg" required>

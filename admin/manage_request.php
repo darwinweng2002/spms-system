@@ -78,6 +78,36 @@ $request_letters = $stmt->fetchAll(PDO::FETCH_ASSOC);
         img:hover {
             transform: scale(1.1);
         }
+        .btn-update {
+            padding: 8px 12px;
+            background: #28a745;
+            text-decoration: none;
+            color: white;
+            border-radius: 5px;
+            font-size: 14px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            border: none;
+            cursor: pointer;
+            transition: 0.3s ease-in-out;
+        }
+        .btn-delete {
+            padding: 8px 12px;
+            background: #dc3545;
+            text-decoration: none;
+            color: white;
+            border-radius: 5px;
+            font-size: 14px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            border: none;
+            cursor: pointer;
+            transition: 0.3s ease-in-out;
+        }
         .btn-add {
             background: #007bff;
             color: white;
@@ -209,7 +239,7 @@ $request_letters = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <th>Requested Items</th>  <!-- Nested Items List -->
             <th>Date Received</th>
             <th>Description</th>
-            <th>Stock Availability</th>
+          
             <th>Status</th>
             <th>Remarks</th>
             <th>Request Letter</th>
@@ -259,7 +289,7 @@ $request_letters = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
                 <td><?= htmlspecialchars($request['date_received']) ?></td>
                 <td><?= htmlspecialchars($request['description']) ?></td>
-                <td><?= htmlspecialchars($request['quantity']) ?></td>
+               
                 <td>
                     <span class="<?= $status_class ?>"><?= $status ?></span>  <!-- Display status with color -->
                 </td>
@@ -278,10 +308,10 @@ $request_letters = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <?php endif; ?>
 </td>
                 <td>
-                    <a href="update_request.php?id=<?= $request['id'] ?>" class="btn btn-success btn-sm">Update</a>
+                    <a href="update_request.php?id=<?= $request['id'] ?>" class="btn-update">Update</a>
                     <form action="delete_request.php" method="POST" class="delete-form d-inline-block">
                     <input type="hidden" name="id" value="<?= $request['id'] ?>">
-                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                    <button type="submit" class="btn-delete">Delete</button>
                 </form>
                 </td>
             </tr>
