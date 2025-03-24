@@ -28,8 +28,12 @@ $stmt = $pdo->prepare("SELECT COUNT(*) AS total_pending FROM request_letters WHE
 $stmt->execute();
 $pending_count = $stmt->fetch(PDO::FETCH_ASSOC)['total_pending'];
 
-?>
+// ✅ Fetch Total Letter Requests Count
+$stmt = $pdo->prepare("SELECT COUNT(*) AS total_requests FROM request_letters");
+$stmt->execute();
+$total_requests = $stmt->fetch(PDO::FETCH_ASSOC)['total_requests'];
 
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -81,11 +85,23 @@ $pending_count = $stmt->fetch(PDO::FETCH_ASSOC)['total_pending'];
 
         /* Dashboard Grid */
         .dashboard-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            justify-content: center;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr); /* Ensures only 4 items per row */
+        gap: 20px;
+        justify-content: center;
+    }
+
+    @media screen and (max-width: 1024px) {
+        .dashboard-grid {
+            grid-template-columns: repeat(2, 1fr); /* 2 items per row on smaller screens */
         }
+    }
+
+    @media screen and (max-width: 600px) {
+        .dashboard-grid {
+            grid-template-columns: repeat(1, 1fr); /* 1 item per row on very small screens */
+        }
+    }
 
         /* Stat Cards */
         .stat-card {
@@ -154,31 +170,36 @@ $pending_count = $stmt->fetch(PDO::FETCH_ASSOC)['total_pending'];
         <h1>Dashboard</h1>
 
         <div class="dashboard-grid">
-    <!-- ✅ Admin Accounts Stat Card -->
-    <div class="stat-card">
-        <span class="stat-title">Admin Accounts <span class="stat-status">Active</span></span>
-        <span class="stat-number"><?php echo $admin_count; ?></span>
-    </div>
+            <!-- ✅ Admin Accounts Stat Card -->
+            <div class="stat-card">
+                <span class="stat-title">Admin Accounts <span class="stat-status">Active</span></span>
+                <span class="stat-number"><?php echo $admin_count; ?></span>
+            </div>
 
-    <!-- ✅ Employee Stat Card -->
-    <div class="stat-card">
-        <span class="stat-title">Employees <span class="stat-status">Active</span></span>
-        <span class="stat-number"><?php echo $employee_count; ?></span>
-    </div>
+            <!-- ✅ Employee Stat Card -->
+            <div class="stat-card">
+                <span class="stat-title">Employees <span class="stat-status">Active</span></span>
+                <span class="stat-number"><?php echo $employee_count; ?></span>
+            </div>
 
-    <!-- ✅ Approved Requests Stat Card -->
-    <div class="stat-card">
-        <span class="stat-title">Approved Requests <span class="stat-status">Total</span></span>
-        <span class="stat-number"><?php echo $approved_count; ?></span>
-    </div>
+            <!-- ✅ Approved Requests Stat Card -->
+            <div class="stat-card">
+                <span class="stat-title">Approved Requests <span class="stat-status">Total</span></span>
+                <span class="stat-number"><?php echo $approved_count; ?></span>
+            </div>
 
-    <!-- ✅ Pending Requests Stat Card -->
-    <div class="stat-card">
-        <span class="stat-title">Pending Requests <span class="stat-status">Total</span></span>
-        <span class="stat-number"><?php echo $pending_count; ?></span>
-    </div>
-</div>
+            <!-- ✅ Pending Requests Stat Card -->
+            <div class="stat-card">
+                <span class="stat-title">Pending Requests <span class="stat-status">Total</span></span>
+                <span class="stat-number"><?php echo $pending_count; ?></span>
+            </div>
 
+            <!-- ✅ Total Letter Requests Stat Card -->
+            <div class="stat-card">
+                <span class="stat-title">Requests Letters <span class="stat-status">Total</span></span>
+                <span class="stat-number"><?php echo $total_requests; ?></span>
+            </div>
+        </div>
     </div>
 </div>
 
