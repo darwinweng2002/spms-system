@@ -3,21 +3,28 @@ session_start();
 require_once 'db.php';  // Database connection
 
 $search = isset($_GET['search']) ? trim($_GET['search']) : '';
+$filter = isset($_GET['status_filter']) ? $_GET['status_filter'] : '';  // New filter for status
 
 $noResults = false;  // Initialize a flag for tracking empty search results
 
-// ✅ Fetch Request Letters with Search functionality
+// ✅ Fetch Request Letters with search and filter functionality
+$query = "SELECT * FROM request_letters WHERE 1";
+
 if ($search) {
-    $stmt = $pdo->prepare("SELECT * FROM request_letters 
-                           WHERE requestor_name LIKE :search 
-                           OR purpose LIKE :search 
-                           OR description LIKE :search 
-                           ORDER BY created_at DESC");
-    $stmt->execute(['search' => "%$search%"]);
-} else {
-    $stmt = $pdo->query("SELECT * FROM request_letters ORDER BY created_at DESC");
+    $query .= " AND (requestor_name LIKE :search OR purpose LIKE :search OR description LIKE :search)";
+}
+if ($filter) {
+    $query .= " AND status = :status";
 }
 
+$query .= " ORDER BY created_at DESC";
+$stmt = $pdo->prepare($query);
+
+$params = [];
+if ($search) $params['search'] = "%$search%";
+if ($filter) $params['status'] = $filter;
+
+$stmt->execute($params);
 $request_letters = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 if (empty($request_letters)) {
@@ -261,17 +268,23 @@ if (empty($request_letters)) {
     <h2>Manage Request Letters</h2>
 
     <div class="d-flex justify-content-between align-items-center mb-4">
-    <div class="input-group w-50">
-        <input type="text" class="form-control" placeholder="Search">
-        <button class="btn btn-primary" type="button">Search</button>
-    </div>
+        <form method="GET" class="d-flex w-75">
+            <input type="text" name="search" class="form-control me-2" value="<?= htmlspecialchars($search) ?>" placeholder="Search">
+            
+            <select name="status_filter" class="form-select me-2">
+                <option value="">All</option>
+                <option value="Approved" <?= $filter === 'Approved' ? 'selected' : '' ?>>Approved</option>
+                <option value="Pending" <?= $filter === 'Pending' ? 'selected' : '' ?>>Pending</option>
+                <option value="Denied" <?= $filter === 'Denied' ? 'selected' : '' ?>>Denied</option>
+            </select>
 
-    <div>
+            <button class="btn btn-primary" type="submit">Search</button>
+        </form>
+
         <button class="print-button" onclick="printTable()">
             <i class="bi bi-printer"></i> Print Request Letters
         </button>
     </div>
-</div>
 
 
 
@@ -458,41 +471,98 @@ function printTable() {
             <title>Print Request Letters</title>
             <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
             <style>
+                * {
+                    margin: 0;
+                    padding: 0;
+                    box-sizing: border-box;
+                }
+
                 body {
                     font-family: 'Poppins', sans-serif;
                     padding: 20px;
                 }
+
+                .header-container {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    padding: 10px 20px;
+                    border-bottom: 2px solid black;
+                }
+
+                .header-left {
+                    width: 100px; /* Adjust logo size */
+                }
+
+                .header-left img {
+                    width: 100%;
+                    height: auto;
+                }
+
+                .header-right {
+                    text-align: center;
+                    flex-grow: 1;
+                }
+
+                .header-right h1 {
+                    font-size: 18px;
+                    font-weight: bold;
+                    text-transform: uppercase;
+                }
+
+                .header-right p {
+                    font-size: 14px;
+                    margin: 5px 0;
+                }
+
+                .progress-report {
+                    text-align: center;
+                    margin-top: 10px;
+                    font-size: 16px;
+                    font-weight: bold;
+                    letter-spacing: 1px;
+                    border-top: 2px solid black;
+                    padding-top: 5px;
+                }
+
+                a {
+                    color: blue;
+                    text-decoration: none;
+                }
+
                 table {
                     width: 100%;
                     border-collapse: collapse;
                     margin: 20px 0;
                 }
+
                 th, td {
                     border: 1px solid #ddd;
                     padding: 10px;
                     text-align: center;
                 }
+
                 th {
                     background: #007bff;
                     color: white;
                 }
+
                 tr:nth-child(even) {
                     background-color: #f9f9f9;
                 }
+
                 h2 {
                     text-align: center;
                     margin-bottom: 20px;
                 }
                 
-                /* 🔹 Hide action columns for printing */
                 td:last-child, th:last-child {
                     display: none;
                 }
 
-                /* 🔹 Adjust request letter image size */
                 td img {
                     width: 200px;
-                    height: auto;  /* Maintain aspect ratio */
+                    height: auto;
                     display: block;
                     margin: 0 auto;
                     border: 1px solid #ddd;
@@ -503,8 +573,23 @@ function printTable() {
             </style>
         </head>
         <body>
+
+            <div class="header-container">
+                <div class="header-left">
+                    <img src="upload/prmsu_logo.png" alt="University Logo"> 
+                </div>
+                <div class="header-right">
+                    <h1>Republic of the Philippines</h1>
+                    <h1>President Ramon Magsaysay State University</h1>
+                    <p>Iba, Zambales, Philippines</p>
+                    <p>Tel./Fax No. (047) 811-1683 | <a href="mailto:rmtupresident@yahoo.com">rmtupresident@yahoo.com</a> | 
+                        <a href="http://www.prmsu.edu.ph" target="_blank">www.prmsu.edu.ph</a></p>
+                </div>
+            </div>
+
             <h2>Request Letters</h2>
             ${tableContent}
+
         </body>
         </html>
     `);
@@ -512,6 +597,7 @@ function printTable() {
     printWindow.print();
     printWindow.close();
 }
+
 
 </script>
 
