@@ -29,6 +29,7 @@ $request_letters = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <?php require_once 'includes/header_nav.php'; ?>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
@@ -198,6 +199,46 @@ $request_letters = $stmt->fetchAll(PDO::FETCH_ASSOC);
     font-size: 14px;
     color: #333;
 }
+@media print {
+    .btn, .search-container, form, footer, .btn-update, .btn-delete, .delete-form {
+        display: none !important;  /* Hides all non-data elements */
+    }
+
+    /* Make the table look clean during printing */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th, td {
+        border: 1px solid #ddd;
+        padding: 10px;
+        text-align: center;
+    }
+
+    th {
+        background-color: #007bff;
+        color: white;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+}
+.print-button {
+    background-color: #007bff; /* Blue background */
+    color: #fff; /* White text */
+    border: none; /* No border */
+    padding: 10px 20px; /* Padding for size */
+    cursor: pointer;
+    border-radius: 5px; /* Rounded corners */
+    transition: background-color 0.3s;
+}
+
+.print-button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}
+
 
     </style>
 </head>
@@ -208,14 +249,21 @@ $request_letters = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <div class="main-container">
     <h2>Manage Request Letters</h2>
 
-    <div class="search-container text-center mb-4">
-        <form method="GET" action="">
-            <input type="text" name="search" class="search-input form-control d-inline-block w-50"
-                   placeholder="Search"
-                   value="<?= htmlspecialchars($search) ?>">
-            <button type="submit" class="search-btn btn btn-primary">Search</button>
-        </form>
+    <div class="d-flex justify-content-between align-items-center mb-4">
+    <div class="input-group w-50">
+        <input type="text" class="form-control" placeholder="Search">
+        <button class="btn btn-primary" type="button">Search</button>
     </div>
+
+    <div>
+        <button class="print-button" onclick="printTable()">
+            <i class="bi bi-printer"></i> Print Request Letters
+        </button>
+    </div>
+</div>
+
+
+
 
     <?php if (isset($_GET['success'])): ?>
         <script>
@@ -374,6 +422,78 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 });
+
+function printTable() {
+    // Extract only the table content for printing
+    const tableContent = document.querySelector('table').outerHTML;
+
+    // Create a new window and write the HTML for the print layout
+    const printWindow = window.open('', '_blank', 'width=800,height=600');
+    printWindow.document.open();
+    printWindow.document.write(`
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Print Request Letters</title>
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+            <style>
+                body {
+                    font-family: 'Poppins', sans-serif;
+                    padding: 20px;
+                }
+                table {
+                    width: 100%;
+                    border-collapse: collapse;
+                    margin: 20px 0;
+                }
+                th, td {
+                    border: 1px solid #ddd;
+                    padding: 10px;
+                    text-align: center;
+                }
+                th {
+                    background: #007bff;
+                    color: white;
+                }
+                tr:nth-child(even) {
+                    background-color: #f9f9f9;
+                }
+                h2 {
+                    text-align: center;
+                    margin-bottom: 20px;
+                }
+                
+                /* 🔹 Hide action columns for printing */
+                td:last-child, th:last-child {
+                    display: none;
+                }
+
+                /* 🔹 Adjust request letter image size */
+                td img {
+                    width: 200px;
+                    height: auto;  /* Maintain aspect ratio */
+                    display: block;
+                    margin: 0 auto;
+                    border: 1px solid #ddd;
+                    border-radius: 5px;
+                    padding: 5px;
+                    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                }
+            </style>
+        </head>
+        <body>
+            <h2>Request Letters</h2>
+            ${tableContent}
+        </body>
+        </html>
+    `);
+    printWindow.document.close();
+    printWindow.print();
+    printWindow.close();
+}
+
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
