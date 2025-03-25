@@ -263,6 +263,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <label>Remarks</label>
             <textarea name="purpose" placeholder="Enter Remarks" required></textarea>
         </div>
+        <label>Upload image of request letter</label>
         <div class="file-input">
             <label for="file-upload">Choose File</label>
             <input type="file" id="file-upload" name="upload_letter" accept="image/png, image/jpeg, image/jpg" required>

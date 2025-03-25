@@ -405,6 +405,5 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 });
 </script>
-<?php require_once 'includes/admin_footer.php'; ?>
 </body>
 </html>
