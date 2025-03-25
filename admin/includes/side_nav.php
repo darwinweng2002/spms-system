@@ -88,6 +88,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
          <li><a href="manage_request.php" class="<?= ($current_page == 'manage_request.php') ? 'active' : '' ?>"> Request</a></li> 
        <!--   <li><a href="spreadsheet_editor.php" class="<?= ($current_page == 'spreadsheet_editor.php') ? 'active' : '' ?>"> Spreadsheet</a></li> -->
         <li><a href="employee_list.php" class="<?= ($current_page == 'settings.php') ? 'active' : '' ?>"> Employee Records</a></li> 
+        <li><a href="summary.php" class="<?= ($current_page == 'settings.php') ? 'active' : '' ?>"> Manage Records</a></li>
         <li><a href="manage_admin.php" class="<?= ($current_page == 'settings.php') ? 'active' : '' ?>"> Manage Accounts</a></li>
       
         <!-- <a href="logout.php" class="logout-btn">Logout</a> -->
