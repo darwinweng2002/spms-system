@@ -4,6 +4,8 @@ require_once 'db.php';  // Database connection
 
 $search = isset($_GET['search']) ? trim($_GET['search']) : '';
 
+$noResults = false;  // Initialize a flag for tracking empty search results
+
 // ✅ Fetch Request Letters with Search functionality
 if ($search) {
     $stmt = $pdo->prepare("SELECT * FROM request_letters 
@@ -17,7 +19,12 @@ if ($search) {
 }
 
 $request_letters = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+if (empty($request_letters)) {
+    $noResults = true;  // Set to true if no results are found
+}
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -42,7 +49,7 @@ $request_letters = $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
         .main-container {
             max-width: 1600px;
-            margin: 100px 250px;
+            margin: 100px 300px;
             background: white;
             padding: 25px;
             border-radius: 10px;
@@ -238,7 +245,11 @@ $request_letters = $stmt->fetchAll(PDO::FETCH_ASSOC);
 .print-button:hover {
     background-color: #0056b3; /* Darker blue on hover */
 }
-
+#noResultsMessage {
+    margin-top: 20px;
+    font-size: 18px;
+    font-weight: bold;
+}
 
     </style>
 </head>
@@ -279,6 +290,7 @@ $request_letters = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <a href="add_request.php" class="btn btn-add mb-3">+ Add Request</a>
 
     <table>
+    <div id="noResultsMessage" class="alert alert-danger text-center d-none">No results found</div>  
         <thead>
         <tr>
             <th>No.</th>
@@ -402,12 +414,14 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 
-    document.addEventListener('DOMContentLoaded', function () {
-    const searchInput = document.getElementById('searchInput');
+document.addEventListener('DOMContentLoaded', function () {
+    const searchInput = document.querySelector('.form-control');  // Select search input
     const tableRows = document.querySelectorAll('tbody tr');
+    const noResultsMessage = document.getElementById('noResultsMessage');  // Select the message div
 
     searchInput.addEventListener('input', function () {
         const searchTerm = searchInput.value.toLowerCase().trim();
+        let visibleRowCount = 0;
 
         tableRows.forEach(row => {
             const requestorName = row.children[1].textContent.toLowerCase();
@@ -418,10 +432,15 @@ document.addEventListener('DOMContentLoaded', function () {
                 text.includes(searchTerm)
             );
 
-            row.style.display = isVisible ? '' : 'none';
+            row.style.display = isVisible ? '' : 'none';  // Toggle visibility
+            if (isVisible) visibleRowCount++;  // Count visible rows
         });
+
+        // Display "No results found" if no rows match
+        noResultsMessage.classList.toggle('d-none', visibleRowCount !== 0);
     });
 });
+
 
 function printTable() {
     // Extract only the table content for printing
