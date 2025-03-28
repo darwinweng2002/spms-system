@@ -380,13 +380,13 @@ if (empty($request_letters)) {
         <img src="uploads/default.png" alt="No Image Available" class="img-thumbnail">
     <?php endif; ?>
 </td>
-                <td>
-                    <a href="update_request.php?id=<?= $request['id'] ?>" class="btn-update">Update</a>
-                    <form action="delete_request.php" method="POST" class="delete-form d-inline-block">
-                    <input type="hidden" name="id" value="<?= $request['id'] ?>">
-                    <button type="submit" class="btn-delete">Delete</button>
-                </form>
-                </td>
+<td>
+    <a href="update_request.php?id=<?= $request['id'] ?>" class="btn-update">Update</a>
+
+    <!-- Updated delete button with event trigger -->
+    <button type="button" class="btn-delete" data-id="<?= $request['id'] ?>">Delete</button>  
+</td>
+
             </tr>
         <?php endforeach; ?>
 
@@ -598,6 +598,47 @@ function printTable() {
     printWindow.close();
 }
 
+document.addEventListener('DOMContentLoaded', function () {
+    const deleteButtons = document.querySelectorAll('.btn-delete');
+
+    deleteButtons.forEach(button => {
+        button.addEventListener('click', function () {
+            const requestId = this.getAttribute('data-id');
+
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "This action will permanently delete the request.",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#dc3545',
+                cancelButtonColor: '#6c757d',
+                confirmButtonText: 'Yes, delete it!',
+                cancelButtonText: 'Cancel'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // AJAX Request to delete the request
+                    fetch('delete_request.php', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded'
+                        },
+                        body: `id=${encodeURIComponent(requestId)}`
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            Swal.fire('Deleted!', 'The request has been deleted.', 'success');
+                            setTimeout(() => window.location.reload(), 1500); // Refresh the page after deletion
+                        } else {
+                            Swal.fire('Error!', 'Failed to delete the request.', 'error');
+                        }
+                    })
+                    .catch(err => Swal.fire('Error!', 'An error occurred.', 'error'));
+                }
+            });
+        });
+    });
+});
 
 </script>
 

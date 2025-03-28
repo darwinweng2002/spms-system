@@ -1,23 +1,25 @@
 <?php
+session_start();
 require_once 'db.php';
 
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['id'])) {
-    $id = $_POST['id'];
+header('Content-Type: application/json');
 
-    // Delete file
-    $stmt = $pdo->prepare("SELECT upload_letter FROM request_letters WHERE id = :id");
-    $stmt->execute(['id' => $id]);
-    $request = $stmt->fetch(PDO::FETCH_ASSOC);
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['id'])) {
+    $id = intval($_POST['id']);  // Sanitize the input
 
-    if ($request && !empty($request['upload_letter']) && file_exists($request['upload_letter'])) {
-        unlink($request['upload_letter']);
+    try {
+        // Delete request by ID
+        $stmt = $pdo->prepare("DELETE FROM request_letters WHERE id = ?");
+        $stmt->execute([$id]);
+
+        if ($stmt->rowCount() > 0) {
+            echo json_encode(['success' => true]);  // Send success response
+        } else {
+            echo json_encode(['success' => false, 'message' => 'Request not found or already deleted.']);
+        }
+    } catch (Exception $e) {
+        echo json_encode(['success' => false, 'message' => 'Database error: ' . $e->getMessage()]);
     }
-
-    // Delete from database
-    $stmt = $pdo->prepare("DELETE FROM request_letters WHERE id = :id");
-    $stmt->execute(['id' => $id]);
-
-    header("Location: manage_requests.php?deleted=1");
-    exit;
+} else {
+    echo json_encode(['success' => false, 'message' => 'Invalid request.']);
 }
-?>
