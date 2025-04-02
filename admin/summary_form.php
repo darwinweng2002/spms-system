@@ -115,7 +115,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         .resizable-table th {
             position: sticky;
             top: 0;
-            background: #2C3E50;
+            background: #343a40;
             color: white;
             text-align: center;
             padding: 10px;
@@ -144,13 +144,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         @media (max-width: 768px) {
             .table { font-size: 14px; }
         }
+        footer {
+            width: 100%;
+            text-align: center;
+            padding: 2px;
+            background: #2C3E50;
+            color: #fff;
+            font-size: 10px;
+            position: absolute;
+            bottom: 0;
+        }
+
+        footer img.footer-logo {
+            height: 60px;
+            width: auto;
+        }
     </style>
 </head>
 <body>
-    <br>
-    <br>
 <?php require_once 'includes/side_nav.php'; ?>
 <div class="container mt-5">
+    <br>
+    <br>
+    
     <div class="card">
         <div class="card-header">
             <i class="bi bi-pencil-square"></i> Property Summary Form
@@ -227,6 +243,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </div>
 
 </body>
+<?php require_once 'includes/admin_footer.php'; ?>
 <script>
     document.addEventListener("DOMContentLoaded", function () {
     const table = document.querySelector(".resizable-table");

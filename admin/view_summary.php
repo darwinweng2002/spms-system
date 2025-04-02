@@ -113,14 +113,29 @@ $summaries = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 font-size: 12px;
             }
         }
+        footer {
+            width: 100%;
+            text-align: center;
+            padding: 2px;
+            background: #2C3E50;
+            color: #fff;
+            font-size: 10px;
+            position: absolute;
+            bottom: 0;
+        }
+
+        footer img.footer-logo {
+            height: 60px;
+            width: auto;
+        }
     </style>
 </head>
 <body>
 <?php require_once 'includes/side_nav.php'; ?>
-<br>
-<br>
-
     <div class="container mt-5">
+        <br>
+        <br>
+        
         <div class="card">
             <div class="card-header">
                 <i class="bi bi-file-earmark-text"></i> Employee Summary Records
@@ -174,4 +189,5 @@ $summaries = $stmt->fetchAll(PDO::FETCH_ASSOC);
         </div>
     </div>
 </body>
+<?php require_once 'includes/admin_footer.php'; ?>
 </html>

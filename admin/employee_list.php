@@ -9,7 +9,20 @@ if (!isset($_SESSION['admin_id'])) {
 }
 
 // Fetch all employees
-$stmt = $pdo->prepare("SELECT * FROM employees");
+$searchQuery = isset($_GET['search']) ? trim($_GET['search']) : '';
+
+if (!empty($searchQuery)) {
+    $stmt = $pdo->prepare("SELECT * FROM employees WHERE 
+        last_name LIKE :search OR 
+        first_name LIKE :search OR 
+        middle_name LIKE :search OR 
+        position LIKE :search OR 
+        campus LIKE :search");
+    $stmt->bindValue(':search', '%' . $searchQuery . '%', PDO::PARAM_STR);
+} else {
+    $stmt = $pdo->prepare("SELECT * FROM employees");
+}
+
 $stmt->execute();
 $employees = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
@@ -26,6 +39,7 @@ $employees = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
     <style>
         * {
             font-family: 'Poppins', sans-serif;
@@ -86,6 +100,25 @@ $employees = $stmt->fetchAll(PDO::FETCH_ASSOC);
             margin: 2px;
         }
 
+        .search-container {
+            margin-bottom: 15px;
+            text-align: right;
+        }
+
+        .search-container input {
+            width: 100%;
+            border-radius: 8px;
+            padding: 8px;
+            border: 1px solid #ccc;
+            transition: 0.3s;
+        }
+
+        .search-container input:focus {
+            outline: none;
+            border-color: #007bff;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+        }
+
         @media (max-width: 768px) {
             .table {
                 font-size: 14px;
@@ -94,6 +127,14 @@ $employees = $stmt->fetchAll(PDO::FETCH_ASSOC);
             .btn-sm {
                 padding: 4px 8px;
                 font-size: 12px;
+            }
+
+            .search-container {
+                text-align: center;
+            }
+
+            .search-container input {
+                width: 100%;
             }
         }
     </style>
@@ -108,11 +149,15 @@ $employees = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <i class="bi bi-people-fill"></i> Employee Records
             </div>
             <div class="card-body">
+                <!-- Search Box -->
+                <div class="search-container">
+                    <input type="text" id="search" class="form-control" placeholder="Search Employee...">
+                </div>
+
                 <div class="table-responsive">
                     <table class="table table-bordered table-striped mt-3">
                         <thead>
                             <tr>
-                               
                                 <th>Last Name</th>
                                 <th>First Name</th>
                                 <th>Middle Name</th>
@@ -121,20 +166,19 @@ $employees = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                 <th>Actions</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="employee-table">
                             <?php foreach ($employees as $employee): ?>
                                 <tr>
-                                  
-                                    <td><?= $employee['last_name'] ?></td>
-                                    <td><?= $employee['first_name'] ?></td>
-                                    <td><?= $employee['middle_name'] ?></td>
-                                    <td><?= $employee['position'] ?></td>
-                                    <td><?= $employee['campus'] ?></td>
+                                    <td><?= htmlspecialchars($employee['last_name']) ?></td>
+                                    <td><?= htmlspecialchars($employee['first_name']) ?></td>
+                                    <td><?= htmlspecialchars($employee['middle_name']) ?></td>
+                                    <td><?= htmlspecialchars($employee['position']) ?></td>
+                                    <td><?= htmlspecialchars($employee['campus']) ?></td>
                                     <td class="text-center action-buttons">
-                                        <a href="http://localhost/spms_system/admin/summary_form.php?employee_id=<?= $employee['id'] ?>" 
+                                        <a href="summary_form.php?employee_id=<?= $employee['id'] ?>" 
                                         class="btn btn-success btn-sm"><i class="bi bi-pencil-square"></i> Create</a>
                                         
-                                        <a href="http://localhost/spms_system/admin/view_summary.php?employee_id=<?= $employee['id'] ?>" 
+                                        <a href="view_summary.php?employee_id=<?= $employee['id'] ?>" 
                                         class="btn btn-primary btn-sm"><i class="bi bi-eye-fill"></i> View</a>
                                     </td>
                                 </tr>
@@ -145,5 +189,25 @@ $employees = $stmt->fetchAll(PDO::FETCH_ASSOC);
             </div>
         </div>
     </div>
+
+<script>
+document.getElementById("search").addEventListener("input", function() {
+    let searchValue = this.value.trim();
+    let tableBody = document.getElementById("employee-table");
+
+    fetch(`employee_list.php?search=${searchValue}`)
+        .then(response => response.text())
+        .then(data => {
+            let parser = new DOMParser();
+            let newDoc = parser.parseFromString(data, "text/html");
+            let newTableBody = newDoc.getElementById("employee-table");
+
+            if (newTableBody) {
+                tableBody.innerHTML = newTableBody.innerHTML;
+            }
+        });
+});
+</script>
+
 </body>
 </html>
