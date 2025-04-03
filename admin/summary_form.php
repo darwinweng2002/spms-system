@@ -219,7 +219,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </thead>
         <tbody>
             <tr>
-                <td><input type="text" name="reference_no"></td>
+            <td>
+            <input list="reference_options" name="reference_no" class="form-control">
+            <datalist id="reference_options">
+                <option value="PAR; ">
+                <option value="ICS; ">
+            </datalist>
+        </td>
                 <td><input type="number" name="qty"></td>
                 <td><input type="text" name="unit"></td>
                 <td><input type="text" name="article"></td>
@@ -228,7 +234,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <td><input type="date" name="date"></td>
                 <td><input type="number" name="unit_cost" step="0.01"></td>
                 <td><input type="number" name="total_cost" step="0.01"></td>
-                <td><input type="text" name="fund_cluster"></td>
+                <td>
+                <select name="fund_cluster" class="form-select">
+                    <option value="" disabled selected>Select Fund Cluster</option>
+                    <option value="01-1-01-101 (RAF-101)">01-1-01-101 (RAF-101)</option>
+                    <option value="06-2-07-000 (BRF-161)">06-2-07-000 (BRF-161)</option>
+                    <option value="07-2-08-601 (TRF-163)">07-2-08-601 (TRF-163)</option>
+                    <option value="05-2-06-441 (IGF-164)">05-2-06-441 (IGF-164)</option>
+                </select>
+            </td>
+
                 <td><input type="text" name="remarks"></td>
             </tr>
         </tbody>

@@ -23,7 +23,11 @@ if (!isset($_SESSION['admin_id'])) {
 
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
-
+        body {
+            min-height: 100vh; /* Ensure the body takes at least the full screen height */
+            display: flex;
+            flex-direction: column;
+        }
         /* ✅ Main Page Layout */
         .main-container {
             width: calc(100% - 250px);
@@ -31,6 +35,7 @@ if (!isset($_SESSION['admin_id'])) {
             padding: 20px;
             background: #f8f9fa;
             min-height: 100vh;
+           
         }
 
         /* ✅ Flexbox for Form & Org-Chart Image */
@@ -119,6 +124,8 @@ if (!isset($_SESSION['admin_id'])) {
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            flex: 1; /* Makes the container take available space */
+            padding-bottom: 80px;
         }
 
         table {
@@ -216,12 +223,12 @@ if (!isset($_SESSION['admin_id'])) {
         footer {
             width: 100%;
             text-align: center;
-            padding: 2px;
+            padding: 10px;
             background: #2C3E50;
             color: #fff;
             font-size: 10px;
-            position: absolute;
-            bottom: 0;
+            position: relative; /* Change from absolute to relative */
+            margin-top: auto;
         }
 
         footer img.footer-logo {
@@ -232,9 +239,10 @@ if (!isset($_SESSION['admin_id'])) {
 </head>
 <body>
 <?php require_once 'includes/side_nav.php'; ?>
+<br>
+<br>
     <div class="content">
         <h1>Manage Admin Users</h1>
-
         <div class="admin-section">
         <!-- ✅ Add Admin Form -->
         <div class="admin-form">
@@ -405,5 +413,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 });
 </script>
+<?php require_once 'includes/admin_footer.php'; ?>
 </body>
 </html>

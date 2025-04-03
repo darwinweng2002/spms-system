@@ -44,10 +44,14 @@ $summaries = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         body {
             background-color: #f8f9fa;
+            min-height: 100vh; 
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1500px;
+            flex: 1;
+            padding-bottom: 80px; 
+            margin-left: 17%;
         }
 
         .card {
@@ -113,22 +117,85 @@ $summaries = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 font-size: 12px;
             }
         }
+
         footer {
             width: 100%;
             text-align: center;
-            padding: 2px;
+            padding: 10px;
             background: #2C3E50;
             color: #fff;
             font-size: 10px;
-            position: absolute;
-            bottom: 0;
+            position: relative; 
+            margin-top: auto;
         }
 
         footer img.footer-logo {
             height: 60px;
             width: auto;
         }
+/* 🔹 PRINT STYLES */
+@media print {
+    body {
+        background-color: white;
+    }
+
+    .no-print {
+        display: none !important; /* Hide buttons & unnecessary UI */
+    }
+
+    .container {
+        max-width: 100%;
+        margin: 0;
+        padding: 0;
+    }
+
+    /* Only print the summary table */
+    .printable-table {
+        width: 100%;
+        border: 1px solid black; /* Border around the table */
+        border-collapse: collapse; /* Collapse borders between cells */
+    }
+
+    /* Add borders and padding to the table headers and data cells */
+    .printable-table th, .printable-table td {
+        border: 1px solid black; /* Ensure borders are visible */
+        padding: 10px;
+        text-align: center;
+    }
+
+    .printable-table th {
+        background-color: #343a40;
+        color: white;
+        font-weight: bold;
+    }
+
+    /* Adjustments for cells that need text alignment */
+    .text-end {
+        text-align: right;
+    }
+    
+    .card-header, .action-buttons, footer, .btn {
+        display: none !important; /* Hide other elements */
+    }
+
+    .print-header {
+        text-align: center;
+        font-size: 18px;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+}
     </style>
+    <script>
+        function printSummary() {
+            const content = document.getElementById('printable-content').innerHTML; // Get the table HTML content
+            const originalContent = document.body.innerHTML; // Save the original content of the page
+
+            document.body.innerHTML = content; // Replace page content with printable content
+            window.print(); // Trigger print
+            document.body.innerHTML = originalContent; // Restore the original page content after printing
+        }
+    </script>
 </head>
 <body>
 <?php require_once 'includes/side_nav.php'; ?>
@@ -142,8 +209,8 @@ $summaries = $stmt->fetchAll(PDO::FETCH_ASSOC);
             </div>
             <div class="card-body">
                 <?php if ($summaries): ?>
-                    <div class="table-responsive">
-                        <table class="table table-bordered table-striped mt-3">
+                    <div class="table-responsive" id="printable-content">
+                        <table class="table table-bordered table-striped mt-3 printable-table">
                             <thead>
                                 <tr>
                                     <th>Reference No./Date</th>
@@ -184,6 +251,11 @@ $summaries = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
                 <div class="text-center mt-4">
                     <a href="employee_list.php" class="btn btn-secondary"><i class="bi bi-arrow-left"></i> Back to Employee List</a>
+                </div>
+
+                <!-- Print Button -->
+                <div class="text-center mt-4">
+                    <button class="btn btn-primary no-print" onclick="printSummary()">Print Summary</button>
                 </div>
             </div>
         </div>
