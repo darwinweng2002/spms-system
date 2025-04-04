@@ -149,7 +149,7 @@ $summaries = $stmt->fetchAll(PDO::FETCH_ASSOC);
         padding: 0;
     }
 
-    /* Only print the summary table */
+    /* Only print the summary table with grid lines */
     .printable-table {
         width: 100%;
         border: 1px solid black; /* Border around the table */
@@ -169,15 +169,17 @@ $summaries = $stmt->fetchAll(PDO::FETCH_ASSOC);
         font-weight: bold;
     }
 
-    /* Adjustments for cells that need text alignment */
+    /* Adjustments for text alignment within table */
     .text-end {
         text-align: right;
     }
     
+    /* Hide unnecessary elements */
     .card-header, .action-buttons, footer, .btn {
-        display: none !important; /* Hide other elements */
+        display: none !important;
     }
 
+    /* Add optional header for printed table (if required) */
     .print-header {
         text-align: center;
         font-size: 18px;
@@ -186,16 +188,6 @@ $summaries = $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }
     </style>
-    <script>
-        function printSummary() {
-            const content = document.getElementById('printable-content').innerHTML; // Get the table HTML content
-            const originalContent = document.body.innerHTML; // Save the original content of the page
-
-            document.body.innerHTML = content; // Replace page content with printable content
-            window.print(); // Trigger print
-            document.body.innerHTML = originalContent; // Restore the original page content after printing
-        }
-    </script>
 </head>
 <body>
 <?php require_once 'includes/side_nav.php'; ?>
@@ -260,6 +252,72 @@ $summaries = $stmt->fetchAll(PDO::FETCH_ASSOC);
             </div>
         </div>
     </div>
+    <?php require_once 'includes/admin_footer.php'; ?>
 </body>
-<?php require_once 'includes/admin_footer.php'; ?>
+<script>
+function printSummary() {
+    const content = document.querySelector("#printable-content").innerHTML; // Get summary content
+    const originalContent = document.body.innerHTML; // Store original page content
+
+    // Define the print header (from the image)
+    const printHeader = `
+        <div style="text-align: center; margin-bottom: 20px;">
+            <img src="upload/prmsu_logo.png" style="height: 80px;">
+            <h3 style="margin: 5px 0;">Republic of the Philippines</h3>
+            <h2 style="margin: 5px 0; font-weight: bold;">PRESIDENT RAMON MAGSAYSAY STATE UNIVERSITY</h2>
+            <p style="margin: 5px 0;">Iba, Zambales, Philippines</p>
+            <p style="margin: 5px 0;">Tel./Fax No. (047) 811-1683 | rmtupresident@yahoo.com | <a href="https://www.prmsu.edu.ph">www.prmsu.edu.ph</a></p>
+            <hr style="border: 2px solid black;">
+            <h4 style="margin-top: 10px; text-decoration: underline;">Employee Summary Records</h4>
+        </div>
+    `;
+
+    // Add grid lines to the table
+    const printStyles = `
+        <style>
+            body {
+                font-family: 'Poppins', sans-serif;
+                color: black;
+            }
+
+            table {
+                width: 100%;
+                border: 2px solid black;
+                border-collapse: collapse;
+            }
+
+            th, td {
+                border: 2px solid black;
+                padding: 8px;
+                text-align: center;
+            }
+
+            th {
+                background-color: #343a40;
+                color: white;
+                font-weight: bold;
+            }
+
+            .text-end {
+                text-align: right;
+            }
+
+            @media print {
+                .no-print { display: none; }
+            }
+        </style>
+    `;
+
+    // Create printable HTML layout
+    const printWindow = window.open('', '', 'width=900,height=600');
+    printWindow.document.write(`<html><head><title>Print Employee Summary</title>${printStyles}</head><body>`);
+    printWindow.document.write(printHeader); // Insert header
+    printWindow.document.write(content); // Insert summary content
+    printWindow.document.write(`</body></html>`);
+    printWindow.document.close();
+    printWindow.focus();
+    printWindow.print(); // Trigger print dialog
+    printWindow.close();
+}
+</script>
 </html>
