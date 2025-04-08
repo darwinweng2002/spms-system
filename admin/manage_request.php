@@ -368,17 +368,26 @@ if (empty($request_letters)) {
                 </td>
                 <td><?= htmlspecialchars($request['purpose']) ?></td>
                 <td>
-    <?php 
-    $image_path = htmlspecialchars($request['upload_letter']);  // Get the image path from the database
+                <?php 
+                $file_path = htmlspecialchars($request['upload_letter']);  // File path stored in DB
+                $file_extension = strtolower(pathinfo($file_path, PATHINFO_EXTENSION));
 
-    // Check if the image file exists and display it, otherwise show a default image
-    if (!empty($image_path) && file_exists($image_path)): ?>
-        <a href="<?= $image_path ?>" data-lightbox="request-letters" data-title="<?= htmlspecialchars($request['requestor_name']) ?>">
-            <img src="<?= $image_path ?>?t=<?= time() ?>" alt="Request Letter Image" class="img-thumbnail">
-        </a>
-    <?php else: ?>
-        <img src="uploads/default.png" alt="No Image Available" class="img-thumbnail">
-    <?php endif; ?>
+                if (!empty($file_path) && file_exists($file_path)):
+                    if ($file_extension === 'pdf'): ?>
+                        <a href="<?= $file_path ?>" target="_blank" class="btn btn-sm btn-outline-primary">
+                            <i class="bi bi-file-earmark-pdf-fill"></i> View PDF
+                        </a>
+                    <?php elseif (in_array($file_extension, ['jpg', 'jpeg', 'png', 'gif'])): ?>
+                        <a href="<?= $file_path ?>" data-lightbox="request-letters" data-title="<?= htmlspecialchars($request['requestor_name']) ?>">
+                            <img src="<?= $file_path ?>?t=<?= time() ?>" alt="Request Letter Image" class="img-thumbnail">
+                        </a>
+                    <?php else: ?>
+                        <span class="text-muted">Unsupported file</span>
+                    <?php endif; ?>
+                <?php else: ?>
+                    <img src="uploads/default.png" alt="No File Available" class="img-thumbnail">
+                <?php endif; ?>
+
 </td>
 <td>
     <a href="update_request.php?id=<?= $request['id'] ?>" class="btn-update">Update</a>

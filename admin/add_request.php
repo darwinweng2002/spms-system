@@ -15,18 +15,34 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $quantity = trim($_POST['quantity']);
     $date_received = $_POST['date_received'];
 
-    // ✅ Handle File Upload
-    $upload_dir = "uploads/";
-    if (!file_exists($upload_dir)) {
-        mkdir($upload_dir, 0777, true);
-    }
-
+    $upload_dir = "uploads/";  // or your uploads folder
     $file_path = "";
+    
     if (!empty($_FILES['upload_letter']['name'])) {
-        $file_name = time() . "_" . basename($_FILES['upload_letter']['name']);
-        $file_path = $upload_dir . $file_name;
-        move_uploaded_file($_FILES["upload_letter"]["tmp_name"], $file_path);
+        $file_tmp  = $_FILES['upload_letter']['tmp_name'];
+        $file_name = $_FILES['upload_letter']['name'];
+        $file_size = $_FILES['upload_letter']['size'];
+        $file_type = mime_content_type($file_tmp);
+        $ext       = strtolower(pathinfo($file_name, PATHINFO_EXTENSION));
+    
+        // Allowed formats
+        $allowed_mime = ['application/pdf'];
+        $allowed_ext  = ['pdf'];
+    
+        if (!in_array($file_type, $allowed_mime) || !in_array($ext, $allowed_ext)) {
+            die("❌ Invalid PDF file.");
+        }
+    
+        $safe_name = time() . "_" . uniqid() . ".pdf";
+        $file_path = $upload_dir . $safe_name;
+    
+        if (!move_uploaded_file($file_tmp, $file_path)) {
+            die("❌ Failed to upload the file.");
+        }
     }
+    
+    
+    
 
     // ✅ Insert into `request_letters` Table
     $stmt = $pdo->prepare("INSERT INTO request_letters 
@@ -266,7 +282,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <label>Upload image of request letter</label>
         <div class="file-input">
             <label for="file-upload">Choose File</label>
-            <input type="file" id="file-upload" name="upload_letter" accept="image/png, image/jpeg, image/jpg" required>
+            <input type="file" id="file-upload" name="upload_letter" accept="image/png, image/jpeg, image/jpg, application/pdf" required>
             <span class="file-name" id="file-name">No file chosen</span>
         </div>
 
@@ -278,22 +294,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </div>
 
 <script>
-    document.getElementById('file-upload').addEventListener('change', function(event) {
-        let file = event.target.files[0];
-        let fileName = document.getElementById('file-name');
-        let filePreview = document.getElementById('file-preview');
+   document.getElementById('file-upload').addEventListener('change', function(event) {
+    let file = event.target.files[0];
+    let fileName = document.getElementById('file-name');
+    let filePreview = document.getElementById('file-preview');
 
-        if (file) {
-            fileName.textContent = file.name; // ✅ Display file name
-
+    if (file) {
+        fileName.textContent = file.name;
+        let isImage = file.type.startsWith("image/");
+        
+        if (isImage) {
             let reader = new FileReader();
             reader.onload = function() {
                 filePreview.src = reader.result;
-                filePreview.style.display = 'block'; // ✅ Show image preview
+                filePreview.style.display = 'block';
             }
             reader.readAsDataURL(file);
+        } else {
+            filePreview.style.display = 'none'; // No preview for PDF
         }
-    });
+    }
+});
+
     let itemIndex = 1;
     document.getElementById('add-item').addEventListener('click', function() {
         let container = document.getElementById('items-container');
