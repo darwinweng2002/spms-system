@@ -1,3 +1,9 @@
-<FilesMatch "\.(xlsx|xls)$">
-    Require all granted
-</FilesMatch>
+<IfModule mod_headers.c>
+    Header set Access-Control-Allow-Origin "*"
+  </IfModule>
+  
+  AddType application/vnd.openxmlformats-officedocument.spreadsheetml.sheet .xlsx
+  AddType application/vnd.ms-excel .xls
+  AddType application/vnd.openxmlformats-officedocument.spreadsheetml.sheet .xlsx
+AddType application/vnd.ms-excel .xls
+Header set Access-Control-Allow-Origin "*"

@@ -175,12 +175,35 @@ $employees = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                     <td><?= htmlspecialchars($employee['position']) ?></td>
                                     <td><?= htmlspecialchars($employee['campus']) ?></td>
                                     <td class="text-center action-buttons">
-                                        <a href="summary_form.php?employee_id=<?= $employee['id'] ?>" 
-                                        class="btn btn-success btn-sm"><i class="bi bi-pencil-square"></i> Create</a>
-                                        
-                                        <a href="view_summary.php?employee_id=<?= $employee['id'] ?>" 
-                                        class="btn btn-primary btn-sm"><i class="bi bi-eye-fill"></i> View</a>
-                                    </td>
+                                    <div class="dropdown">
+                                        <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                            Actions
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <li>
+                                                <a class="dropdown-item" href="summary_form.php?employee_id=<?= $employee['id'] ?>">
+                                                    <i class="bi bi-pencil-square text-success"></i> Create Summary
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="view_summary.php?employee_id=<?= $employee['id'] ?>">
+                                                    <i class="bi bi-eye-fill text-primary"></i> View Summary
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="upload_excel.php?employee_id=<?= $employee['id'] ?>">
+                                                    <i class="bi bi-upload text-warning"></i> Upload Excel
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item" href="view_excel_files.php?id=<?= $employee['id'] ?>">
+                                                    <i class="bi bi-table text-info"></i> View Excel
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </td>
+
                                 </tr>
                             <?php endforeach; ?>
                         </tbody>
