@@ -32,6 +32,7 @@ $files = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 
     <style>
+         * { font-family: 'Poppins', sans-serif; margin: 0; padding: 0; box-sizing: border-box; }
         /* Header and Navbar */
         nav.navbar {
             background-color: #2C3E50;
@@ -41,7 +42,12 @@ $files = $stmt->fetchAll(PDO::FETCH_ASSOC);
             color: white;
             font-weight: bold;
         }
-
+        th {
+            background:
+          #007bff;
+            color: white;
+            font-weight: bold;
+        }
         /* Modal */
         #excelModal {
             display: none;
@@ -121,36 +127,82 @@ $files = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 
 
-        #excelModal {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.5);
-            justify-content: center;
-            align-items: center;
-            z-index: 1050;
-        }
+ /* ✅ Modal Overlay (classic blur effect) */
+#excelModal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.35);
+    backdrop-filter: blur(4px);
+    justify-content: center;
+    align-items: center;
+    z-index: 1050;
+}
 
-        #excelModalContent {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            width: 90%;
-            max-width: 1000px;
-            height: 85%;
-            overflow-y: auto;
-        }
+/* ✅ Modal Box: clean, formal, Excel-friendly */
+#excelModalContent {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 12px;
+    width: 96%;
+    max-width: 1500px;
+    height: 85%;
+    overflow-y: auto;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    border: 1px solid #e0e0e0;
+}
 
-        #spreadsheetContainer table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 14px;
-        }
+/* ✅ Spreadsheet Table Styling */
+#spreadsheetContainer table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    background-color: #fff;
+}
 
-        #spreadsheetContainer th, #spreadsheetContainer td {
-            border: 1px solid #ccc;
-            padding: 6px;
-        }
+#spreadsheetContainer th {
+    background-color: #f4f6f8;
+    color: #333;
+    font-weight: 600;
+    border: 1px solid #dcdcdc;
+    padding: 10px;
+    text-align: center;
+}
+
+
+#spreadsheetContainer td {
+    border: 1px solid #e0e0e0;
+    padding: 10px;
+    color: #2e2e2e;
+    background-color: #fff;
+}
+
+/* ✅ Modal Title */
+#excelModalContent h4 {
+    color: #2c3e50;
+    font-weight: 600;
+    font-size: 20px;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #dee2e6;
+    padding-bottom: 10px;
+}
+/* 🎯 Match Excel File Table Header to Reference Design */
+.file-table thead th {
+    background-color: #0080ff;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    padding: 12px;
+    border: 1px solid #d0d0d0;
+}
+
+/* Optional: style body cells to match spacing and clarity */
+.file-table tbody td {
+    text-align: center;
+    padding: 12px;
+    border: 1px solid #e0e0e0;
+}
+
     </style>
 </head>
 <body>

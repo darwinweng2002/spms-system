@@ -72,14 +72,16 @@ $employees = $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
 
         .table {
-            border-radius: 8px;
             overflow: hidden;
         }
 
         .table th {
-            background-color: #343a40;
+            background-color: #0080ff;
             color: white;
+            font-weight: bold;
             text-align: center;
+            padding: 12px;
+            border: 1px solid #d0d0d0;
         }
 
         .table tbody tr:hover {

@@ -187,6 +187,37 @@ $summaries = $stmt->fetchAll(PDO::FETCH_ASSOC);
         margin-bottom: 20px;
     }
 }
+/* 🔒 Scrollable table with sticky header */
+.table-responsive {
+    max-height: 500px; /* Adjust as needed */
+    overflow-y: auto;
+}
+
+/* Sticky thead */
+.table thead th {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background-color: #0080ff; /* Match your header theme */
+    color: white;
+    text-align: center;
+    font-weight: bold;
+}
+
+/* Optional: scroll bar styling (modern browsers) */
+.table-responsive::-webkit-scrollbar {
+    width: 8px;
+}
+
+.table-responsive::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.table-responsive::-webkit-scrollbar-thumb {
+    background-color: #6c757d;
+    border-radius: 4px;
+}
+
     </style>
 </head>
 <body>
@@ -241,14 +272,14 @@ $summaries = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <p class="text-center text-muted">No summary records found for this employee.</p>
                 <?php endif; ?>
 
-                <div class="text-center mt-4">
-                    <a href="employee_list.php" class="btn btn-secondary"><i class="bi bi-arrow-left"></i> Back to Employee List</a>
-                </div>
-
-                <!-- Print Button -->
-                <div class="text-center mt-4">
-                    <button class="btn btn-primary no-print" onclick="printSummary()">Print Summary</button>
-                </div>
+               <!-- Top-right Buttons (Back + Print) -->
+            <div class="d-flex justify-content-end gap-2 mb-3 no-print">
+                <a href="employee_list.php" class="btn btn-secondary btn-sm">
+                    <i class="bi bi-arrow-left"></i> Back
+                </a>
+                <button class="btn btn-primary btn-sm" onclick="printSummary()">
+                    <i class="bi bi-printer"></i> Print
+                </button>
             </div>
         </div>
     </div>
