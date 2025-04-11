@@ -161,7 +161,7 @@ if (empty($request_letters)) {
         .status-denied { background: #dc3545; }  /* Red for Denied */
         .status-pending { background: #6c757d; }  /* Gray for Pending */
         
-        h2 {
+        .sub-header {
             text-align: center;
             margin-bottom: 20px;
             font-size: 28px;
@@ -265,7 +265,7 @@ if (empty($request_letters)) {
 <?php require_once 'includes/side_nav.php'; ?>
 
 <div class="main-container">
-    <h2>Manage Request Letters</h2>
+    <h2 class="sub-header">Manage Request Letters</h2>
 
     <div class="d-flex justify-content-between align-items-center mb-4">
         <form method="GET" class="d-flex w-75">

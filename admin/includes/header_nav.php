@@ -149,7 +149,22 @@ if (isset($_SESSION['admin_id'])) {
 .logout-btn:hover {
     background: darkred;
 }
+/* ✅ Red Circular Loader */
+.custom-loader {
+    border: 5px solid #f3f3f3;        /* Light gray background */
+    border-top: 5px solid #0056b3;;    /* Bootstrap danger red */
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    margin: 20px auto;
+    animation: spin 1s linear infinite;
+}
 
+/* 🔁 Spin Animation */
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
     </style>
 </head>
 <body>
@@ -175,10 +190,6 @@ if (isset($_SESSION['admin_id'])) {
         </div>
     </div>
 </header>
-
-
-
-
 <script>
 function confirmLogout() {
     Swal.fire({
@@ -191,11 +202,23 @@ function confirmLogout() {
         confirmButtonText: "Yes, Logout"
     }).then((result) => {
         if (result.isConfirmed) {
-            window.location.href = "logout.php";
+            // ✅ Custom Circular Loader UI
+            Swal.fire({
+                title: "Logging out...",
+                html: `<div class="custom-loader"></div>`,
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+                showConfirmButton: false,
+                didOpen: () => {
+                    // 👁️ Activate loader on modal open
+                    setTimeout(() => {
+                        window.location.href = "logout.php";
+                    }, 1500);
+                }
+            });
         }
     });
 }
 </script>
-
 </body>
 </html>

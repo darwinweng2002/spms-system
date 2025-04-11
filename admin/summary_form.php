@@ -159,6 +159,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             height: 60px;
             width: auto;
         }
+        #loadingOverlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    background: rgba(255, 255, 255, 0.6);
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.spinner {
+    border: 6px solid #f3f3f3;
+    border-top: 6px solid #007bff;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
     </style>
 </head>
 <body>
@@ -256,7 +280,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
     </div>
 </div>
-
+<!-- 🔄 Loading Overlay -->
+<div id="loadingOverlay" style="display: none;">
+    <div class="spinner"></div>
+</div>
 </body>
 <?php require_once 'includes/admin_footer.php'; ?>
 <script>
@@ -289,6 +316,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     });
 });
-
+// 🔁 Show loading overlay on form submission
+document.querySelector("form").addEventListener("submit", function () {
+    document.getElementById("loadingOverlay").style.display = "flex";
+});
 </script>
 </html>

@@ -235,9 +235,36 @@ if (!isset($_SESSION['admin_id'])) {
             height: 60px;
             width: auto;
         }
+        #loadingOverlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    background: rgba(255,255,255,0.6);
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.spinner {
+    border: 6px solid #f3f3f3;
+    border-top: 6px solid #007bff;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
     </style>
 </head>
 <body>
+<div id="loadingOverlay" style="display: none;">
+    <div class="spinner"></div>
+</div>
 <?php require_once 'includes/side_nav.php'; ?>
 <br>
 <br>
@@ -312,6 +339,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
         let formData = new FormData(addAdminForm);
 
+        // 🔄 Show Loader
+        document.getElementById("loadingOverlay").style.display = "flex";
+
         try {
             let response = await fetch("add_admin.php", {
                 method: "POST",
@@ -319,16 +349,23 @@ document.addEventListener("DOMContentLoaded", function () {
             });
 
             let data = await response.json();
-            console.log("Server Response:", data); // Debugging
+            console.log("Server Response:", data);
+
+            // 🔄 Hide Loader
+            document.getElementById("loadingOverlay").style.display = "none";
 
             if (data.status === "success") {
                 addAdminForm.reset(); // Clear the form
                 loadAdmins(); // Reload admin table
+                Swal.fire("Success", "Admin added successfully!", "success");
             } else {
-                console.error("Error:", data.message);
+                Swal.fire("Error", data.message, "error");
             }
         } catch (error) {
             console.error("Fetch Error:", error);
+            // 🔄 Hide Loader on failure
+            document.getElementById("loadingOverlay").style.display = "none";
+            Swal.fire("Error", "Failed to add admin. Try again.", "error");
         }
     });
 
@@ -337,19 +374,18 @@ document.addEventListener("DOMContentLoaded", function () {
         try {
             let response = await fetch("fetch_admins.php");
             let data = await response.json();
-            console.log("Admin Data:", data); // Debugging
 
             let tableBody = document.getElementById("adminTableBody");
-            tableBody.innerHTML = ""; // Clear table before adding new data
+            tableBody.innerHTML = "";
 
             if (data.length === 0) {
                 tableBody.innerHTML = `<tr><td colspan="7" style="text-align:center;">No admin users found.</td></tr>`;
                 return;
             }
 
-            data.forEach((admin, index) => {
-                let username = admin.username ? admin.username : "N/A";
-                let avatar = admin.avatar ? admin.avatar : "uploads/default-avatar.png"; // Default if empty
+            data.forEach((admin) => {
+                let avatar = admin.avatar ? admin.avatar : "uploads/default-avatar.png";
+                let username = admin.username || "N/A";
 
                 tableBody.innerHTML += `
                     <tr>
@@ -359,13 +395,13 @@ document.addEventListener("DOMContentLoaded", function () {
                         <td>${admin.position}</td>
                         <td>${admin.campus}</td>
                         <td>
-                            <button class="update-btn" data-id="${admin.id}" >Update</button>
-                            <button class="delete-btn" data-id="${admin.id}" ">Delete</button>
+                            <button class="update-btn" data-id="${admin.id}">Update</button>
+                            <button class="delete-btn" data-id="${admin.id}">Delete</button>
                         </td>
                     </tr>`;
             });
 
-            // Attach event listeners to all delete buttons
+            // Delete button actions
             document.querySelectorAll(".delete-btn").forEach(button => {
                 button.addEventListener("click", function () {
                     let adminId = this.getAttribute("data-id");
@@ -373,7 +409,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 });
             });
 
-            // Attach event listeners to all update buttons
+            // Update button actions
             document.querySelectorAll(".update-btn").forEach(button => {
                 button.addEventListener("click", function () {
                     let adminId = this.getAttribute("data-id");
@@ -386,33 +422,50 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    // Function to delete an admin
     async function deleteAdmin(adminId) {
-        let confirmation = confirm("Are you sure you want to delete this admin?");
-        if (!confirmation) return;
+    Swal.fire({
+        title: "Are you sure?",
+        text: "This action will permanently delete the admin.",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#dc3545",
+        cancelButtonColor: "#6c757d",
+        confirmButtonText: "Yes, delete it!",
+        cancelButtonText: "Cancel"
+    }).then(async (result) => {
+        if (result.isConfirmed) {
+            // 🔄 Show loader
+            document.getElementById("loadingOverlay").style.display = "flex";
 
-        try {
-            let response = await fetch("delete_admin.php", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ id: adminId })
-            });
+            try {
+                const response = await fetch("delete_admin.php", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ id: adminId })
+                });
 
-            let data = await response.json();
-            console.log("Delete Response:", data);
+                const data = await response.json();
 
-            if (data.status === "success") {
-                alert("Admin deleted successfully.");
-                loadAdmins(); // Reload table after deletion
-            } else {
-                alert("Error deleting admin: " + data.message);
+                // 🔄 Hide loader
+                document.getElementById("loadingOverlay").style.display = "none";
+
+                if (data.status === "success") {
+                    Swal.fire("Deleted!", "Admin deleted successfully.", "success");
+                    loadAdmins();
+                } else {
+                    Swal.fire("Error", data.message || "Failed to delete admin.", "error");
+                }
+            } catch (error) {
+                console.error("Delete Error:", error);
+                document.getElementById("loadingOverlay").style.display = "none";
+                Swal.fire("Error", "Something went wrong while deleting.", "error");
             }
-        } catch (error) {
-            console.error("Delete Error:", error);
         }
-    }
+    });
+}
 });
 </script>
+
 <?php require_once 'includes/admin_footer.php'; ?>
 </body>
 </html>
