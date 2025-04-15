@@ -97,13 +97,26 @@ $employee_id = $_GET["employee_id"];
             height: 60px;
             width: auto;
         }
+        .custom-loader {
+        border: 5px solid #f3f3f3;        /* Light gray background */
+        border-top: 5px solid #0056b3;    /* Bootstrap primary blue */
+        border-radius: 50%;
+        width: 60px;
+        height: 60px;
+        margin: 20px auto;
+        animation: spin 3s linear infinite;
+    }
+
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
     </style>
 </head>
 <body>
 <?php require_once 'includes/side_nav.php'; ?>
 <br>
 <br>
-
 <div class="container mt-5">
     <div class="card">
         <div class="card-header bg-primary text-white">Upload Excel File</div>
@@ -129,7 +142,11 @@ $employee_id = $_GET["employee_id"];
         <h6>Selected Files:</h6>
         <ul class="list-group" id="fileList"></ul>
     </div>
-
+<!-- 🔄 Custom Loader UI -->
+<div id="uploadLoader" style="display:none;" class="text-center mt-3">
+    <div class="custom-loader"></div>
+    <p class="mt-2 text-primary fw-semibold">Uploading files... Please wait.</p>
+</div>
     <div class="mt-4">
         <button type="submit" class="btn btn-success"><i class="bi bi-upload"></i> Upload</button>
         <a href="employee_list.php" class="btn btn-secondary">Cancel</a>
@@ -173,5 +190,14 @@ document.getElementById("excelFileInput").addEventListener("change", function(e)
 
     previewContainer.style.display = "block";
 });
+// Handle form submission loading
+document.querySelector("form").addEventListener("submit", function (e) {
+    const submitBtn = this.querySelector("button[type='submit']");
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<i class="bi bi-clock-history"></i> Uploading...';
+    
+    document.getElementById("uploadLoader").style.display = "block";
+});
+
 </script>
 </html>
