@@ -1,14 +1,12 @@
 <?php
 session_start();
-require_once 'db.php';  // Include your PDO-based db.php
+require_once 'db.php';
 
-// Check if admin is logged in
 if (!isset($_SESSION['admin_id'])) {
     header("Location: ../index.php");
     exit;
 }
 
-// Get employee_id from the URL
 $employee_id = $_GET['employee_id'] ?? null;
 
 if (!$employee_id) {
@@ -16,7 +14,6 @@ if (!$employee_id) {
     exit;
 }
 
-// Fetch employee summary records
 $stmt = $pdo->prepare("SELECT * FROM property_summaries WHERE accountable_officer = :employee_id");
 $stmt->execute([':employee_id' => $employee_id]);
 $summaries = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -222,133 +219,158 @@ $summaries = $stmt->fetchAll(PDO::FETCH_ASSOC);
 </head>
 <body>
 <?php require_once 'includes/side_nav.php'; ?>
-    <div class="container mt-5">
-        <br>
-        <br>
-        
-        <div class="card">
-            <div class="card-header">
-                <i class="bi bi-file-earmark-text"></i> Employee Summary Records
-            </div>
-            <div class="card-body">
-                <?php if ($summaries): ?>
-                    <div class="table-responsive" id="printable-content">
-                        <table class="table table-bordered table-striped mt-3 printable-table">
-                            <thead>
-                                <tr>
-                                    <th>Reference No./Date</th>
-                                    <th>Qty</th>
-                                    <th>Unit</th>
-                                    <th>Article</th>
-                                    <th>Description</th>
-                                    <th>Property/Inventory No.</th>
-                                    <th>Date</th>
-                                    <th>Unit Cost</th>
-                                    <th>Total Cost</th>
-                                    <th>Fund Cluster</th>
-                                    <th>Remarks</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php foreach ($summaries as $summary): ?>
-                                    <tr>
-                                        <td><?= htmlspecialchars($summary['reference_no']) ?></td>
-                                        <td class="text-center"><?= htmlspecialchars($summary['qty']) ?></td>
-                                        <td class="text-center"><?= htmlspecialchars($summary['unit']) ?></td>
-                                        <td><?= htmlspecialchars($summary['article']) ?></td>
-                                        <td><?= htmlspecialchars($summary['description']) ?></td>
-                                        <td><?= htmlspecialchars($summary['property_inventory_no']) ?></td>
-                                        <td><?= htmlspecialchars($summary['date']) ?></td>
-                                        <td class="text-end"><?= number_format($summary['unit_cost'], 2) ?></td>
-                                        <td class="text-end"><?= number_format($summary['total_cost'], 2) ?></td>
-                                        <td><?= htmlspecialchars($summary['fund_cluster']) ?></td>
-                                        <td><?= htmlspecialchars($summary['remarks']) ?></td>
-                                    </tr>
-                                <?php endforeach; ?>
-                            </tbody>
-                        </table>
-                    </div>
-                <?php else: ?>
-                    <p class="text-center text-muted">No summary records found for this employee.</p>
-                <?php endif; ?>
+<div class="container mt-5">
+    <br>
+    <br>
 
-               <!-- Top-right Buttons (Back + Print) -->
-            <div class="d-flex justify-content-end gap-2 mb-3 no-print">
-                <a href="employee_list.php" class="btn btn-secondary btn-sm">
-                    <i class="bi bi-arrow-left"></i> Back
-                </a>
-                <button class="btn btn-primary btn-sm" onclick="printSummary()">
-                    <i class="bi bi-printer"></i> Print
-                </button>
-            </div>
+    <div class="card">
+        <div class="card-header bg-primary text-white text-center fw-bold">
+            <i class="bi bi-file-earmark-text"></i> Employee Summary Records
+        </div>
+        <div class="card-body">
+            <?php if ($summaries): ?>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped text-center">
+                        <thead>
+                            <tr>
+                                <th>Ref No.</th><th>Qty</th><th>Unit</th><th>Article</th><th>Description</th>
+                                <th>Inventory No.</th><th>Date</th><th>Unit Cost</th><th>Total Cost</th>
+                                <th>Fund Cluster</th><th>Remarks</th><th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        <?php foreach ($summaries as $summary): ?>
+                            <tr>
+                                <td><?= htmlspecialchars($summary['reference_no']) ?></td>
+                                <td><?= htmlspecialchars($summary['qty']) ?></td>
+                                <td><?= htmlspecialchars($summary['unit']) ?></td>
+                                <td><?= htmlspecialchars($summary['article']) ?></td>
+                                <td><?= htmlspecialchars($summary['description']) ?></td>
+                                <td><?= htmlspecialchars($summary['property_inventory_no']) ?></td>
+                                <td><?= htmlspecialchars($summary['date']) ?></td>
+                                <td><?= number_format($summary['unit_cost'], 2) ?></td>
+                                <td><?= number_format($summary['total_cost'], 2) ?></td>
+                                <td><?= htmlspecialchars($summary['fund_cluster']) ?></td>
+                                <td><?= htmlspecialchars($summary['remarks']) ?></td>
+                                <td>
+                                    <button class="btn btn-sm btn-primary" onclick='openEditModal(<?= json_encode($summary) ?>)'>
+                                        <i class="bi bi-pencil-square"></i> Edit
+                                    </button>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
+            <?php else: ?>
+                <p class="text-muted text-center">No summary records found.</p>
+            <?php endif; ?>
         </div>
     </div>
-    <?php require_once 'includes/admin_footer.php'; ?>
-</body>
-<script>
-function printSummary() {
-    const content = document.querySelector("#printable-content").innerHTML; // Get summary content
-    const originalContent = document.body.innerHTML; // Store original page content
+</div>
 
-    // Define the print header (from the image)
-    const printHeader = `
-        <div style="text-align: center; margin-bottom: 20px;">
-            <img src="upload/prmsu_logo.png" style="height: 80px;">
-            <h3 style="margin: 5px 0;">Republic of the Philippines</h3>
-            <h2 style="margin: 5px 0; font-weight: bold;">PRESIDENT RAMON MAGSAYSAY STATE UNIVERSITY</h2>
-            <p style="margin: 5px 0;">Iba, Zambales, Philippines</p>
-            <p style="margin: 5px 0;">Tel./Fax No. (047) 811-1683 | rmtupresident@yahoo.com | <a href="https://www.prmsu.edu.ph">www.prmsu.edu.ph</a></p>
-            <hr style="border: 2px solid black;">
-            <h4 style="margin-top: 10px; text-decoration: underline;">Employee Summary Records</h4>
+<!-- ✏️ Edit Modal -->
+<div class="modal fade" id="editSummaryModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <form id="editSummaryForm">
+        <div class="modal-header bg-primary text-white">
+          <h5 class="modal-title">Edit Summary</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-    `;
+        <div class="modal-body row g-3 px-4">
+          <input type="hidden" name="id" id="edit_id">
+          <input type="hidden" name="employee_id" value="<?= htmlspecialchars($employee_id) ?>">
 
-    // Add grid lines to the table
-    const printStyles = `
-        <style>
-            body {
-                font-family: 'Poppins', sans-serif;
-                color: black;
-            }
+          <div class="col-md-4">
+            <label>Reference No.</label>
+            <input type="text" class="form-control" name="reference_no" id="edit_reference_no">
+          </div>
+          <div class="col-md-2">
+            <label>Qty</label>
+            <input type="number" class="form-control" name="qty" id="edit_qty">
+          </div>
+          <div class="col-md-2">
+            <label>Unit</label>
+            <input type="text" class="form-control" name="unit" id="edit_unit">
+          </div>
+          <div class="col-md-4">
+            <label>Article</label>
+            <input type="text" class="form-control" name="article" id="edit_article">
+          </div>
+          <div class="col-md-6">
+            <label>Description</label>
+            <input type="text" class="form-control" name="description" id="edit_description">
+          </div>
+          <div class="col-md-6">
+            <label>Inventory No.</label>
+            <input type="text" class="form-control" name="property_inventory_no" id="edit_property_inventory_no">
+          </div>
+          <div class="col-md-3">
+            <label>Date</label>
+            <input type="date" class="form-control" name="date" id="edit_date">
+          </div>
+          <div class="col-md-3">
+            <label>Unit Cost</label>
+            <input type="number" step="0.01" class="form-control" name="unit_cost" id="edit_unit_cost">
+          </div>
+          <div class="col-md-3">
+            <label>Total Cost</label>
+            <input type="number" step="0.01" class="form-control" name="total_cost" id="edit_total_cost">
+          </div>
+          <div class="col-md-3">
+            <label>Fund Cluster</label>
+            <input type="text" class="form-control" name="fund_cluster" id="edit_fund_cluster">
+          </div>
+          <div class="col-md-12">
+            <label>Remarks</label>
+            <textarea class="form-control" name="remarks" id="edit_remarks"></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-success"><i class="bi bi-save"></i> Save</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
 
-            table {
-                width: 100%;
-                border: 2px solid black;
-                border-collapse: collapse;
-            }
-
-            th, td {
-                border: 2px solid black;
-                padding: 8px;
-                text-align: center;
-            }
-
-            th {
-                background-color: #343a40;
-                color: white;
-                font-weight: bold;
-            }
-
-            .text-end {
-                text-align: right;
-            }
-
-            @media print {
-                .no-print { display: none; }
-            }
-        </style>
-    `;
-
-    // Create printable HTML layout
-    const printWindow = window.open('', '', 'width=900,height=600');
-    printWindow.document.write(`<html><head><title>Print Employee Summary</title>${printStyles}</head><body>`);
-    printWindow.document.write(printHeader); // Insert header
-    printWindow.document.write(content); // Insert summary content
-    printWindow.document.write(`</body></html>`);
-    printWindow.document.close();
-    printWindow.focus();
-    printWindow.print(); // Trigger print dialog
-    printWindow.close();
+<script>
+// Open modal and fill fields
+function openEditModal(data) {
+    for (const key in data) {
+        const field = document.getElementById("edit_" + key);
+        if (field) field.value = data[key];
+    }
+    const modal = new bootstrap.Modal(document.getElementById('editSummaryModal'));
+    modal.show();
 }
+
+// Handle form submission
+document.getElementById("editSummaryForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+    const formData = new FormData(this);
+
+    fetch("update_summary.php", {
+        method: "POST",
+        body: formData
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.success) {
+            Swal.fire("Updated!", "Record successfully updated.", "success")
+                .then(() => window.location.reload());
+        } else {
+            Swal.fire("Error!", data.message || "Update failed.", "error");
+        }
+    })
+    .catch(() => {
+        Swal.fire("Error!", "An unexpected error occurred.", "error");
+    });
+});
 </script>
+
+<?php require_once 'includes/admin_footer.php'; ?>
+</body>
 </html>
