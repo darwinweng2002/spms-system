@@ -12,54 +12,49 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $requestor_name = trim($_POST['requestor_name']);
     $purpose = trim($_POST['purpose']);
     $description = trim($_POST['description']);
-    $quantity = trim($_POST['quantity']);
     $date_received = $_POST['date_received'];
 
-    $upload_dir = "uploads/";  // or your uploads folder
+    $upload_dir = "uploads/";
     $file_path = "";
-    
+
     if (!empty($_FILES['upload_letter']['name'])) {
         $file_tmp  = $_FILES['upload_letter']['tmp_name'];
         $file_name = $_FILES['upload_letter']['name'];
         $file_size = $_FILES['upload_letter']['size'];
         $file_type = mime_content_type($file_tmp);
         $ext       = strtolower(pathinfo($file_name, PATHINFO_EXTENSION));
-    
-        // Allowed formats
-        $allowed_mime = ['application/pdf'];
-        $allowed_ext  = ['pdf'];
-    
+
+        $allowed_mime = ['application/pdf', 'image/png', 'image/jpeg', 'image/jpg'];
+        $allowed_ext  = ['pdf', 'png', 'jpg', 'jpeg'];
+
         if (!in_array($file_type, $allowed_mime) || !in_array($ext, $allowed_ext)) {
-            die("❌ Invalid PDF file.");
+            die(" Invalid file format. Only PDF, JPG, PNG allowed.");
         }
-    
-        $safe_name = time() . "_" . uniqid() . ".pdf";
+
+        $safe_name = time() . "_" . uniqid() . "." . $ext;
         $file_path = $upload_dir . $safe_name;
-    
+
         if (!move_uploaded_file($file_tmp, $file_path)) {
-            die("❌ Failed to upload the file.");
+            die(" Failed to upload the file.");
         }
     }
-    
-    
-    
 
-    // ✅ Insert into `request_letters` Table
+    // ✅ Insert into request_letters
     $stmt = $pdo->prepare("INSERT INTO request_letters 
-                           (requestor_name, purpose, description, quantity, date_received, upload_letter, created_at)
-                           VALUES (:requestor_name, :purpose, :description, :quantity, :date_received, :upload_letter, NOW())");
+        (requestor_name, purpose, description, date_received, upload_letter, created_at)
+        VALUES (:requestor_name, :purpose, :description, :date_received, :upload_letter, NOW())");
+
     $stmt->execute([
         'requestor_name' => $requestor_name,
         'purpose' => $purpose,
         'description' => $description,
-        'quantity' => $quantity,
         'date_received' => $date_received,
         'upload_letter' => $file_path
     ]);
 
-    $request_id = $pdo->lastInsertId();  // Retrieve the inserted request's ID
+    $request_id = $pdo->lastInsertId();
 
-    // ✅ Insert Requested Items into `request_items` Table
+    // ✅ Insert items
     if (!empty($_POST['items'])) {
         foreach ($_POST['items'] as $item) {
             $item_name = trim($item['name']);
@@ -67,8 +62,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $item_quantity = (int) $item['quantity'];
 
             $stmt = $pdo->prepare("INSERT INTO request_items 
-                                   (request_id, item_name, item_description, item_quantity)
-                                   VALUES (:request_id, :item_name, :item_description, :item_quantity)");
+                (request_id, item_name, item_description, item_quantity)
+                VALUES (:request_id, :item_name, :item_description, :item_quantity)");
+
             $stmt->execute([
                 'request_id' => $request_id,
                 'item_name' => $item_name,
@@ -81,6 +77,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     header("Location: manage_request.php?success=1");
     exit;
 }
+
 ?>
 
 
@@ -103,15 +100,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         /* ✅ Layout */
         .main-container {
-            max-width: 800px;
+            max-width: 1200px;
             margin: 100px auto;
             background: white;
             padding: 25px;
             border-radius: 10px;
             box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            padding-bottom: 90px;
         }
 
         h2 {
+            text-align: center;
             margin-bottom: 20px;
             font-size: 24px;
             font-weight: 600;
@@ -225,6 +224,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 padding: 15px;
             }
         }
+        footer {
+            width: 100%;
+            text-align: center;
+            padding: 10px;
+            background: #2C3E50;
+            color: #fff;
+            font-size: 10px;
+            position: relative; /* Change from absolute to relative */
+            margin-top: auto;
+        }
+
+        footer img.footer-logo {
+            height: 60px;
+            width: auto;
+        }
     </style>
 </head>
 <body>
@@ -336,6 +350,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     });
 </script>
-
+<?php require_once 'includes/admin_footer.php'; ?>
 </body>
 </html>

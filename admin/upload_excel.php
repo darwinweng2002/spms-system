@@ -76,8 +76,27 @@ $employee_id = $_GET["employee_id"];
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <style>
          * { font-family: 'Poppins', sans-serif; margin: 0; padding: 0; box-sizing: border-box; }
+         .card {
+            margin-top: 60px;
+         }
+         footer {
+            width: 100%;
+            text-align: center;
+            padding: 10px;
+            background: #2C3E50;
+            color: #fff;
+            font-size: 10px;
+            position: relative; /* Change from absolute to relative */
+            margin-top: auto;
+        }
+
+        footer img.footer-logo {
+            height: 60px;
+            width: auto;
+        }
     </style>
 </head>
 <body>
@@ -90,16 +109,69 @@ $employee_id = $_GET["employee_id"];
         <div class="card-header bg-primary text-white">Upload Excel File</div>
         <div class="card-body">
         <form action="upload_excel.php" method="POST" enctype="multipart/form-data">
-            <input type="hidden" name="employee_id" value="<?= htmlspecialchars($employee_id) ?>">
-            <div class="mb-3">
-                <label class="form-label">Select Excel Files</label>
-                <input type="file" name="excel_file[]" class="form-control" accept=".xlsx,.xls" multiple required>
-            </div>
-            <button type="submit" class="btn btn-success">Upload</button>
-            <a href="employee_list.php" class="btn btn-secondary">Cancel</a>
-        </form>
+    <input type="hidden" name="employee_id" value="<?= htmlspecialchars($employee_id) ?>">
+
+    <div class="mb-3">
+        <label class="form-label">Select Excel Files</label>
+        <input 
+            type="file" 
+            name="excel_file[]" 
+            class="form-control" 
+            accept=".xlsx,.xls" 
+            multiple 
+            required
+            id="excelFileInput"
+        >
+    </div>
+
+    <!-- 📄 File Name Preview Section -->
+    <div id="fileNamePreview" class="mt-3" style="display:none;">
+        <h6>Selected Files:</h6>
+        <ul class="list-group" id="fileList"></ul>
+    </div>
+
+    <div class="mt-4">
+        <button type="submit" class="btn btn-success"><i class="bi bi-upload"></i> Upload</button>
+        <a href="employee_list.php" class="btn btn-secondary">Cancel</a>
+    </div>
+</form>
+
         </div>
     </div>
 </div>
+<?php require_once 'includes/admin_footer.php'; ?>
 </body>
+<script>
+document.getElementById("excelFileInput").addEventListener("change", function(e) {
+    const files = e.target.files;
+    const fileListContainer = document.getElementById("fileList");
+    const previewContainer = document.getElementById("fileNamePreview");
+
+    fileListContainer.innerHTML = "";
+
+    if (files.length === 0) {
+        previewContainer.style.display = "none";
+        return;
+    }
+
+    Array.from(files).forEach(file => {
+        const li = document.createElement("li");
+        li.className = "list-group-item d-flex align-items-center gap-2";
+        
+        // Add Excel icon
+        const icon = document.createElement("i");
+        icon.className = "bi bi-file-earmark-excel-fill text-success fs-5";
+
+        // Add file name
+        const span = document.createElement("span");
+        span.textContent = file.name;
+
+        li.appendChild(icon);
+        li.appendChild(span);
+        fileListContainer.appendChild(li);
+    });
+
+    previewContainer.style.display = "block";
+});
+</script>
 </html>

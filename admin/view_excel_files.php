@@ -211,7 +211,7 @@ $files = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <br>
 
 <div class="container mt-5">
-    <h3>Excel Files of <?= htmlspecialchars($employee["first_name"] . " " . $employee["last_name"]) ?></h3>
+    <h3>Property Record Files of <?= htmlspecialchars($employee["first_name"] . " " . $employee["last_name"]) ?></h3>
 
     <!-- Search bar -->
     <input type="text" id="searchInput" class="form-control mb-3" placeholder="Search files..." onkeyup="searchFiles()">

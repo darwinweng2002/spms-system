@@ -61,6 +61,7 @@ if (empty($request_letters)) {
             padding: 25px;
             border-radius: 10px;
             box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            padding-bottom: 80px;
         }
         table {
             width: 100%;
@@ -257,7 +258,21 @@ if (empty($request_letters)) {
     font-size: 18px;
     font-weight: bold;
 }
+footer {
+            width: 100%;
+            text-align: center;
+            padding: 10px;
+            background: #2C3E50;
+            color: #fff;
+            font-size: 10px;
+            position: relative; /* Change from absolute to relative */
+            margin-top: auto;
+        }
 
+        footer img.footer-logo {
+            height: 60px;
+            width: auto;
+        }
     </style>
 </head>
 
@@ -290,15 +305,24 @@ if (empty($request_letters)) {
 
 
     <?php if (isset($_GET['success'])): ?>
-        <script>
-            Swal.fire({
-                title: 'Success!',
-                text: 'Request updated successfully!',
-                icon: 'success',
-                confirmButtonColor: '#007bff'
-            });
-        </script>
-    <?php endif; ?>
+    <script>
+        // ✅ Trigger success popup
+        Swal.fire({
+            title: 'Success!',
+            text: 'Request updated successfully!',
+            icon: 'success',
+            confirmButtonColor: '#007bff'
+        });
+
+        // ✅ Remove `?success=1` from URL after showing popup
+        if (window.history.replaceState) {
+            const url = new URL(window.location);
+            url.searchParams.delete('success');
+            window.history.replaceState({}, document.title, url.pathname + url.search);
+        }
+    </script>
+<?php endif; ?>
+
 
     <a href="add_request.php" class="btn btn-add mb-3">+ Add Request</a>
 
@@ -650,7 +674,7 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 </script>
-
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<?php require_once 'includes/admin_footer.php'; ?>
 </body>
 </html>

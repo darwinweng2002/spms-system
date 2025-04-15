@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once 'db.php';  // Include PDO-based db connection
+require_once 'db.php';
 
 // Check if admin is logged in
 if (!isset($_SESSION['admin_id'])) {
@@ -8,23 +8,50 @@ if (!isset($_SESSION['admin_id'])) {
     exit;
 }
 
-// Fetch all employees
-$searchQuery = isset($_GET['search']) ? trim($_GET['search']) : '';
+// Pagination Setup
+$recordsPerPage = 20;
+$currentPage = isset($_GET['page']) && is_numeric($_GET['page']) ? intval($_GET['page']) : 1;
+$offset = ($currentPage - 1) * $recordsPerPage;
 
+// Optional Search Query
+$searchQuery = isset($_GET['search']) ? trim($_GET['search']) : '';
+$searchParam = '%' . $searchQuery . '%';
+
+// Count total records
 if (!empty($searchQuery)) {
-    $stmt = $pdo->prepare("SELECT * FROM employees WHERE 
+    $countStmt = $pdo->prepare("SELECT COUNT(*) FROM employees WHERE 
         last_name LIKE :search OR 
         first_name LIKE :search OR 
         middle_name LIKE :search OR 
         position LIKE :search OR 
         campus LIKE :search");
-    $stmt->bindValue(':search', '%' . $searchQuery . '%', PDO::PARAM_STR);
+    $countStmt->bindValue(':search', $searchParam);
+    $countStmt->execute();
+    $totalRecords = $countStmt->fetchColumn();
+
+    $stmt = $pdo->prepare("SELECT * FROM employees WHERE 
+        last_name LIKE :search OR 
+        first_name LIKE :search OR 
+        middle_name LIKE :search OR 
+        position LIKE :search OR 
+        campus LIKE :search
+        LIMIT :limit OFFSET :offset");
+    $stmt->bindValue(':search', $searchParam);
 } else {
-    $stmt = $pdo->prepare("SELECT * FROM employees");
+    $countStmt = $pdo->query("SELECT COUNT(*) FROM employees");
+    $totalRecords = $countStmt->fetchColumn();
+
+    $stmt = $pdo->prepare("SELECT * FROM employees LIMIT :limit OFFSET :offset");
 }
 
+// Bind limit & offset
+$stmt->bindValue(':limit', $recordsPerPage, PDO::PARAM_INT);
+$stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
 $stmt->execute();
 $employees = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+// Total pages
+$totalPages = ceil($totalRecords / $recordsPerPage);
 ?>
 
 <!DOCTYPE html>
@@ -54,6 +81,7 @@ $employees = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         .container {
             max-width: 1200px;
+            padding-bottom: 80px;
         }
 
         .card {
@@ -61,17 +89,16 @@ $employees = $stmt->fetchAll(PDO::FETCH_ASSOC);
             box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
             overflow: hidden;
         }
-
         .card-header {
-            background: linear-gradient(135deg, #007bff, #6610f2);
-            color: white;
+            background: #0080ff;
             font-size: 1.2rem;
             padding: 15px 20px;
             text-align: center;
             font-weight: 600;
+            color:  #f8f9fa;
         }
 
-        .table {
+        .table {    
             overflow: hidden;
         }
 
@@ -139,13 +166,29 @@ $employees = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 width: 100%;
             }
         }
+        footer {
+            width: 100%;
+            text-align: center;
+            padding: 10px;
+            background: #2C3E50;
+            color: #fff;
+            font-size: 10px;
+            position: relative; /* Change from absolute to relative */
+            margin-top: auto;
+        }
+
+        footer img.footer-logo {
+            height: 60px;
+            width: auto;
+        }
     </style>
 </head>
 <body>
 <?php require_once 'includes/side_nav.php'; ?>
-    <br>
-    <br>
+    
     <div class="container mt-5">
+        <br>
+        <br>  
         <div class="card">
             <div class="card-header">
                 <i class="bi bi-people-fill"></i> Employee Records
@@ -210,6 +253,28 @@ $employees = $stmt->fetchAll(PDO::FETCH_ASSOC);
                             <?php endforeach; ?>
                         </tbody>
                     </table>
+                    <!-- Pagination Controls -->
+<nav aria-label="Employee table pagination" class="mt-4">
+    <ul class="pagination justify-content-center">
+        <?php if ($currentPage > 1): ?>
+            <li class="page-item">
+                <a class="page-link" href="?page=<?= $currentPage - 1 ?>&search=<?= urlencode($searchQuery) ?>">Previous</a>
+            </li>
+        <?php endif; ?>
+
+        <?php for ($page = 1; $page <= $totalPages; $page++): ?>
+            <li class="page-item <?= $page == $currentPage ? 'active' : '' ?>">
+                <a class="page-link" href="?page=<?= $page ?>&search=<?= urlencode($searchQuery) ?>"><?= $page ?></a>
+            </li>
+        <?php endfor; ?>
+
+        <?php if ($currentPage < $totalPages): ?>
+            <li class="page-item">
+                <a class="page-link" href="?page=<?= $currentPage + 1 ?>&search=<?= urlencode($searchQuery) ?>">Next</a>
+            </li>
+        <?php endif; ?>
+    </ul>
+</nav>
                 </div>  
             </div>
         </div>
@@ -232,7 +297,8 @@ document.getElementById("search").addEventListener("input", function() {
             }
         });
 });
-</script>
 
+</script>
+<?php require_once 'includes/admin_footer.php'; ?>
 </body>
 </html>
