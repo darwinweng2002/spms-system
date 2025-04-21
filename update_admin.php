@@ -28,28 +28,49 @@ if (!$admin) {
 
 // 📝 Update Logic
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $name     = trim($_POST['name']);
-    $username = trim($_POST['username']);
-    $position = trim($_POST['position']);
-    $campus   = trim($_POST['campus']);
-    $existingAvatar = $_POST['existing_avatar'] ?? '';
-    $password = $_POST['password'] ?? '';
-    $confirmPassword = $_POST['confirm_password'] ?? '';
+    $fields = [];
+    $params = ['id' => $admin_id]; // Always include ID
 
-    // ✅ Basic validation
-    if (empty($name) || empty($username) || empty($position) || empty($campus)) {
-        die("All fields except password are required.");
+    // Optional updates — only include if filled
+    if (!empty(trim($_POST['name']))) {
+        $fields[] = "name = :name";
+        $params['name'] = trim($_POST['name']);
     }
 
-    // 🖼️ Handle avatar upload
+    if (!empty(trim($_POST['username']))) {
+        $fields[] = "username = :username";
+        $params['username'] = trim($_POST['username']);
+    }
+
+    if (!empty(trim($_POST['position']))) {
+        $fields[] = "position = :position";
+        $params['position'] = trim($_POST['position']);
+    }
+
+    if (!empty(trim($_POST['campus']))) {
+        $fields[] = "campus = :campus";
+        $params['campus'] = trim($_POST['campus']);
+    }
+
+    // Password handling
+    if (!empty($_POST['password'])) {
+        if ($_POST['password'] !== $_POST['confirm_password']) {
+            die("Passwords do not match.");
+        }
+        $fields[] = "password = :password";
+        $params['password'] = password_hash($_POST['password'], PASSWORD_DEFAULT);
+    }
+
+    // Avatar upload
+    $existingAvatar = $_POST['existing_avatar'] ?? '';
     $avatarPath = $existingAvatar;
+
     if (!empty($_FILES['avatar']['name'])) {
         $uploadDir = 'upload/';
         $extension = pathinfo($_FILES['avatar']['name'], PATHINFO_EXTENSION);
         $uniqueFileName = 'admin_' . time() . '_' . rand(1000, 9999) . '.' . $extension;
         $avatarPath = $uploadDir . $uniqueFileName;
 
-        // Only allow jpg, jpeg, png
         $allowedTypes = ['image/jpeg', 'image/jpg', 'image/png'];
         if (!in_array($_FILES['avatar']['type'], $allowedTypes)) {
             die("Invalid image type. Only JPG, JPEG, and PNG allowed.");
@@ -58,40 +79,21 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         if (!move_uploaded_file($_FILES['avatar']['tmp_name'], $avatarPath)) {
             die("Failed to upload avatar.");
         }
+
+        $fields[] = "avatar = :avatar";
+        $params['avatar'] = $avatarPath;
     }
 
-    // 🔐 Optional password update logic
-    $updatePassword = '';
-    $params = [
-        'name'     => $name,
-        'username' => $username,
-        'position' => $position,
-        'campus'   => $campus,
-        'avatar'   => $avatarPath,
-        'id'       => $admin_id
-    ];
-
-    if (!empty($password)) {
-        if ($password !== $confirmPassword) {
-            die("Passwords do not match.");
-        }
-
-        // Securely hash the new password
-        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-        $updatePassword = ', password = :password';
-        $params['password'] = $hashedPassword;
+    // If no fields were updated
+    if (empty($fields)) {
+        die("No changes made.");
     }
 
-    // 💾 Update Database
-    $updateStmt = $pdo->prepare("
-        UPDATE admin_users 
-        SET name = :name, username = :username, position = :position, campus = :campus, avatar = :avatar
-        $updatePassword
-        WHERE id = :id
-    ");
+    // Build the SQL
+    $sql = "UPDATE admin_users SET " . implode(', ', $fields) . " WHERE id = :id";
+    $updateStmt = $pdo->prepare($sql);
     $updateStmt->execute($params);
 
-    // ✅ Redirect
     header("Location: manage_admin.php");
     exit;
 }
