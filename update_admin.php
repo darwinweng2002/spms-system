@@ -245,6 +245,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 <body>
 
 <?php require_once 'includes/side_nav.php'; ?>
+<br>
+<br>
 
 <div class="container">
     <div class="form-container">
