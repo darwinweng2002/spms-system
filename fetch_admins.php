@@ -1,17 +1,15 @@
 <?php
 require_once 'db.php';
 
-$sql = "SELECT id, name, username, position, campus, avatar FROM admins";
-$result = $conn->query($sql);
+header("Content-Type: application/json");
 
-$admins = [];
+try {
+    $stmt = $pdo->prepare("SELECT id, name, username, position, campus, avatar FROM admin_users ORDER BY id ASC");
+    $stmt->execute();
+    $admins = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-if ($result && $result->num_rows > 0) {
-    while ($row = $result->fetch_assoc()) {
-        $admins[] = $row;
-    }
+    echo json_encode($admins);
+} catch (PDOException $e) {
+    echo json_encode(["status" => "error", "message" => "Database error: " . $e->getMessage()]);
 }
-
-header('Content-Type: application/json');
-echo json_encode($admins);
 ?>
