@@ -289,6 +289,8 @@ if (!isset($_SESSION['admin_id'])) {
 
                 <label for="password">Password</label>
                 <input type="password" id="password" name="password" required>
+                <label for="confirm_password">Confirm Password</label>
+                <input type="password" id="confirm_password" name="confirm_password" required>
 
                 <label for="avatar">Profile Picture</label>
                 <input type="file" id="avatar" name="avatar" accept="image/png, image/jpeg, image/jpg">
@@ -335,39 +337,48 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Handle form submission
     addAdminForm.addEventListener("submit", async function (event) {
-        event.preventDefault();
+    event.preventDefault();
 
-        let formData = new FormData(addAdminForm);
+    const password = document.getElementById("password").value;
+    const confirmPassword = document.getElementById("confirm_password").value;
 
-        // 🔄 Show Loader
-        document.getElementById("loadingOverlay").style.display = "flex";
+    // Validate if passwords match
+    if (password !== confirmPassword) {
+        Swal.fire("Error", "Passwords do not match!", "error");
+        return;
+    }
 
-        try {
-            let response = await fetch("add_admin.php", {
-                method: "POST",
-                body: formData
-            });
+    let formData = new FormData(addAdminForm);
 
-            let data = await response.json();
-            console.log("Server Response:", data);
+    // 🔄 Show Loader
+    document.getElementById("loadingOverlay").style.display = "flex";
 
-            // 🔄 Hide Loader
-            document.getElementById("loadingOverlay").style.display = "none";
+    try {
+        let response = await fetch("add_admin.php", {
+            method: "POST",
+            body: formData
+        });
 
-            if (data.status === "success") {
-                addAdminForm.reset(); // Clear the form
-                loadAdmins(); // Reload admin table
-                Swal.fire("Success", "Admin added successfully!", "success");
-            } else {
-                Swal.fire("Error", data.message, "error");
-            }
-        } catch (error) {
-            console.error("Fetch Error:", error);
-            // 🔄 Hide Loader on failure
-            document.getElementById("loadingOverlay").style.display = "none";
-            Swal.fire("Error", "Failed to add admin. Try again.", "error");
+        let data = await response.json();
+        console.log("Server Response:", data);
+
+        // 🔄 Hide Loader
+        document.getElementById("loadingOverlay").style.display = "none";
+
+        if (data.status === "success") {
+            addAdminForm.reset(); // Clear the form
+            loadAdmins(); // Reload admin table
+            Swal.fire("Success", "Admin added successfully!", "success");
+        } else {
+            Swal.fire("Error", data.message, "error");
         }
-    });
+    } catch (error) {
+        console.error("Fetch Error:", error);
+        // 🔄 Hide Loader on failure
+        document.getElementById("loadingOverlay").style.display = "none";
+        Swal.fire("Error", "Failed to add admin. Try again.", "error");
+    }
+});
 
     // Load Admins Function
     async function loadAdmins() {
