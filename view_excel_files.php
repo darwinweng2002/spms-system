@@ -288,27 +288,54 @@ function closeExcelModal() {
 
 // Delete Function
 function deleteExcel(fileId, fileName) {
-    if (!confirm(`Delete file "${fileName}"? This cannot be undone.`)) return;
+    Swal.fire({
+        title: 'Are you sure?',
+        text: `Delete file "${fileName}"? This action cannot be undone.`,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#e74c3c',
+        cancelButtonColor: '#6c757d',
+        confirmButtonText: 'Yes, delete it!',
+        cancelButtonText: 'Cancel'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            Swal.fire({
+                title: 'Deleting...',
+                text: 'Please wait while we delete the file.',
+                didOpen: () => {
+                    Swal.showLoading();
+                },
+                allowOutsideClick: false
+            });
 
-    fetch('delete_excel_file.php', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ id: fileId, file_name: fileName })
-    })
-    .then(res => res.json())
-    .then(result => {
-        if (result.success) {
-            alert("File deleted successfully.");
-            location.reload();
-        } else {
-            alert("Failed to delete file: " + result.message);
+            fetch('delete_excel_file.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ id: fileId, file_name: fileName })
+            })
+            .then(res => res.json())
+            .then(result => {
+                if (result.success) {
+                    Swal.fire({
+                        title: 'Deleted!',
+                        text: 'The file has been deleted.',
+                        icon: 'success',
+                        confirmButtonColor: '#007bff'
+                    }).then(() => {
+                        location.reload(); // Reload after confirmation
+                    });
+                } else {
+                    Swal.fire('Error', result.message, 'error');
+                }
+            })
+            .catch(err => {
+                console.error(err);
+                Swal.fire('Error', 'Something went wrong during deletion.', 'error');
+            });
         }
-    })
-    .catch(err => {
-        console.error(err);
-        alert("Error: " + err.message);
     });
 }
+
 function searchFiles() {
     const input = document.getElementById('searchInput').value.toLowerCase(); // Get the search term
     const rows = document.querySelectorAll('.file-row'); // Get all file rows
