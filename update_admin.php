@@ -259,22 +259,22 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <label>Name:</label>
     <input type="text" name="name" 
         value="<?php echo isset($admin['name']) ? htmlspecialchars($admin['name'], ENT_QUOTES, 'UTF-8') : ''; ?>" 
-        placeholder="Enter full name" required>
+        placeholder="Enter full name">
 
     <label>Username:</label>
     <input type="text" name="username" 
         value="<?php echo isset($admin['username']) ? htmlspecialchars($admin['username'], ENT_QUOTES, 'UTF-8') : ''; ?>" 
-        required>
+        >
 
     <label>Position:</label>
     <input type="text" name="position" 
         value="<?php echo isset($admin['position']) ? htmlspecialchars($admin['position'], ENT_QUOTES, 'UTF-8') : ''; ?>" 
-        required>
+        >
 
     <label>Campus:</label>
     <input type="text" name="campus" 
         value="<?php echo isset($admin['campus']) ? htmlspecialchars($admin['campus'], ENT_QUOTES, 'UTF-8') : ''; ?>" 
-        required>
+        >
 
     <label>New Password:</label>
     <input type="password" name="password" id="password" placeholder="Leave blank to keep current password">
