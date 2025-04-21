@@ -255,16 +255,24 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         <h2>Update Admin</h2>
         <form method="POST" enctype="multipart/form-data">
     <label>Name:</label>
-    <input type="text" name="name" value="<?php echo htmlspecialchars($admin['name'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" required>
+    <input type="text" name="name" 
+        value="<?php echo isset($admin['name']) ? htmlspecialchars($admin['name'], ENT_QUOTES, 'UTF-8') : ''; ?>" 
+        placeholder="Enter full name" required>
 
     <label>Username:</label>
-    <input type="text" name="username" value="<?php echo htmlspecialchars($admin['username'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" required>
+    <input type="text" name="username" 
+        value="<?php echo isset($admin['username']) ? htmlspecialchars($admin['username'], ENT_QUOTES, 'UTF-8') : ''; ?>" 
+        required>
 
     <label>Position:</label>
-    <input type="text" name="position" value="<?php echo htmlspecialchars($admin['position'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" required>
+    <input type="text" name="position" 
+        value="<?php echo isset($admin['position']) ? htmlspecialchars($admin['position'], ENT_QUOTES, 'UTF-8') : ''; ?>" 
+        required>
 
     <label>Campus:</label>
-    <input type="text" name="campus" value="<?php echo htmlspecialchars($admin['campus'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" required>
+    <input type="text" name="campus" 
+        value="<?php echo isset($admin['campus']) ? htmlspecialchars($admin['campus'], ENT_QUOTES, 'UTF-8') : ''; ?>" 
+        required>
 
     <label>New Password:</label>
     <input type="password" name="password" id="password" placeholder="Leave blank to keep current password">
@@ -275,14 +283,18 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     <label>Profile Picture:</label>
     <input type="file" name="avatar" id="avatarInput" accept="image/png, image/jpeg, image/jpg">
-    <input type="hidden" name="existing_avatar" value="<?php echo htmlspecialchars($admin['avatar'] ?? '', ENT_QUOTES, 'UTF-8'); ?>">
+    <input type="hidden" name="existing_avatar" 
+        value="<?php echo isset($admin['avatar']) ? htmlspecialchars($admin['avatar'], ENT_QUOTES, 'UTF-8') : ''; ?>">
 
     <div class="avatar-preview" style="display: block;">
-        <img id="avatarPreview" src="<?php echo htmlspecialchars($admin['avatar'] ?? 'uploads/default-avatar.png', ENT_QUOTES, 'UTF-8'); ?>" alt="Avatar Preview">
+        <img id="avatarPreview" 
+            src="<?php echo !empty($admin['avatar']) ? htmlspecialchars($admin['avatar'], ENT_QUOTES, 'UTF-8') : 'uploads/default-avatar.png'; ?>" 
+            alt="Avatar Preview">
     </div>
 
     <button type="submit">Update Admin</button>
 </form>
+
 
         <a href="manage_admin.php" class="back-link">Back to Admin List</a>
     </div>
