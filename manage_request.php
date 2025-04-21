@@ -429,7 +429,7 @@ footer {
                 </a>
             </li>
             <li>
-                <button class="dropdown-item text-danger btn-delete" data-id="<?= $request['id'] ?>">
+                <button class="btn btn-outline-danger custom-delete" data-id="<?= $request['id'] ?>">
                     <i class="bi bi-trash3-fill"></i> Delete
                 </button>
             </li>
