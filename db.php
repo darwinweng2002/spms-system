@@ -1,8 +1,8 @@
 <?php
 $host = 'localhost';
-$dbname = 'spms'; // Your database name
-$username = 'root'; // Your MySQL username
-$password = ''; // Your MySQL password
+$dbname = 'u450897284_spms'; // Your database name
+$username = 'u450897284_spmsuser'; // Your MySQL username
+$password = 'Spmsprmsuiba1234'; // Your MySQL password
 
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $username, $password);
