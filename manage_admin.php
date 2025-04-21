@@ -275,26 +275,30 @@ if (!isset($_SESSION['admin_id'])) {
         <div class="admin-form">
             <h1>Add New Admin</h1>
             <form id="addAdminForm">
-                <label for="name">Admin Name</label>
-                <input type="text" id="name" name="name" required>
+            <label for="name">Admin Name</label>
+            <input type="text" id="name" name="name" required>
 
-                <label for="username">Username</label>
-                <input type="text" id="username" name="username" required>
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" required>
 
-                <label for="position">Position</label>
-                <input type="text" id="position" name="position" required>
+            <label for="position">Position</label>
+            <input type="text" id="position" name="position" required>
 
-                <label for="campus">Campus</label>
-                <input type="text" id="campus" name="campus" required>
+            <label for="campus">Campus</label>
+            <input type="text" id="campus" name="campus" required>
 
-                <label for="password">Password</label>
-                <input type="password" id="password" name="password" required>
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required>
 
-                <label for="avatar">Profile Picture</label>
-                <input type="file" id="avatar" name="avatar" accept="image/png, image/jpeg, image/jpg">
+            <label for="confirm_password">Confirm Password</label>
+            <input type="password" id="confirm_password" name="confirm_password" required>
 
-                <button type="submit">Add Admin</button>
-            </form>
+            <label for="avatar">Profile Picture</label>
+            <input type="file" id="avatar" name="avatar" accept="image/png, image/jpeg, image/jpg">
+
+            <button type="submit">Add Admin</button>
+        </form>
+
         </div>
 
         <!-- ✅ Org-Chart (Now on the right) -->
@@ -335,7 +339,22 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Handle form submission
     addAdminForm.addEventListener("submit", async function (event) {
-        event.preventDefault();
+    event.preventDefault();
+
+    const password = document.getElementById("password").value;
+    const confirmPassword = document.getElementById("confirm_password").value;
+
+    if (password !== confirmPassword) {
+        Swal.fire("Password Mismatch", "Passwords do not match. Please try again.", "error");
+        return;
+    }
+
+    let formData = new FormData(addAdminForm);
+
+    // 🔄 Show Loader
+    document.getElementById("loadingOverlay").style.display = "flex";
+
+
 
         let formData = new FormData(addAdminForm);
 
