@@ -33,10 +33,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $position = trim($_POST['position']);
     $campus   = trim($_POST['campus']);
     $existingAvatar = $_POST['existing_avatar'] ?? '';
+    $password = $_POST['password'] ?? '';
+    $confirmPassword = $_POST['confirm_password'] ?? '';
 
-    // ✅ Basic validation (add more if needed)
+    // ✅ Basic validation
     if (empty($name) || empty($username) || empty($position) || empty($campus)) {
-        die("All fields are required.");
+        die("All fields except password are required.");
     }
 
     // 🖼️ Handle avatar upload
@@ -58,26 +60,43 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         }
     }
 
-    // 💾 Update Database
-    $updateStmt = $pdo->prepare("
-        UPDATE admin_users 
-        SET name = :name, username = :username, position = :position, campus = :campus, avatar = :avatar 
-        WHERE id = :id
-    ");
-    $updateStmt->execute([
+    // 🔐 Optional password update logic
+    $updatePassword = '';
+    $params = [
         'name'     => $name,
         'username' => $username,
         'position' => $position,
         'campus'   => $campus,
         'avatar'   => $avatarPath,
         'id'       => $admin_id
-    ]);
+    ];
+
+    if (!empty($password)) {
+        if ($password !== $confirmPassword) {
+            die("Passwords do not match.");
+        }
+
+        // Securely hash the new password
+        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+        $updatePassword = ', password = :password';
+        $params['password'] = $hashedPassword;
+    }
+
+    // 💾 Update Database
+    $updateStmt = $pdo->prepare("
+        UPDATE admin_users 
+        SET name = :name, username = :username, position = :position, campus = :campus, avatar = :avatar
+        $updatePassword
+        WHERE id = :id
+    ");
+    $updateStmt->execute($params);
 
     // ✅ Redirect
     header("Location: manage_admin.php");
     exit;
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -242,6 +261,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
             <label>Campus:</label>
             <input type="text" name="campus" value="<?php echo htmlspecialchars($admin['campus'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" required>
+            <label>New Password:</label>
+            <input type="password" name="password" id="password" placeholder="Leave blank to keep current password">
+
+            <label>Confirm New Password:</label>
+            <input type="password" name="confirm_password" id="confirm_password" placeholder="Re-enter password">
+            <span id="passwordFeedback" style="font-size: 13px;"></span>
 
             <label>Profile Picture:</label>
             <input type="file" name="avatar" id="avatarInput" accept="image/png, image/jpeg, image/jpg">
@@ -265,6 +290,30 @@ document.getElementById("avatarInput").addEventListener("change", function (even
     }
     reader.readAsDataURL(event.target.files[0]);
 });
+const passwordInput = document.getElementById("password");
+const confirmPasswordInput = document.getElementById("confirm_password");
+const feedback = document.getElementById("passwordFeedback");
+
+function checkPasswordsMatch() {
+    const password = passwordInput.value;
+    const confirmPassword = confirmPasswordInput.value;
+
+    if (!confirmPassword && !password) {
+        feedback.textContent = "";
+        return;
+    }
+
+    if (password === confirmPassword) {
+        feedback.textContent = "✅ Passwords match";
+        feedback.style.color = "green";
+    } else {
+        feedback.textContent = "❌ Passwords do not match";
+        feedback.style.color = "red";
+    }
+}
+
+passwordInput.addEventListener("input", checkPasswordsMatch);
+confirmPasswordInput.addEventListener("input", checkPasswordsMatch);
 </script>
 <?php require_once 'includes/admin_footer.php'; ?>
 </body>
