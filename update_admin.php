@@ -247,10 +247,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 <?php require_once 'includes/side_nav.php'; ?>
 
 <div class="container">
-    <br>
-    <br>
-    
+
     <div class="form-container">
+    <br>
+    <br>
         <h2>Update Admin</h2>
         <form method="POST" enctype="multipart/form-data">
     <label>Name:</label>
