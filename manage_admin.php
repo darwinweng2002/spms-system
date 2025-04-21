@@ -291,6 +291,8 @@ if (!isset($_SESSION['admin_id'])) {
                 <input type="password" id="password" name="password" required>
                 <label for="confirm_password">Confirm Password</label>
                 <input type="password" id="confirm_password" name="confirm_password" required>
+                <span id="passwordFeedback" style="font-size: 13px; color: red;"></span>
+
 
                 <label for="avatar">Profile Picture</label>
                 <input type="file" id="avatar" name="avatar" accept="image/png, image/jpeg, image/jpg">
@@ -475,6 +477,31 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 }
 });
+const passwordInput = document.getElementById("password");
+const confirmPasswordInput = document.getElementById("confirm_password");
+const feedback = document.getElementById("passwordFeedback");
+
+function checkPasswordsMatch() {
+    const password = passwordInput.value;
+    const confirmPassword = confirmPasswordInput.value;
+
+    if (!confirmPassword) {
+        feedback.textContent = ""; // Clear message if confirm field is empty
+        return;
+    }
+
+    if (password === confirmPassword) {
+        feedback.textContent = "✅ Passwords match";
+        feedback.style.color = "green";
+    } else {
+        feedback.textContent = "❌ Passwords do not match";
+        feedback.style.color = "red";
+    }
+}
+
+passwordInput.addEventListener("input", checkPasswordsMatch);
+confirmPasswordInput.addEventListener("input", checkPasswordsMatch);
+
 </script>
 
 <?php require_once 'includes/admin_footer.php'; ?>
