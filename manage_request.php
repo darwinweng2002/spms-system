@@ -458,11 +458,12 @@ footer {
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-    const deleteForms = document.querySelectorAll('.delete-form');  // Correct selector
+    const deleteButtons = document.querySelectorAll('.delete-request');
 
-    deleteForms.forEach(form => {
-        form.addEventListener('submit', function (event) {
-            event.preventDefault();  // Prevent form submission
+    deleteButtons.forEach(button => {
+        button.addEventListener('click', function (event) {
+            event.preventDefault();
+            const requestId = this.getAttribute('data-id');
 
             Swal.fire({
                 title: 'Are you sure?',
@@ -475,7 +476,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 cancelButtonText: 'Cancel'
             }).then((result) => {
                 if (result.isConfirmed) {
-                    this.submit();  // Submit the form if user confirms
+                    // Redirect to PHP delete handler (you must have this in your backend)
+                    window.location.href = `delete_request.php?id=${requestId}`;
                 }
             });
         });
