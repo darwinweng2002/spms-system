@@ -239,7 +239,7 @@ $employees = $pdo->query("SELECT * FROM employees ORDER BY last_name ASC")->fetc
     <?php require_once 'includes/side_nav.php'; ?>
 
     <div class="main-container">
-        <h2 class="sub-header">Property Employee Records</h2>
+        <h2 class="sub-header">Property Employee Records Weh</h2>
 
         <!-- ✅ Display success message when an employee is added -->
         <?php if (isset($_GET['success'])): ?>
