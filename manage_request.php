@@ -280,7 +280,7 @@ footer {
 <?php require_once 'includes/side_nav.php'; ?>
 
 <div class="main-container">
-    <h2 class="sub-header"> Sick Manage Request Letters</h2>
+    <h2 class="sub-header">Manage Request Letters</h2>
 
     <div class="d-flex justify-content-between align-items-center mb-4">
         <form method="GET" class="d-flex w-75">
