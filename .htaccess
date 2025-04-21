@@ -1,0 +1,4 @@
+
+<FilesMatch "\.(xls|xlsx)$">
+   Header set Access-Control-Allow-Origin "*"
+</FilesMatch>
