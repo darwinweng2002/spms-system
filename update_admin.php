@@ -250,34 +250,36 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <div class="form-container">
         <h2>Update Admin</h2>
         <form method="POST" enctype="multipart/form-data">
-            <label>Name:</label>
-            <input type="text" name="name" placeholder="Enter full name" required>
+    <label>Name:</label>
+    <input type="text" name="name" value="<?php echo htmlspecialchars($admin['name'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" required>
 
-            <label>Username:</label>
-            <input type="text" name="username" value="<?php echo htmlspecialchars($admin['username'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" required>
+    <label>Username:</label>
+    <input type="text" name="username" value="<?php echo htmlspecialchars($admin['username'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" required>
 
-            <label>Position:</label>
-            <input type="text" name="position" value="<?php echo htmlspecialchars($admin['position'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" required>
+    <label>Position:</label>
+    <input type="text" name="position" value="<?php echo htmlspecialchars($admin['position'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" required>
 
-            <label>Campus:</label>
-            <input type="text" name="campus" value="<?php echo htmlspecialchars($admin['campus'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" required>
-            <label>New Password:</label>
-            <input type="password" name="password" id="password" placeholder="Leave blank to keep current password">
+    <label>Campus:</label>
+    <input type="text" name="campus" value="<?php echo htmlspecialchars($admin['campus'] ?? '', ENT_QUOTES, 'UTF-8'); ?>" required>
 
-            <label>Confirm New Password:</label>
-            <input type="password" name="confirm_password" id="confirm_password" placeholder="Re-enter password">
-            <span id="passwordFeedback" style="font-size: 13px;"></span>
+    <label>New Password:</label>
+    <input type="password" name="password" id="password" placeholder="Leave blank to keep current password">
 
-            <label>Profile Picture:</label>
-            <input type="file" name="avatar" id="avatarInput" accept="image/png, image/jpeg, image/jpg">
-            
-            <div class="avatar-preview" style="display: none;">
-            <img id="avatarPreview" src="" alt="Avatar Preview">
-        </div>
+    <label>Confirm New Password:</label>
+    <input type="password" name="confirm_password" id="confirm_password" placeholder="Re-enter password">
+    <span id="passwordFeedback" style="font-size: 13px;"></span>
 
+    <label>Profile Picture:</label>
+    <input type="file" name="avatar" id="avatarInput" accept="image/png, image/jpeg, image/jpg">
+    <input type="hidden" name="existing_avatar" value="<?php echo htmlspecialchars($admin['avatar'] ?? '', ENT_QUOTES, 'UTF-8'); ?>">
 
-            <button type="submit">Update Admin</button>
-        </form>
+    <div class="avatar-preview" style="display: block;">
+        <img id="avatarPreview" src="<?php echo htmlspecialchars($admin['avatar'] ?? 'uploads/default-avatar.png', ENT_QUOTES, 'UTF-8'); ?>" alt="Avatar Preview">
+    </div>
+
+    <button type="submit">Update Admin</button>
+</form>
+
         <a href="manage_admin.php" class="back-link">Back to Admin List</a>
     </div>
 </div>
