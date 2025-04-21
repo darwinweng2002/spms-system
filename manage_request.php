@@ -695,17 +695,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 });
-document.querySelectorAll('.delete-request').forEach(btn => {
-  btn.addEventListener('click', function (e) {
-    e.preventDefault();
-    const id = this.getAttribute('data-id');
-    // Confirm + process delete
-    if (confirm('Are you sure you want to delete this request?')) {
-      // Do your AJAX/fetch/redirect here
-    }
-  });
-});
-
 </script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <?php require_once 'includes/admin_footer.php'; ?>
