@@ -159,7 +159,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); 
             width: 400px; 
             position: relative;
-            padding-bottom: 80px;
+            padding-bottom: 85px;
         }
 
         h2 { font-size: 22px; margin-bottom: 20px; }
