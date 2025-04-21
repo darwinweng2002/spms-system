@@ -276,6 +276,11 @@ footer {
         .dropdown-menu .dropdown-item i {
     margin-right: 6px;
 }
+/* Hover state to simulate button feel inside dropdown */
+.dropdown-item.text-danger:hover {
+  background-color: #f8d7da;
+  color: #842029;
+}
 
     </style>
 </head>
@@ -423,15 +428,17 @@ footer {
             Actions
         </button>
         <ul class="dropdown-menu">
+            <!-- Update Link -->
             <li>
                 <a class="dropdown-item text-success" href="update_request.php?id=<?= $request['id'] ?>">
                     <i class="bi bi-pencil-square"></i> Update
                 </a>
             </li>
+            <!-- Delete Action Styled Like Link -->
             <li>
-                <button class="btn btn-outline-danger custom-delete" data-id="<?= $request['id'] ?>">
+                <a href="#" class="dropdown-item text-danger delete-request" data-id="<?= $request['id'] ?>">
                     <i class="bi bi-trash3-fill"></i> Delete
-                </button>
+                </a>
             </li>
         </ul>
     </div>
@@ -687,6 +694,16 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         });
     });
+});
+document.querySelectorAll('.delete-request').forEach(btn => {
+  btn.addEventListener('click', function (e) {
+    e.preventDefault();
+    const id = this.getAttribute('data-id');
+    // Confirm + process delete
+    if (confirm('Are you sure you want to delete this request?')) {
+      // Do your AJAX/fetch/redirect here
+    }
+  });
 });
 
 </script>
