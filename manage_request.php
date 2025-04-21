@@ -273,6 +273,10 @@ footer {
             height: 60px;
             width: auto;
         }
+        .dropdown-menu .dropdown-item i {
+    margin-right: 6px;
+}
+
     </style>
 </head>
 
@@ -414,12 +418,24 @@ footer {
 
 </td>
 <td>
-    <a href="update_request.php?id=<?= $request['id'] ?>" class="btn-update">Update</a>
-
-    <!-- Updated delete button with event trigger -->
-    <button type="button" class="btn-delete" data-id="<?= $request['id'] ?>">Delete</button>  
+    <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle btn-sm" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Actions
+        </button>
+        <ul class="dropdown-menu">
+            <li>
+                <a class="dropdown-item text-success" href="update_request.php?id=<?= $request['id'] ?>">
+                    <i class="bi bi-pencil-square"></i> Update
+                </a>
+            </li>
+            <li>
+                <button class="dropdown-item text-danger btn-delete" data-id="<?= $request['id'] ?>">
+                    <i class="bi bi-trash3-fill"></i> Delete
+                </button>
+            </li>
+        </ul>
+    </div>
 </td>
-
             </tr>
         <?php endforeach; ?>
 
