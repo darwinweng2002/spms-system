@@ -78,7 +78,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         .form-control, .form-select { border-radius: 6px; }
         .btn { font-weight: 500; border-radius: 6px; }
         textarea {
-        resize: vertical;
+        resize: both;
         min-height: 80px;
         max-height: 900px; /* keep the resize under control */
     }
