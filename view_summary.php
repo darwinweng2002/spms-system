@@ -255,7 +255,7 @@ $summaries = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                 <td>
                                 <div class="dropdown">
                                     <button class="btn btn-sm btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <i class="bi bi-gear-fill"></i> Actions
+                                         Actions
                                     </button>
                                     <ul class="dropdown-menu">
                                         <li>
