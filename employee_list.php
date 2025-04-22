@@ -80,7 +80,7 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1600px;
             padding-bottom: 80px;
         }
 
