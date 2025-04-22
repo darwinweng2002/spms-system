@@ -47,7 +47,7 @@ body {
 .admin-section {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 30px;
+    gap: 15px;
     align-items: stretch;
     background: transparent;
     margin-bottom: 30px;
