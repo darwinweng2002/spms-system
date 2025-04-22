@@ -208,9 +208,11 @@ $total_requests = $stmt->fetch(PDO::FETCH_ASSOC)['total_requests'];
 
             <!-- ✅ Total Letter Requests Stat Card -->
             <div class="stat-card">
+                <div class="stat-icon text-primary"><i class="bi bi-envelope-paper-fill"></i></div>
                 <span class="stat-title">Requests Letters <span class="stat-status">Total</span></span>
-                <span class="stat-number"><?php echo $total_requests; ?></span>
-            </div>
+                <span class="stat-number"><?= $total_requests; ?></span>
+        </div>
+
         </div>
     </div>
 </div>
