@@ -47,7 +47,7 @@ body {
 .admin-section {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 60px;
+    gap: 30px;
     align-items: stretch;
     background: transparent;
     margin-bottom: 30px;
@@ -71,6 +71,7 @@ body {
 
 .admin-form input {
     padding: 10px;
+    gap: 30px;
     font-size: 14px;
     border: 1px solid #ddd;
     border-radius: 6px;
