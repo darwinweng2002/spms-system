@@ -184,11 +184,12 @@ $total_requests = $stmt->fetch(PDO::FETCH_ASSOC)['total_requests'];
         </div>
 
 
-            <!-- ✅ Employee Stat Card -->
-            <div class="stat-card">
-                <span class="stat-title">Employees <span class="stat-status">Active</span></span>
-                <span class="stat-number"><?php echo $employee_count; ?></span>
-            </div>
+        <div class="stat-card">
+        <div class="stat-icon"><i class="bi bi-people-fill"></i></div>
+        <span class="stat-title">Employees <span class="stat-status">Active</span></span>
+        <span class="stat-number"><?= $employee_count; ?></span>
+    </div>
+
 
             <!-- ✅ Approved Requests Stat Card -->
             <div class="stat-card">
