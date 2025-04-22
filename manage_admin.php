@@ -19,6 +19,7 @@ if (!isset($_SESSION['admin_id'])) {
     <?php require_once 'includes/header_nav.php'; ?>
     <!-- Include Background -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> <!-- SweetAlert2 -->
 
     <style>
