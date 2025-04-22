@@ -54,15 +54,7 @@ body {
 }
 
 /* --- Add Admin Form --- */
-.admin-form {
-    background: #ffffff;
-    padding: 30px;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
+.
 
 .admin-form h1 {
     font-size: 22px;
@@ -285,16 +277,16 @@ footer img.footer-logo {
         <div class="admin-form">
             <h1>Add New Admin</h1>
             <form id="addAdminForm">
-                <label for="name">Admin Name</label>
+                <label for="name"></label>
                 <input type="text" id="name" name="name" required>
 
-                <label for="username">Username</label>
+                <label for="username"></label>
                 <input type="text" id="username" name="username" required>
 
-                <label for="position">Position</label>
+                <label for="position"></label>
                 <input type="text" id="position" name="position" required>
 
-                <label for="campus">Campus</label>
+                <label for="campus"></label>
                 <input type="text" id="campus" name="campus" required>
 
                 <label for="password">Password</label>
