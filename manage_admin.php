@@ -23,223 +23,203 @@ if (!isset($_SESSION['admin_id'])) {
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> <!-- SweetAlert2 -->
 
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
-        body {
-            min-height: 100vh; /* Ensure the body takes at least the full screen height */
-            display: flex;
-            flex-direction: column;
-        }
-        /* ✅ Main Page Layout */
-        .main-container {
-            width: calc(100% - 250px);
-            margin-left: 250px;
-            padding: 20px;
-            background: #f8f9fa;
-            min-height: 100vh;
-           
-        }
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
 
-        /* ✅ Flexbox for Form & Org-Chart Image */
-        .admin-section {
-            max-width: 1600px;
-            margin: auto;
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 20px;
-        }
+body {
+    background: #f8f9fa;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
 
-        h1 {
-            font-size: 24px;
-            font-weight: bold;
-            text-align: left;
-            margin-bottom: 20px;
-        }
+.main-container {
+    width: calc(100% - 250px);
+    margin-left: 250px;
+    padding: 40px;
+}
 
-        /* ✅ Admin Form */
-        .admin-form {
-            flex: 1; /* Takes available space */
-            max-width: 500px;
-        }
+/* --- Section Layout --- */
+.admin-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    align-items: stretch;
+    background: transparent;
+    margin-bottom: 30px;
+}
 
-        .admin-form label {
-            font-size: 16px;
-            font-weight: 500;
-            display: block;
-            margin-top: 10px;
-        }
+/* --- Add Admin Form --- */
+.admin-form {
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
 
-        .admin-form input {
-            width: 100%;
-            padding: 10px;
-            margin-top: 5px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 14px;
-        }
+.admin-form h1 {
+    font-size: 22px;
+    margin-bottom: 10px;
+    color: #002855;
+}
 
-        .admin-form button {
-            width: 100%;
-            padding: 12px;
-            background: #007bff;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-            transition: 0.3s;
-            margin-top: 10px;
-        }   
+.admin-form label {
+    font-weight: 500;
+    font-size: 15px;
+    color: #333;
+    margin-top: 8px;
+}
 
-        .admin-form button:hover {
-            background: #0056b3;
-        }
+.admin-form input {
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    background: #fff;
+    transition: border 0.3s;
+}
 
-        /* ✅ Org-Chart Image */
-        .org-chart {
-            flex: 1;
-            max-width: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+.admin-form input:focus {
+    outline: none;
+    border-color: #007bff;
+}
 
-        .org-chart img {
-            width: 100%;
-            max-width: 900pxpx; /* Adjust image width */
-            height: auto;
-            border-radius: 10px;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-        }
+.admin-form button {
+    background: #007bff;
+    color: #fff;
+    border: none;
+    padding: 12px;
+    font-size: 16px;
+    border-radius: 6px;
+    margin-top: 15px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
 
-        /* ✅ Table */
-        .table-container {
-            max-width: 1600px;
-            margin: auto;
-            margin-top: 30px;
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-            flex: 1; /* Makes the container take available space */
-            padding-bottom: 80px;
-        }
+.admin-form button:hover {
+    background: #0056b3;
+}
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            background: white;
-            border-radius: 10px;
-            overflow: hidden;
-        }
+/* --- Org Chart Display --- */
+.org-chart {
+    background: #fff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 
-        table, th, td {
-            border: 1px solid #ddd;
-            padding: 12px;
-            text-align: center;
-        }
+.org-chart img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
 
-        th {
-            background: #007bff;
-            color: white;
-            font-size: 16px;
-        }
+/* --- Table Area --- */
+.table-container {
+    background: #ffffff;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    overflow-x: auto;
+}
 
-        tr:nth-child(even) {
-            background-color: #f2f2f2;
-        }
+.table-container h2 {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 15px;
+    color: #002855;
+}
 
-        tr:hover {
-            background: #ddd;
-        }
+/* --- Table Styling --- */
+table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 8px;
+    overflow: hidden;
+}
 
-        /* ✅ Buttons */
-        .update-btn {
-            padding: 8px 12px;
-            background: #28a745;
-            text-decoration: none;
-            color: white;
-            border-radius: 5px;
-            font-size: 14px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 5px;
-            border: none;
-            cursor: pointer;
-            transition: 0.3s ease-in-out;
-        }
+table th {
+    background-color: #007bff;
+    color: white;
+    padding: 12px;
+    font-size: 15px;
+    font-weight: 600;
+}
 
-        .update-btn:hover {
-            background: #218838;
-        }
+table td {
+    padding: 12px;
+    background-color: #ffffff;
+    text-align: center;
+    border-bottom: 1px solid #eee;
+}
 
-        .delete-btn {
-            padding: 8px 12px;
-            background: #dc3545;
-            text-decoration: none;
-            color: white;
-            border-radius: 5px;
-            font-size: 14px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 5px;
-            border: none;
-            cursor: pointer;
-            transition: 0.3s ease-in-out;
-        }
+table tr:nth-child(even) td {
+    background-color: #f9f9f9;
+}
 
-        .delete-btn:hover {
-            background: #b02a37;
-        }
+/* --- Buttons --- */
+.update-btn,
+.delete-btn {
+    padding: 8px 14px;
+    font-size: 14px;
+    border-radius: 5px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
 
-        /* ✅ Responsive */
-        @media (max-width: 768px) {
-            .main-container {
-                width: 100%;
-                margin-left: 0;
-                padding: 15px;
-            }
+.update-btn {
+    background: #28a745;
+    color: white;
+}
 
-            .admin-section {
-                flex-direction: column;
-                align-items: center;
-                text-align: center;
-            }
+.update-btn:hover {
+    background: #218838;
+}
 
-            .admin-form, .org-chart {
-                max-width: 100%;
-            }
+.delete-btn {
+    background: #dc3545;
+    color: white;
+}
 
-            .table-container {
-                width: 95%;
-                overflow-x: auto;
-            }
-        }
-        footer {
-            width: 100%;
-            text-align: center;
-            padding: 10px;
-            background: #2C3E50;
-            color: #fff;
-            font-size: 10px;
-            position: relative; /* Change from absolute to relative */
-            margin-top: auto;
-        }
+.delete-btn:hover {
+    background: #c82333;
+}
 
-        footer img.footer-logo {
-            height: 60px;
-            width: auto;
-        }
-        #loadingOverlay {
+/* --- Avatar Image in Table --- */
+table img {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+/* --- Feedback text --- */
+#passwordFeedback {
+    font-size: 13px;
+    margin-top: 4px;
+}
+
+/* --- Loader Overlay --- */
+#loadingOverlay {
     position: fixed;
     top: 0; left: 0;
-    width: 100vw; height: 100vh;
+    width: 100vw;
+    height: 100vh;
     background: rgba(255,255,255,0.6);
     z-index: 9999;
     display: flex;
@@ -260,6 +240,34 @@ if (!isset($_SESSION['admin_id'])) {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
+
+/* --- Responsive Layout --- */
+@media (max-width: 992px) {
+    .admin-section {
+        grid-template-columns: 1fr;
+    }
+
+    .main-container {
+        padding: 20px;
+        margin-left: 0;
+        width: 100%;
+    }
+}
+
+footer {
+    text-align: center;
+    padding: 10px;
+    background: #2C3E50;
+    color: #fff;
+    font-size: 12px;
+    margin-top: auto;
+}
+
+footer img.footer-logo {
+    height: 60px;
+    width: auto;
+}
+
     </style>
 </head>
 <body>
