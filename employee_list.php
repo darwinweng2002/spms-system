@@ -82,6 +82,7 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
         .container {
             max-width: 1600px;
             padding-bottom: 80px;
+            margin-left: 250px;
         }
 
         .card {
