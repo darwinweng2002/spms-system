@@ -70,7 +70,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
         * { font-family: 'Poppins', sans-serif; box-sizing: border-box; }
-        body { background-color: #f8f9fa; }
+        body { background-color: #f8f9fa; height: 100%;
+            overflow-y: auto; }
         .container { max-width: 1600px; margin-left: 250px; }
         .card { border-radius: 12px; box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); }
         .card-header { background: #0080ff; color: white; font-size: 1.2rem; padding: 15px 20px; text-align: center; font-weight: 600; }
@@ -157,8 +158,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             background: #2C3E50;
             color: #fff;
             font-size: 10px;
-            position: absolute;
-            bottom: 0;
         }
 
         footer img.footer-logo {
