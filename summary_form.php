@@ -79,7 +79,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         textarea {
         resize: vertical;
         min-height: 80px;
-        max-height: 250px; /* keep the resize under control */
+        max-height: 900px; /* keep the resize under control */
     }
 
         .btn-secondary { background-color: #6c757d; border: none; }
