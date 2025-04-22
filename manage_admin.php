@@ -331,11 +331,11 @@ footer img.footer-logo {
 <br>
 <br>
     <div class="content">
+        <br>
+        <br>
         <div class="admin-section">
         <!-- ✅ Add Admin Form -->
         <div class="admin-form">
-            <br>
-            <br>
             <h1>Add New Admin</h1>
             <form id="addAdminForm" class="admin-grid">
     <div class="form-group">
