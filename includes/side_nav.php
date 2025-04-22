@@ -79,7 +79,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
         <br><br><br>
         <li>
             <a href="dashboard.php" class="<?= ($current_page == 'dashboard.php') ? 'active' : '' ?>">
-                <i class="bi bi-speedometer2"></i> Dashboard
+                <i class="bi-grid-fill"></i> Dashboard
             </a>
         </li>
         <li>
