@@ -125,7 +125,7 @@ $total_requests = $stmt->fetch(PDO::FETCH_ASSOC)['total_requests'];
         }
 
         .stat-title {
-            font-size: 16px;
+            font-size: 18px;
             font-weight: 600;
             color: #002855;
         }
