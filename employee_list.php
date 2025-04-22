@@ -221,15 +221,10 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
                                     <td><?= htmlspecialchars($employee['position']) ?></td>
                                     <td><?= htmlspecialchars($employee['campus']) ?></td>
                                     <td class="text-center action-buttons">
-                                    <div class="dropdown">
+                                    <div class="dropup">
                                     <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        Actions
-                                    </button>
-                                    <ul class="dropdown-menu">
-                                        <!-- list items -->
-                                    </ul>
-                                </div>
-
+                                            Actions
+                                        </button>
                                         <ul class="dropdown-menu">
                                             <li>
                                                 <a class="dropdown-item" href="summary_form.php?employee_id=<?= $employee['id'] ?>">
