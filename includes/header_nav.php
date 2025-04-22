@@ -186,7 +186,9 @@ if (isset($_SESSION['admin_id'])) {
                 <img src="<?= htmlspecialchars($admin_avatar) ?>" alt="Admin Avatar" class="profile-avatar">
                 <span class="profile-name"><?= htmlspecialchars($admin_name) ?></span>
             </div>
-            <a href="#" class="logout-btn" onclick="confirmLogout()">Logout</a>
+            <a href="#" class="logout-btn" onclick="confirmLogout()">
+                <i class="bi bi-box-arrow-right" style="margin-right: 6px;"></i> Logout
+            </a>
         </div>
     </div>
 </header>
