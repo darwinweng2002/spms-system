@@ -331,7 +331,7 @@ footer img.footer-logo {
 <br>
 <br>
     <div class="content">
-        <h1>Manage Admin Users</h1>
+        <h1><i class="bi bi-person-gear me-2"> Manage Admin Users</h1>
         <div class="admin-section">
         <!-- ✅ Add Admin Form -->
         <div class="admin-form">
