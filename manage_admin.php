@@ -59,11 +59,10 @@ body {
     padding: 30px;
     border-radius: 12px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 20px 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
-
 
 .admin-form h1 {
     font-size: 22px;
@@ -285,50 +284,31 @@ footer img.footer-logo {
         <!-- ✅ Add Admin Form -->
         <div class="admin-form">
             <h1>Add New Admin</h1>
-        <form id="addAdminForm">
-    <h1>Add New Admin</h1>
+            <form id="addAdminForm">
+                <label for="name">Admin Name</label>
+                <input type="text" id="name" name="name" required>
 
-    <div>
-        <label for="name">Admin Name</label>
-        <input type="text" id="name" name="name" required>
-    </div>
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" required>
 
-    <div>
-        <label for="username">Username</label>
-        <input type="text" id="username" name="username" required>
-    </div>
+                <label for="position">Position</label>
+                <input type="text" id="position" name="position" required>
 
-    <div>
-        <label for="position">Position</label>
-        <input type="text" id="position" name="position" required>
-    </div>
+                <label for="campus">Campus</label>
+                <input type="text" id="campus" name="campus" required>
 
-    <div>
-        <label for="campus">Campus</label>
-        <input type="text" id="campus" name="campus" required>
-    </div>
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+                <label for="confirm_password">Confirm Password</label>
+                <input type="password" id="confirm_password" name="confirm_password" required>
+                <span id="passwordFeedback" style="font-size: 13px; color: red;"></span>
 
-    <div>
-        <label for="password">Password</label>
-        <input type="password" id="password" name="password" required>
-    </div>
 
-    <div>
-        <label for="confirm_password">Confirm</label>
-        <input type="password" id="confirm_password" name="confirm_password" required>
-        <span id="passwordFeedback" style="font-size: 13px; color: red;"></span>
-    </div>
+                <label for="avatar">Profile Picture</label>
+                <input type="file" id="avatar" name="avatar" accept="image/png, image/jpeg, image/jpg">
 
-    <div style="grid-column: span 2;">
-        <label for="avatar">Profile Picture</label>
-        <input type="file" id="avatar" name="avatar" accept="image/png, image/jpeg, image/jpg">
-    </div>
-
-    <div style="grid-column: span 2;">
-        <button type="submit">Add Admin</button>
-    </div>
-</form>
-
+                <button type="submit">Add Admin</button>
+            </form>
         </div>
 
         <!-- ✅ Org-Chart (Now on the right) -->
