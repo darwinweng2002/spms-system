@@ -76,6 +76,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         .card-header { background: #0080ff; color: white; font-size: 1.2rem; padding: 15px 20px; text-align: center; font-weight: 600; }
         .form-control, .form-select { border-radius: 6px; }
         .btn { font-weight: 500; border-radius: 6px; }
+        textarea {
+        resize: vertical;
+        min-height: 80px;
+        max-height: 250px; /* keep the resize under control */
+    }
+
         .btn-secondary { background-color: #6c757d; border: none; }
         .btn-secondary:hover { background-color: #5a6268; }
         .table { border-radius: 8px; overflow: hidden; }
