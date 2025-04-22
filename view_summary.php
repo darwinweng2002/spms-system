@@ -58,7 +58,7 @@ $summaries = $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
 
         .card-header {
-            background: linear-gradient(135deg, #007bff, #6610f2);
+            background: #0080ff;
             color: white;
             font-size: 1.2rem;
             padding: 15px 20px;
@@ -253,10 +253,25 @@ $summaries = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                 <td><?= htmlspecialchars($summary['fund_cluster']) ?></td>
                                 <td><?= htmlspecialchars($summary['remarks']) ?></td>
                                 <td>
-                                    <button class="btn btn-sm btn-primary" onclick='openEditModal(<?= json_encode($summary) ?>)'>
-                                        <i class="bi bi-pencil-square"></i> Edit
+                                <div class="dropdown">
+                                    <button class="btn btn-sm btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="bi bi-gear-fill"></i> Actions
                                     </button>
-                                </td>
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <a class="dropdown-item" href="#" onclick='openEditModal(<?= json_encode($summary) ?>)'>
+                                                <i class="bi bi-pencil-square text-primary"></i> Edit
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item text-danger" href="#" onclick="confirmDelete(<?= $summary['id'] ?>)">
+                                                <i class="bi bi-trash-fill"></i> Delete
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </td>
+
                             </tr>
                         <?php endforeach; ?>
                         </tbody>
@@ -369,6 +384,37 @@ document.getElementById("editSummaryForm").addEventListener("submit", function (
         Swal.fire("Error!", "An unexpected error occurred.", "error");
     });
 });
+function confirmDelete(id) {
+    Swal.fire({
+        title: "Are you sure?",
+        text: "This will permanently delete the summary record.",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#dc3545",
+        cancelButtonColor: "#6c757d",
+        confirmButtonText: "Yes, delete it!"
+    }).then((result) => {
+        if (result.isConfirmed) {
+            fetch("delete_summary.php", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ id: id })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    Swal.fire("Deleted!", "Record has been deleted.", "success")
+                        .then(() => location.reload());
+                } else {
+                    Swal.fire("Error!", data.message || "Delete failed.", "error");
+                }
+            })
+            .catch(() => {
+                Swal.fire("Error!", "An unexpected error occurred.", "error");
+            });
+        }
+    });
+}
 </script>
 
 <?php require_once 'includes/admin_footer.php'; ?>
