@@ -289,9 +289,9 @@ footer img.footer-logo {
                 <label for="campus"></label>
                 <input type="text" id="campus" name="campus" required>
 
-                <label for="password">Password</label>
+                <label for="password"></label>
                 <input type="password" id="password" name="password" required>
-                <label for="confirm_password">Confirm Password</label>
+                <label for="confirm_password"></label>
                 <input type="password" id="confirm_password" name="confirm_password" required>
                 <span id="passwordFeedback" style="font-size: 13px; color: red;"></span>
 
