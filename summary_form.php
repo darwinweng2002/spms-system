@@ -71,7 +71,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <style>
         * { font-family: 'Poppins', sans-serif; box-sizing: border-box; }
         body { background-color: #f8f9fa; }
-        .container { max-width: 1100px; }
+        .container { max-width: 1600px; }
         .card { border-radius: 12px; box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); }
         .card-header { background: linear-gradient(135deg, #007bff, #6610f2); color: white; font-size: 1.2rem; padding: 15px 20px; text-align: center; font-weight: 600; }
         .form-control, .form-select { border-radius: 6px; }
