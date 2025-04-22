@@ -279,19 +279,13 @@ $employees = $pdo->query("SELECT * FROM employees ORDER BY last_name ASC")->fetc
                 <label>Campus</label>
                 <select name="campus" required>
                     <option value="" disabled selected>Select Campus</option>
-                    <option value="Botolan">Botolan</option>
-                    <option value="Cabangan">Cabangan</option>
+                    <option value="Iba (Main)">Iba (Main)</option>
+                    <option value="Botolan">Botolan Campus</option>
                     <option value="Candelaria">Candelaria</option>
                     <option value="Castillejos">Castillejos</option>
-                    <option value="Iba">Iba</option>
                     <option value="Masinloc">Masinloc</option>
-                    <option value="Palauig">Palauig</option>
-                    <option value="San Antonio">San Antonio</option>
-                    <option value="San Felipe">San Felipe</option>
                     <option value="San Marcelino">San Marcelino</option>
-                    <option value="San Narciso">San Narciso</option>
-                    <option value="Santa Cruz">Santa Cruz</option>
-                    <option value="Subic">Subic</option>
+                    <option value="Sta. Cruz">Sta. Cruz</option>
                 </select>
             </div>
 
