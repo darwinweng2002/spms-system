@@ -71,7 +71,6 @@ body {
 
 .admin-form input {
     padding: 10px;
-    gap: 30px;
     font-size: 14px;
     border: 1px solid #ddd;
     border-radius: 6px;
@@ -98,6 +97,66 @@ body {
 
 .admin-form button:hover {
     background: #0056b3;
+}
+.admin-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px 30px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    font-size: 15px;
+    margin-bottom: 6px;
+    color: #333;
+    font-weight: 500;
+}
+
+.form-group input[type="text"],
+.form-group input[type="password"],
+.form-group input[type="file"] {
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    background: #fff;
+    transition: border 0.3s ease-in-out;
+}
+
+.form-group input:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+.form-group span#passwordFeedback {
+    font-size: 13px;
+    margin-top: 4px;
+    color: red;
+}
+
+.form-group.full-width {
+    grid-column: span 2;
+}
+
+.admin-form button,
+.form-group button {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.form-group button:hover {
+    background-color: #0056b3;
 }
 
 /* --- Org Chart Display --- */
@@ -277,31 +336,48 @@ footer img.footer-logo {
         <!-- ✅ Add Admin Form -->
         <div class="admin-form">
             <h1>Add New Admin</h1>
-            <form id="addAdminForm">
-                <label for="name"></label>
-                <input type="text" id="name" name="name" required>
+            <form id="addAdminForm" class="admin-grid">
+    <div class="form-group">
+        <label for="name">Admin Name</label>
+        <input type="text" id="name" name="name" required>
+    </div>
 
-                <label for="username"></label>
-                <input type="text" id="username" name="username" required>
+    <div class="form-group">
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" required>
+    </div>
 
-                <label for="position"></label>
-                <input type="text" id="position" name="position" required>
+    <div class="form-group">
+        <label for="position">Position</label>
+        <input type="text" id="position" name="position" required>
+    </div>
 
-                <label for="campus"></label>
-                <input type="text" id="campus" name="campus" required>
+    <div class="form-group">
+        <label for="campus">Campus</label>
+        <input type="text" id="campus" name="campus" required>
+    </div>
 
-                <label for="password"></label>
-                <input type="password" id="password" name="password" required>
-                <label for="confirm_password"></label>
-                <input type="password" id="confirm_password" name="confirm_password" required>
-                <span id="passwordFeedback" style="font-size: 13px; color: red;"></span>
+    <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" required>
+    </div>
 
+    <div class="form-group">
+        <label for="confirm_password">Confirm Password</label>
+        <input type="password" id="confirm_password" name="confirm_password" required>
+        <span id="passwordFeedback"></span>
+    </div>
 
-                <label for="avatar"></label>
-                <input type="file" id="avatar" name="avatar" accept="image/png, image/jpeg, image/jpg">
+    <div class="form-group full-width">
+        <label for="avatar">Profile Picture</label>
+        <input type="file" id="avatar" name="avatar" accept="image/png, image/jpeg, image/jpg">
+    </div>
 
-                <button type="submit">Add Admin</button>
-            </form>
+    <div class="form-group full-width">
+        <button type="submit">Add Admin</button>
+    </div>
+</form>
+
         </div>
 
         <!-- ✅ Org-Chart (Now on the right) -->
