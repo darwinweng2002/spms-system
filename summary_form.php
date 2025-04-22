@@ -95,6 +95,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             padding: 6px 10px; /* Better padding for visibility */
             text-align: center; /* Center text for consistency */
             font-size: 16px; /* Increase readability */
+            resize: both;
             -moz-appearance: textfield; /* Remove number spinner in Firefox */
         }
 
