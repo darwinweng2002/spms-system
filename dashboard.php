@@ -106,28 +106,28 @@ $total_requests = $stmt->fetch(PDO::FETCH_ASSOC)['total_requests'];
 
         /* Stat Cards */
         .stat-card {
-            background: white;
-            padding: 30px 25px;
-            border-radius: 12px;
-            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            min-width: 250px;
-            height: 120px;
-            transition: 0.3s ease-in-out;
-        }
+        background: white;
+        padding: 25px 20px;
+        border-radius: 12px;
+        box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.08);
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-width: 230px;
+        height: auto;
+        transition: 0.3s ease-in-out;
+    }
 
         .stat-card:hover {
             transform: scale(1.02);
         }
 
         .stat-title {
-            font-size: 20px;
+            font-size: 18px;
             font-weight: 600;
             color: #002855;
+            line-height: 1;
         }
 
         .stat-status {
@@ -135,7 +135,10 @@ $total_requests = $stmt->fetch(PDO::FETCH_ASSOC)['total_requests'];
             color: #6c757d;
             margin-left: 5px;
         }
-
+        .stat-info {
+        text-align: center;
+        margin-bottom: 8px;
+    }
         .stat-number {
             font-size: 30px;
             font-weight: bold;
@@ -143,10 +146,10 @@ $total_requests = $stmt->fetch(PDO::FETCH_ASSOC)['total_requests'];
             margin-top: 10px;
         }
         .stat-icon {
-    font-size: 30px;
-    margin-bottom: 10px;
-    color: #007bff; /* Blue default icon color */
-}
+        font-size: 36px;
+        margin-bottom: 10px;
+        color: #007bff;
+    }
 
         /* Footer */
         footer {
@@ -175,13 +178,17 @@ $total_requests = $stmt->fetch(PDO::FETCH_ASSOC)['total_requests'];
         <br><br><br>
         <h1>Dashboard</h1>
 
-        <div class="dashboard-grid">
-            <!-- ✅ Admin Accounts Stat Card -->
-            <div class="stat-card">
-            <div class="stat-icon"><i class="bi bi-person-lock"></i></div>
-            <span class="stat-title">Admin Accounts <span class="stat-status">Active</span></span>
-            <span class="stat-number"><?= $admin_count; ?></span>
+        <div class="stat-card">
+        <div class="stat-icon">
+            <i class="bi bi-person-lock"></i> <!-- Use other icons for other cards -->
         </div>
+        <div class="stat-info">
+            <div class="stat-title">Admin Accounts</div>
+            <div class="stat-status">Active</div>
+        </div>
+        <div class="stat-number"><?= $admin_count; ?></div>
+    </div>
+
 
 
             <!-- ✅ Employee Stat Card -->
