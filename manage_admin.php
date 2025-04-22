@@ -188,7 +188,7 @@ body {
 .table-container h2 {
     font-size: 20px;
     font-weight: 600;
-    margin-bottom: 15px;
+    margin-bottom: 5px;
     color: #002855;
 }
 
