@@ -84,7 +84,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
         <br>
         <br>
         <li><a href="dashboard.php" class="<?= ($current_page == 'dashboard.php') ? 'active' : '' ?>"> Dashboard</a></li>
-        <li><a href="add_employee.php" class="<?= ($current_page == 'manage_users.php') ? 'active' : '' ?>"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 30 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user-round-plus-icon lucide-user-round-plus"><path d="M2 21a8 8 0 0 1 13.292-6"/><circle cx="10" cy="8" r="5"/><path d="M19 16v6"/><path d="M22 19h-6"/></svg> Add Employee</a></li>
+        <li><a href="add_employee.php" class="<?= ($current_page == 'manage_users.php') ? 'active' : '' ?>"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="20" viewBox="0 0 30 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user-round-plus-icon lucide-user-round-plus"><path d="M2 21a8 8 0 0 1 13.292-6"/><circle cx="10" cy="8" r="5"/><path d="M19 16v6"/><path d="M22 19h-6"/></svg> Add Employee</a></li>
          <li><a href="manage_request.php" class="<?= ($current_page == 'manage_request.php') ? 'active' : '' ?>"> Request</a></li> 
        <!--   <li><a href="spreadsheet_editor.php" class="<?= ($current_page == 'spreadsheet_editor.php') ? 'active' : '' ?>"> Spreadsheet</a></li> -->
         <li><a href="employee_list.php" class="<?= ($current_page == 'settings.php') ? 'active' : '' ?>"> Employee Records</a></li> 
