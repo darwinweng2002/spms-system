@@ -141,6 +141,11 @@ $total_requests = $stmt->fetch(PDO::FETCH_ASSOC)['total_requests'];
             color: #001f3f;
             margin-top: 10px;
         }
+        .stat-icon {
+    font-size: 30px;
+    margin-bottom: 10px;
+    color: #007bff; /* Blue default icon color */
+}
 
         /* Footer */
         footer {
@@ -172,9 +177,11 @@ $total_requests = $stmt->fetch(PDO::FETCH_ASSOC)['total_requests'];
         <div class="dashboard-grid">
             <!-- ✅ Admin Accounts Stat Card -->
             <div class="stat-card">
-                <span class="stat-title">Admin Accounts <span class="stat-status">Active</span></span>
-                <span class="stat-number"><?php echo $admin_count; ?></span>
-            </div>
+            <div class="stat-icon"><i class="bi bi-person-lock"></i></div>
+            <span class="stat-title">Admin Accounts <span class="stat-status">Active</span></span>
+            <span class="stat-number"><?= $admin_count; ?></span>
+        </div>
+
 
             <!-- ✅ Employee Stat Card -->
             <div class="stat-card">
