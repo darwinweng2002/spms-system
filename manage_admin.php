@@ -334,10 +334,10 @@ footer img.footer-logo {
         <div class="admin-section">
         <!-- ✅ Add Admin Form -->
         <div class="admin-form">
+            <br>
             <h1>Add New Admin</h1>
             <form id="addAdminForm" class="admin-grid">
     <div class="form-group">
-        <br>
         <label for="name">Admin Name</label>
         <input type="text" id="name" name="name" required>
     </div>
