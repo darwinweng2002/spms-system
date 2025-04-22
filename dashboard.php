@@ -191,11 +191,12 @@ $total_requests = $stmt->fetch(PDO::FETCH_ASSOC)['total_requests'];
     </div>
 
 
-            <!-- ✅ Approved Requests Stat Card -->
-            <div class="stat-card">
-                <span class="stat-title">Approved Requests <span class="stat-status">Total</span></span>
-                <span class="stat-number"><?php echo $approved_count; ?></span>
-            </div>
+        <div class="stat-card">
+        <div class="stat-icon text-success"><i class="bi bi-check-circle-fill"></i></div>
+        <span class="stat-title">Approved Requests <span class="stat-status">Total</span></span>
+        <span class="stat-number"><?= $approved_count; ?></span>
+        </div>
+
 
             <!-- ✅ Pending Requests Stat Card -->
             <div class="stat-card">
