@@ -296,7 +296,7 @@ footer img.footer-logo {
                 <span id="passwordFeedback" style="font-size: 13px; color: red;"></span>
 
 
-                <label for="avatar">Profile Picture</label>
+                <label for="avatar"></label>
                 <input type="file" id="avatar" name="avatar" accept="image/png, image/jpeg, image/jpg">
 
                 <button type="submit">Add Admin</button>
