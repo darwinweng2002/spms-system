@@ -107,7 +107,7 @@ $total_requests = $stmt->fetch(PDO::FETCH_ASSOC)['total_requests'];
         /* Stat Cards */
         .stat-card {
             background: white;
-            padding: 30px 25px;
+            padding: 40px 25px;
             border-radius: 12px;
             box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
             text-align: center;
