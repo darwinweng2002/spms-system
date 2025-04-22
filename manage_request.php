@@ -56,7 +56,7 @@ if (empty($request_letters)) {
         }
         .main-container {
             max-width: 1600px;
-            margin: 100px 300px;
+            margin-left: 250px;
             background: white;
             padding: 25px;
             border-radius: 10px;
