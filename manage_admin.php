@@ -147,6 +147,7 @@ table {
     border-spacing: 0;
     border-radius: 8px;
     overflow: hidden;
+    padding-bottom: 80px;
 }
 
 table th {
