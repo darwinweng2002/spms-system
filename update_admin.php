@@ -256,46 +256,75 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <br>
         <h2>Update Admin</h2>
         <form method="POST" enctype="multipart/form-data">
-    <label>Name:</label>
-    <input type="text" name="name" 
-        value="<?php echo isset($admin['name']) ? htmlspecialchars($admin['name'], ENT_QUOTES, 'UTF-8') : ''; ?>" 
-        placeholder="Enter full name">
+    <div class="row g-3">
 
-    <label>Username:</label>
-    <input type="text" name="username" 
-        value="<?php echo isset($admin['username']) ? htmlspecialchars($admin['username'], ENT_QUOTES, 'UTF-8') : ''; ?>" 
-        >
+        <div class="col-md-6">
+            <label>Name:</label>
+            <input type="text" name="name"
+                value="<?= isset($admin['name']) ? htmlspecialchars($admin['name'], ENT_QUOTES, 'UTF-8') : ''; ?>"
+                placeholder="Enter full name" class="form-control">
+        </div>
 
-    <label>Position:</label>
-    <input type="text" name="position" 
-        value="<?php echo isset($admin['position']) ? htmlspecialchars($admin['position'], ENT_QUOTES, 'UTF-8') : ''; ?>" 
-        >
+        <div class="col-md-6">
+            <label>Username:</label>
+            <input type="text" name="username"
+                value="<?= isset($admin['username']) ? htmlspecialchars($admin['username'], ENT_QUOTES, 'UTF-8') : ''; ?>"
+                class="form-control">
+        </div>
 
-    <label>Campus:</label>
-    <input type="text" name="campus" 
-        value="<?php echo isset($admin['campus']) ? htmlspecialchars($admin['campus'], ENT_QUOTES, 'UTF-8') : ''; ?>" 
-        >
+        <div class="col-md-6">
+            <label>Position:</label>
+            <input type="text" name="position"
+                value="<?= isset($admin['position']) ? htmlspecialchars($admin['position'], ENT_QUOTES, 'UTF-8') : ''; ?>"
+                class="form-control">
+        </div>
 
-    <label>New Password:</label>
-    <input type="password" name="password" id="password" placeholder="Leave blank to keep current password">
+        <div class="col-md-6">
+            <label>Campus:</label>
+            <input type="text" name="campus"
+                value="<?= isset($admin['campus']) ? htmlspecialchars($admin['campus'], ENT_QUOTES, 'UTF-8') : ''; ?>"
+                class="form-control">
+        </div>
 
-    <label>Confirm New Password:</label>
-    <input type="password" name="confirm_password" id="confirm_password" placeholder="Re-enter password">
-    <span id="passwordFeedback" style="font-size: 13px;"></span>
+        <div class="col-md-6">
+            <label>New Password:</label>
+            <input type="password" name="password" id="password" class="form-control"
+                placeholder="Leave blank to keep current password">
+        </div>
 
-    <label>Profile Picture:</label>
-    <input type="file" name="avatar" id="avatarInput" accept="image/png, image/jpeg, image/jpg">
-    <input type="hidden" name="existing_avatar" 
-        value="<?php echo isset($admin['avatar']) ? htmlspecialchars($admin['avatar'], ENT_QUOTES, 'UTF-8') : ''; ?>">
+        <div class="col-md-6">
+            <label>Confirm Password:</label>
+            <input type="password" name="confirm_password" id="confirm_password" class="form-control"
+                placeholder="Re-enter password">
+            <span id="passwordFeedback" style="font-size: 13px;"></span>
+        </div>
 
-    <div class="avatar-preview" style="display: block;">
-        <img id="avatarPreview" 
-            src="<?php echo !empty($admin['avatar']) ? htmlspecialchars($admin['avatar'], ENT_QUOTES, 'UTF-8') : 'uploads/default-avatar.png'; ?>" 
-            alt="Avatar Preview">
+        <div class="col-md-6">
+            <label>Profile Picture:</label>
+            <input type="file" name="avatar" id="avatarInput" accept="image/png, image/jpeg, image/jpg" class="form-control">
+            <input type="hidden" name="existing_avatar"
+                value="<?= isset($admin['avatar']) ? htmlspecialchars($admin['avatar'], ENT_QUOTES, 'UTF-8') : ''; ?>">
+        </div>
+
+        <div class="col-md-6 d-flex align-items-center justify-content-center">
+            <div class="avatar-preview">
+                <img id="avatarPreview"
+                    src="<?= !empty($admin['avatar']) ? htmlspecialchars($admin['avatar'], ENT_QUOTES, 'UTF-8') : 'uploads/default-avatar.png'; ?>"
+                    alt="Avatar Preview" style="width: 80px; height: 80px; border-radius: 50%; border: 2px solid #ddd;">
+            </div>
+        </div>
+
+        <div class="col-12">
+            <button type="submit" class="btn btn-primary w-100">Update Admin</button>
+        </div>
+
+        <div class="col-12">
+            <a href="manage_admin.php" class="back-link">← Back to Admin List</a>
+        </div>
+
     </div>
-
-    <button type="submit">Update Admin</button>
 </form>
+
 
 
         <a href="manage_admin.php" class="back-link">Back to Admin List</a>
