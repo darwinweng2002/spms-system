@@ -391,7 +391,6 @@ footer img.footer-logo {
         <div class="table-container">
             <h2>Admin Users</h2>
             <table>
-            <table>
     <thead>
         <tr>
             <!-- <th>#</th> -->
