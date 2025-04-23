@@ -197,8 +197,14 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
             <div class="card-body">
                 <!-- Search Box -->
                 <div class="search-container">
+                <div class="input-group">
+                    <span class="input-group-text bg-primary text-white">
+                        <i class="bi bi-search"></i>
+                    </span>
                     <input type="text" id="search" class="form-control" placeholder="Search Employee...">
                 </div>
+            </div>
+
 
                 <div class="table-responsive">
                     <table class="table table-bordered table-striped mt-3">
