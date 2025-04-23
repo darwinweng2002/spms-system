@@ -23,7 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $status = $_POST['status'];
     $stmt = $pdo->prepare("UPDATE request_letters SET status = ? WHERE id = ?");
     $stmt->execute([$status, $request_id]);
-    header("Location: manage_request.php?success=1");
+    header("Location: manage_request.php?success=updated");
     exit;
 }
 ?>

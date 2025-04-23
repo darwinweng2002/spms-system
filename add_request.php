@@ -74,7 +74,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     }
 
-    header("Location: manage_request.php?success=1");
+    header("Location: manage_request.php?success=added");
     exit;
 }
 

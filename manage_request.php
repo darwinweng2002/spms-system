@@ -309,30 +309,37 @@ footer {
             <i class="bi bi-printer"></i> Print Request Letters
         </button>
     </div>
-
-
-
-
     <?php if (isset($_GET['success'])): ?>
-    <script>
-        // ✅ Trigger success popup
-        Swal.fire({
-            title: 'Success!',
-            text: 'Request updated successfully!',
-            icon: 'success',
-            confirmButtonColor: '#007bff'
-        });
+<script>
+    let successType = "<?= $_GET['success'] ?>";
+    let message = "";
 
-        // ✅ Remove `?success=1` from URL after showing popup
-        if (window.history.replaceState) {
-            const url = new URL(window.location);
-            url.searchParams.delete('success');
-            window.history.replaceState({}, document.title, url.pathname + url.search);
-        }
-    </script>
+    switch (successType) {
+        case "added":
+            message = "Request added successfully!";
+            break;
+        case "updated":
+            message = "Request updated successfully!";
+            break;
+        default:
+            message = "Success!";
+    }
+
+    Swal.fire({
+        title: 'Success!',
+        text: message,
+        icon: 'success',
+        confirmButtonColor: '#007bff'
+    });
+
+    // ✅ Clean the URL
+    if (window.history.replaceState) {
+        const url = new URL(window.location);
+        url.searchParams.delete('success');
+        window.history.replaceState({}, document.title, url.pathname + url.search);
+    }
+</script>
 <?php endif; ?>
-
-
     <a href="add_request.php" class="btn btn-add mb-3">+ Add Request</a>
 
     <table>
