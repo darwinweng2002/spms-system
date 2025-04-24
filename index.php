@@ -174,15 +174,6 @@
     border-color: #007bff;
     box-shadow: 0 0 5px rgba(0,123,255,0.3);
 }
-
-/* Eye Toggle Icon */
-.toggle-password {
-    position: absolute;
-    right: 12px;
-    cursor: pointer;
-    font-size: 1.1rem;
-    color: #555;
-}
         </style>
     </head>
     <body>  <!-- 🔄 Loading Spinner Overlay -->
@@ -211,7 +202,7 @@
         <i class="bi bi-lock-fill"></i>
         <input type="password" id="password" name="password" required>
         <span class="toggle-password" onclick="togglePassword()">
-            <i class="bi bi-eye" id="toggleIcon"></i>
+            
         </span>
     </div>
 </div>
