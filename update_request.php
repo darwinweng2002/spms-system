@@ -45,7 +45,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <style>
         * { font-family: 'Poppins', sans-serif; margin: 0; padding: 0; box-sizing: border-box; }
-        .main-container { max-width: 900px; margin: 100px auto; background: white; padding: 25px; border-radius: 10px; box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); }
+        .main-container { width: 900px; margin: 100px auto; background: white; padding: 25px; border-radius: 10px; box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); }
         h2 { text-align: center; margin-bottom: 20px; font-size: 24px; font-weight: 600; }
         form { display: flex; flex-direction: column; gap: 15px; }
         label { font-weight: 600; margin-bottom: 5px; }
