@@ -224,6 +224,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         }
 
         .back-link:hover { text-decoration: none; }
+        .card-header {
+        background: #0080ff;
+        font-size: 1.2rem;
+        padding: 15px 20px;
+        text-align: center;
+        font-weight: 600;
+        color: #f8f9fa;
+    }
 
         /* Fixed Footer */
         footer {
@@ -254,15 +262,17 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 <div class="container">
 
-    <div class="form-container">
+    <div class="form-container card">
     <br>
     <br>
-        <h2>Update Admin</h2>
+    <div class="card-header">
+    <i class="bi bi-person-lines-fill"></i> Update Admin
+  </div>
         <form method="POST" enctype="multipart/form-data">
     <div class="row g-3">
         <!-- Name -->
         <div class="col-md-6">
-            <label>Name:</label>
+            <label>Name</label>
             <input type="text" name="name"
                 value="<?= isset($admin['name']) ? htmlspecialchars($admin['name'], ENT_QUOTES, 'UTF-8') : ''; ?>"
                 placeholder="Enter full name" class="form-control">
@@ -270,7 +280,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         <!-- Username -->
         <div class="col-md-6">
-            <label>Username:</label>
+            <label>Username</label>
             <input type="text" name="username"
                 value="<?= isset($admin['username']) ? htmlspecialchars($admin['username'], ENT_QUOTES, 'UTF-8') : ''; ?>"
                 class="form-control">
@@ -278,7 +288,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         <!-- Position -->
         <div class="col-md-6">
-            <label>Position:</label>
+            <label>Position</label>
             <input type="text" name="position"
                 value="<?= isset($admin['position']) ? htmlspecialchars($admin['position'], ENT_QUOTES, 'UTF-8') : ''; ?>"
                 class="form-control">
@@ -286,7 +296,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         <!-- Campus -->
         <div class="col-md-6">
-            <label>Campus:</label>
+            <label>Campus</label>
             <input type="text" name="campus"
                 value="<?= isset($admin['campus']) ? htmlspecialchars($admin['campus'], ENT_QUOTES, 'UTF-8') : ''; ?>"
                 class="form-control">
@@ -294,14 +304,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         <!-- Password -->
         <div class="col-md-6">
-            <label>New Password:</label>
+            <label>New Password</label>
             <input type="password" name="password" id="password" class="form-control"
                 placeholder="Leave blank to keep current password">
         </div>
 
         <!-- Confirm Password -->
         <div class="col-md-6">
-            <label>Confirm Password:</label>
+            <label>Confirm Password</label>
             <input type="password" name="confirm_password" id="confirm_password" class="form-control"
                 placeholder="Re-enter password">
             <span id="passwordFeedback" style="font-size: 13px;"></span>
@@ -309,7 +319,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         <!-- Upload Avatar -->
         <div class="col-md-6">
-            <label>Profile Picture:</label>
+            <label>Profile Picture</label>
             <input type="file" name="avatar" id="avatarInput" accept="image/png, image/jpeg, image/jpg" class="form-control">
             <input type="hidden" name="existing_avatar"
                 value="<?= isset($admin['avatar']) ? htmlspecialchars($admin['avatar'], ENT_QUOTES, 'UTF-8') : ''; ?>">
