@@ -370,11 +370,9 @@ footer img.footer-logo {
             <form id="addAdminForm" class="admin-grid">
     <div class="form-group">
         <label for="name">Admin Name</label>
-        <div class="input-group">
         <div class="input-icon-group">
             <i class="bi bi-person-fill"></i>
-        </div>
-            <input type="text" id="name" name="name" required>
+            <input type="text" id="name" name="name" required style="padding-left: 100px;">
         </div>
     </div>
 
