@@ -226,13 +226,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         .back-link:hover { text-decoration: none; }
         .card-header {
-        background: #0080ff;
-        font-size: 1.2rem;
-        padding: 15px 20px;
-        text-align: center;
-        font-weight: 600;
-        color: #f8f9fa;
-        width: 900px;
+            background: #0080ff;
+    font-size: 1.2rem;
+    padding: 15px 20px;
+    text-align: center;
+    font-weight: 600;
+    color: #f8f9fa;
     }
 
         /* Fixed Footer */
