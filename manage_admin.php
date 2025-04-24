@@ -380,7 +380,7 @@ footer img.footer-logo {
         <label for="username">Username</label>
         <div class="input-icon-group">
             <i class="bi bi-person-badge-fill"></i>
-            <input type="text" id="username" name="username" required>
+            <input type="text" id="username" name="username" required style="padding-left: 30px;">
         </div>
     </div>
 
@@ -388,7 +388,7 @@ footer img.footer-logo {
         <label for="position">Position</label>
         <div class="input-icon-group">
             <i class="bi bi-briefcase-fill"></i>
-            <input type="text" id="position" name="position" required>
+            <input type="text" id="position" name="position" required style="padding-left: 30px;">
         </div>
     </div>
 
@@ -396,7 +396,7 @@ footer img.footer-logo {
         <label for="campus">Campus</label>
         <div class="input-icon-group">
             <i class="bi bi-building"></i>
-            <input type="text" id="campus" name="campus" required>
+            <input type="text" id="campus" name="campus" required style="padding-left: 30px;">
         </div>
     </div>
 
@@ -404,7 +404,7 @@ footer img.footer-logo {
         <label for="password">Password</label>
         <div class="input-icon-group">
             <i class="bi bi-lock-fill"></i>
-            <input type="password" id="password" name="password" required>
+            <input type="password" id="password" name="password" required style="padding-left: 30px;">
         </div>
     </div>
 
@@ -412,7 +412,7 @@ footer img.footer-logo {
         <label for="confirm_password">Confirm Password</label>
         <div class="input-icon-group">
             <i class="bi bi-shield-lock-fill"></i>
-            <input type="password" id="confirm_password" name="confirm_password" required>
+            <input type="password" id="confirm_password" name="confirm_password" required style="padding-left: 30px;">
         </div>
         <span id="passwordFeedback"></span>
     </div>
