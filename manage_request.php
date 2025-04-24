@@ -293,6 +293,9 @@ footer {
 
     <div class="d-flex justify-content-between align-items-center mb-4">
         <form method="GET" class="d-flex w-75">
+        <span class="input-group-text bg-primary text-white">
+                        <i class="bi bi-search"></i>
+                    </span>
             <input type="text" name="search" class="form-control me-2" value="<?= htmlspecialchars($search) ?>" placeholder="Search">
             
             <select name="status_filter" class="form-select me-2">
