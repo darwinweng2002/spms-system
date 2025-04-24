@@ -265,8 +265,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 <div class="container">
 
     <div class="form-container card">
-    <br>
-    <br>
     <div class="card-header">
     <i class="bi bi-person-lines-fill"></i> Update Admin
   </div>
