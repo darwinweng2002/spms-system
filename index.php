@@ -146,6 +146,43 @@
     0%   { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
+.input-icon-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-icon-wrapper i.bi {
+    position: absolute;
+    left: 12px;
+    font-size: 1.1rem;
+    color: #888;
+    pointer-events: none;
+}
+
+.input-icon-wrapper input {
+    width: 100%;
+    padding: 10px 40px 10px 38px; /* left for icon, right for eye icon */
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    outline: none;
+    transition: 0.3s ease;
+}
+
+.input-icon-wrapper input:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0,123,255,0.3);
+}
+
+/* Eye Toggle Icon */
+.toggle-password {
+    position: absolute;
+    right: 12px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    color: #555;
+}
         </style>
     </head>
     <body>  <!-- 🔄 Loading Spinner Overlay -->
@@ -159,18 +196,25 @@
             <div class="login-box">
                 <h2>Administrator Login</h2>
                 <form id="login-form">
-        <div class="input-group">
-            <label for="username">Username</label>
-            <input type="text" id="username" name="username" required>
-        </div>
-        <div class="input-group">
-            <label for="password">Password</label>
-            <div class="password-container">
-                <input type="password" id="password" name="password" required>
-                <span class="toggle-password" onclick="togglePassword()">
-                    <i class="fas fa-eye"></i> <!-- Eye icon -->
-                </span>
-            </div>
+       <!-- Username Field with Icon -->
+<div class="input-group">
+    <label for="username">Username</label>
+    <div class="input-icon-wrapper">
+        <i class="bi bi-person-fill"></i>
+        <input type="text" id="username" name="username" required>
+    </div>
+</div>
+<!-- Password Field with Icon and Toggle Eye -->
+<div class="input-group">
+    <label for="password">Password</label>
+    <div class="input-icon-wrapper">
+        <i class="bi bi-lock-fill"></i>
+        <input type="password" id="password" name="password" required>
+        <span class="toggle-password" onclick="togglePassword()">
+            <i class="bi bi-eye" id="toggleIcon"></i>
+        </span>
+    </div>
+</div>
         </div>
         <button type="submit">Login</button>
     </form>
