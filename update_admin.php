@@ -164,6 +164,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); 
             width: 900px; 
             position: relative;
+            margin-left: 40px;
             padding-bottom: 85px;
         }
 
@@ -232,7 +233,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         font-weight: 600;
         color: #f8f9fa;
         width: 900px;
-        margin-right: 40px;
     }
 
         /* Fixed Footer */
