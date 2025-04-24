@@ -152,7 +152,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(255, 255, 255, 0.7); /* White overlay with transparency */
             z-index: -1;
         }
 
