@@ -162,7 +162,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             padding: 25px; 
             border-radius: 10px; 
             box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); 
-            width: 400px; 
+            width: 900px; 
             position: relative;
             padding-bottom: 85px;
         }
@@ -253,6 +253,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 <?php require_once 'includes/side_nav.php'; ?>
 
 <div class="container">
+
     <div class="form-container">
     <br>
     <br>
@@ -318,12 +319,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             </div>
 
             <div class="col-12">
-                <a href="manage_admin.php" class="btn btn-link w-100">← Back to Admin List</a>
+                <a href="manage_admin.php" class="btn btn-link w-100">Back to Admin List</a>
             </div>
 
         </div>
     </div>
 </form>
+
 </div>
 
 <script>
