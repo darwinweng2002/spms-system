@@ -253,89 +253,77 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 <?php require_once 'includes/side_nav.php'; ?>
 
 <div class="container">
-
     <div class="form-container">
     <br>
     <br>
         <h2>Update Admin</h2>
         <form method="POST" enctype="multipart/form-data">
-    <div class="row g-3">
-        <!-- Name -->
-        <div class="col-md-6">
-            <label>Name:</label>
-            <input type="text" name="name"
-                value="<?= isset($admin['name']) ? htmlspecialchars($admin['name'], ENT_QUOTES, 'UTF-8') : ''; ?>"
-                placeholder="Enter full name" class="form-control">
-        </div>
+    <div class="container">
+        <div class="row g-3">
 
-        <!-- Username -->
-        <div class="col-md-6">
-            <label>Username:</label>
-            <input type="text" name="username"
-                value="<?= isset($admin['username']) ? htmlspecialchars($admin['username'], ENT_QUOTES, 'UTF-8') : ''; ?>"
-                class="form-control">
-        </div>
-
-        <!-- Position -->
-        <div class="col-md-6">
-            <label>Position:</label>
-            <input type="text" name="position"
-                value="<?= isset($admin['position']) ? htmlspecialchars($admin['position'], ENT_QUOTES, 'UTF-8') : ''; ?>"
-                class="form-control">
-        </div>
-
-        <!-- Campus -->
-        <div class="col-md-6">
-            <label>Campus:</label>
-            <input type="text" name="campus"
-                value="<?= isset($admin['campus']) ? htmlspecialchars($admin['campus'], ENT_QUOTES, 'UTF-8') : ''; ?>"
-                class="form-control">
-        </div>
-
-        <!-- Password -->
-        <div class="col-md-6">
-            <label>New Password:</label>
-            <input type="password" name="password" id="password" class="form-control"
-                placeholder="Leave blank to keep current password">
-        </div>
-
-        <!-- Confirm Password -->
-        <div class="col-md-6">
-            <label>Confirm Password:</label>
-            <input type="password" name="confirm_password" id="confirm_password" class="form-control"
-                placeholder="Re-enter password">
-            <span id="passwordFeedback" style="font-size: 13px;"></span>
-        </div>
-
-        <!-- Upload Avatar -->
-        <div class="col-md-6">
-            <label>Profile Picture:</label>
-            <input type="file" name="avatar" id="avatarInput" accept="image/png, image/jpeg, image/jpg" class="form-control">
-            <input type="hidden" name="existing_avatar"
-                value="<?= isset($admin['avatar']) ? htmlspecialchars($admin['avatar'], ENT_QUOTES, 'UTF-8') : ''; ?>">
-        </div>
-
-        <!-- Preview Avatar -->
-        <div class="col-md-6 d-flex align-items-center justify-content-center">
-            <div class="avatar-preview">
-                <img id="avatarPreview"
-                    src="<?= !empty($admin['avatar']) ? htmlspecialchars($admin['avatar'], ENT_QUOTES, 'UTF-8') : 'uploads/default-avatar.png'; ?>"
-                    alt="Avatar Preview" style="width: 80px; height: 80px; border-radius: 50%; border: 2px solid #ddd;">
+            <div class="col-md-6">
+                <label for="name">Full Name:</label>
+                <input type="text" class="form-control" name="name" id="name"
+                    value="<?= htmlspecialchars($admin['name'] ?? '', ENT_QUOTES) ?>">
             </div>
-        </div>
 
-        <!-- Submit -->
-        <div class="col-12">
-            <button type="submit" class="btn btn-primary w-100">Update Admin</button>
-        </div>
+            <div class="col-md-6">
+                <label for="username">Username:</label>
+                <input type="text" class="form-control" name="username" id="username"
+                    value="<?= htmlspecialchars($admin['username'] ?? '', ENT_QUOTES) ?>">
+            </div>
 
-        <!-- Back Link -->
-        <div class="col-12 text-center">
-            <a href="manage_admin.php" class="back-link">Back to Admin List</a>
+            <div class="col-md-6">
+                <label for="position">Position:</label>
+                <input type="text" class="form-control" name="position" id="position"
+                    value="<?= htmlspecialchars($admin['position'] ?? '', ENT_QUOTES) ?>">
+            </div>
+
+            <div class="col-md-6">
+                <label for="campus">Campus:</label>
+                <input type="text" class="form-control" name="campus" id="campus"
+                    value="<?= htmlspecialchars($admin['campus'] ?? '', ENT_QUOTES) ?>">
+            </div>
+
+            <div class="col-md-6">
+                <label for="password">New Password:</label>
+                <input type="password" class="form-control" name="password" id="password"
+                    placeholder="Leave blank to keep current password">
+            </div>
+
+            <div class="col-md-6">
+                <label for="confirm_password">Confirm Password:</label>
+                <input type="password" class="form-control" name="confirm_password" id="confirm_password"
+                    placeholder="Re-enter password">
+                <span id="passwordFeedback" style="font-size: 13px;"></span>
+            </div>
+
+            <div class="col-md-6">
+                <label for="avatarInput">Profile Picture:</label>
+                <input type="file" class="form-control" name="avatar" id="avatarInput" accept="image/*">
+                <input type="hidden" name="existing_avatar"
+                    value="<?= htmlspecialchars($admin['avatar'] ?? '', ENT_QUOTES) ?>">
+            </div>
+
+            <div class="col-md-6 d-flex align-items-center justify-content-center">
+                <div class="avatar-preview">
+                    <img id="avatarPreview"
+                        src="<?= !empty($admin['avatar']) ? htmlspecialchars($admin['avatar']) : 'uploads/default-avatar.png'; ?>"
+                        alt="Avatar Preview" style="width: 80px; height: 80px; border-radius: 50%; border: 2px solid #ddd;">
+                </div>
+            </div>
+
+            <div class="col-12">
+                <button type="submit" class="btn btn-primary w-100">Update Admin</button>
+            </div>
+
+            <div class="col-12">
+                <a href="manage_admin.php" class="btn btn-link w-100">← Back to Admin List</a>
+            </div>
+
         </div>
     </div>
 </form>
-
 </div>
 
 <script>
