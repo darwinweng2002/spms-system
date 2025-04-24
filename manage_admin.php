@@ -372,7 +372,7 @@ footer img.footer-logo {
         <label for="name">Admin Name</label>
         <div class="input-icon-group">
             <i class="bi bi-person-fill"></i>
-            <input type="text" id="name" name="name" required style="padding-left: 100px;">
+            <input type="text" id="name" name="name" required style="padding-left: 30px;">
         </div>
     </div>
 
