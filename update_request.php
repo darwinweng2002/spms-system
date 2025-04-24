@@ -39,6 +39,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <?php require_once 'includes/header_nav.php'; ?>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> 
 
@@ -71,7 +72,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         background: #5a6268;
         color: white;
     }
+    footer {
+            width: 100%;
+            text-align: center;
+            padding: 10px;
+            background: #2C3E50;
+            color: #fff;
+            font-size: 10px;
+            position: relative; /* Change from absolute to relative */
+            margin-top: auto;
+        }
 
+        footer img.footer-logo {
+            height: 60px;
+            width: auto;
+        }
     </style>
 </head>
 <body>
@@ -97,6 +112,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <a href="manage_request.php" class="btn btn-secondary">← Back to Requests</a>
     </form>
 </div>
-
+<?php require_once 'includes/admin_footer.php'; ?>
 </body>
 </html>
