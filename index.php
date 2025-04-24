@@ -7,7 +7,7 @@
         <meta name="description" content="Official Property Management System for President Ramon Magsaysay State University (PRMSU). Track, manage, and request property summaries easily.">
         <meta name="keywords" content="PRMSU, Property Management, SPMS, Zambales, University, Government Assets">
         <?php require_once 'includes/header_nav2.php'; ?>
-        <!-- Import SweetAlert2 -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <!-- Import Custom Login Script -->
         <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
