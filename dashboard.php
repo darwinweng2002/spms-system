@@ -186,7 +186,7 @@ $total_requests = $stmt->fetch(PDO::FETCH_ASSOC)['total_requests'];
 
         <div class="stat-card">
         <div class="stat-icon"><i class="bi bi-people-fill"></i></div>
-        <span class="stat-title">Employees <span class="stat-status">Active</span></span>
+        <span class="stat-title">Employees <span class="stat-status">Total</span></span>
         <span class="stat-number"><?= $employee_count; ?></span>
     </div>
 

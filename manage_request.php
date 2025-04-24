@@ -241,17 +241,23 @@ if (empty($request_letters)) {
     }
 }
 .print-button {
-    background-color: #007bff; /* Blue background */
-    color: #fff; /* White text */
-    border: none; /* No border */
-    padding: 10px 20px; /* Padding for size */
+    background-color: #f1f1f1;         /* Light grey background */
+    color: #333;                      /* Dark grey text */
+    border: 1px solid #ccc;           /* Subtle border */
+    padding: 10px 20px;
     cursor: pointer;
-    border-radius: 5px; /* Rounded corners */
-    transition: background-color 0.3s;
+    border-radius: 6px;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease-in-out;
 }
 
 .print-button:hover {
-    background-color: #0056b3; /* Darker blue on hover */
+    background-color: #e0e0e0;        /* Slightly darker on hover */
+    border-color: #bbb;
+    color: #000;
 }
 #noResultsMessage {
     margin-top: 20px;
@@ -310,8 +316,9 @@ footer {
         </form>
 
         <button class="print-button" onclick="printTable()">
-            <i class="bi bi-printer"></i> Print Request Letters
+        <i class="bi bi-printer"></i> Print Request Letters
         </button>
+
     </div>
     <?php if (isset($_GET['success'])): ?>
 <script>
