@@ -369,9 +369,11 @@ footer img.footer-logo {
             <h1>Add New Admin</h1>
             <form id="addAdminForm" class="admin-grid">
     <div class="form-group">
-    <div class="input-icon-group">
-    <i class="bi bi-person-fill"></i>
         <label for="name">Admin Name</label>
+        <div class="input-group">
+        <div class="input-icon-group">
+            <i class="bi bi-person-fill"></i>
+        </div>
             <input type="text" id="name" name="name" required>
         </div>
     </div>
