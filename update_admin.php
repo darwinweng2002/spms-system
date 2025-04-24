@@ -330,9 +330,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         </div>
 
         <!-- Back Link -->
-        <div class="col-12 text-center">
-            <a href="manage_admin.php" class="back-link">Back to Admin List</a>
-        </div>
     </div>
 </form>
 
