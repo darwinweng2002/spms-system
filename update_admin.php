@@ -157,16 +157,17 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         }
 
         /* Form Container */
-        .form-container { 
-            background: rgba(255, 255, 255, 0.9);
-            padding: 25px; 
-            border-radius: 10px; 
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); 
-            width: 900px; 
-            position: relative;
-            margin-left: 40px;
-            padding-bottom: 85px;
-        }
+        .form-container {
+        background: rgba(255, 255, 255, 0.9);
+        padding: 25px;
+        border-radius: 10px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        max-width: 900px; /* ✅ Let it resize gracefully */
+        width: 100%;
+        margin: 100px auto; /* ✅ Center horizontally */
+        padding-bottom: 85px;
+    }
+
 
         h2 { font-size: 22px; margin-bottom: 20px; }
         
@@ -227,12 +228,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         .back-link:hover { text-decoration: none; }
         .card-header {
             background: #0080ff;
-    font-size: 1.2rem;
-    padding: 15px 20px;
-    text-align: center;
-    font-weight: 600;
-    color: #f8f9fa;
-    }
+            font-size: 1.2rem;
+            padding: 15px 20px;
+            text-align: center;
+            font-weight: 600;
+            color: #f8f9fa;
+      }
 
         /* Fixed Footer */
         footer {
@@ -262,8 +263,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 <?php require_once 'includes/side_nav.php'; ?>
 
 <div class="container">
-
     <div class="form-container card">
+        <br>
+        <br>
     <div class="card-header">
     <i class="bi bi-person-lines-fill"></i> Update Admin
   </div>
