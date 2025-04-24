@@ -257,7 +257,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         <h2>Update Admin</h2>
         <form method="POST" enctype="multipart/form-data">
     <div class="row g-3">
-
+        <!-- Name -->
         <div class="col-md-6">
             <label>Name:</label>
             <input type="text" name="name"
@@ -265,6 +265,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 placeholder="Enter full name" class="form-control">
         </div>
 
+        <!-- Username -->
         <div class="col-md-6">
             <label>Username:</label>
             <input type="text" name="username"
@@ -272,6 +273,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 class="form-control">
         </div>
 
+        <!-- Position -->
         <div class="col-md-6">
             <label>Position:</label>
             <input type="text" name="position"
@@ -279,6 +281,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 class="form-control">
         </div>
 
+        <!-- Campus -->
         <div class="col-md-6">
             <label>Campus:</label>
             <input type="text" name="campus"
@@ -286,12 +289,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 class="form-control">
         </div>
 
+        <!-- Password -->
         <div class="col-md-6">
             <label>New Password:</label>
             <input type="password" name="password" id="password" class="form-control"
                 placeholder="Leave blank to keep current password">
         </div>
 
+        <!-- Confirm Password -->
         <div class="col-md-6">
             <label>Confirm Password:</label>
             <input type="password" name="confirm_password" id="confirm_password" class="form-control"
@@ -299,6 +304,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             <span id="passwordFeedback" style="font-size: 13px;"></span>
         </div>
 
+        <!-- Upload Avatar -->
         <div class="col-md-6">
             <label>Profile Picture:</label>
             <input type="file" name="avatar" id="avatarInput" accept="image/png, image/jpeg, image/jpg" class="form-control">
@@ -306,6 +312,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 value="<?= isset($admin['avatar']) ? htmlspecialchars($admin['avatar'], ENT_QUOTES, 'UTF-8') : ''; ?>">
         </div>
 
+        <!-- Preview Avatar -->
         <div class="col-md-6 d-flex align-items-center justify-content-center">
             <div class="avatar-preview">
                 <img id="avatarPreview"
@@ -314,21 +321,18 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             </div>
         </div>
 
+        <!-- Submit -->
         <div class="col-12">
             <button type="submit" class="btn btn-primary w-100">Update Admin</button>
         </div>
 
-        <div class="col-12">
-            <a href="manage_admin.php" class="back-link">← Back to Admin List</a>
+        <!-- Back Link -->
+        <div class="col-12 text-center">
+            <a href="manage_admin.php" class="back-link">Back to Admin List</a>
         </div>
-
     </div>
 </form>
 
-
-
-        <a href="manage_admin.php" class="back-link">Back to Admin List</a>
-    </div>
 </div>
 
 <script>
