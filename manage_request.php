@@ -316,7 +316,7 @@ footer {
         </form>
 
         <button class="print-button" onclick="printTable()">
-        <i class="bi bi-printer fs-5"></i> Print Request Letters
+        <i class="bi bi-printer fs-6"></i> Print Request Letters
         </button>
 
     </div>
