@@ -232,7 +232,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         font-weight: 600;
         color: #f8f9fa;
         width: 900px;
-        margin-left: 40px;
+        margin-left: 25px;
     }
 
         /* Fixed Footer */
