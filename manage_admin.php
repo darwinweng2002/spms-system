@@ -252,6 +252,22 @@ table tr:nth-child(even) td {
 .delete-btn:hover {
     background: #c82333;
 }
+.input-icon-group {
+    position: relative;
+}
+
+.input-icon-group i {
+    position: absolute;
+    top: 50%;
+    left: 12px;
+    transform: translateY(-50%);
+    color: #888;
+    font-size: 1rem;
+}
+
+.input-icon-group input {
+    padding-left: 2.2rem;
+}
 
 /* --- Avatar Image in Table --- */
 table img {
@@ -340,32 +356,50 @@ footer img.footer-logo {
             <form id="addAdminForm" class="admin-grid">
     <div class="form-group">
         <label for="name">Admin Name</label>
-        <input type="text" id="name" name="name" required>
+        <div class="input-icon-group">
+            <i class="bi bi-person-fill"></i>
+            <input type="text" id="name" name="name" required>
+        </div>
     </div>
 
     <div class="form-group">
         <label for="username">Username</label>
-        <input type="text" id="username" name="username" required>
+        <div class="input-icon-group">
+            <i class="bi bi-person-badge-fill"></i>
+            <input type="text" id="username" name="username" required>
+        </div>
     </div>
 
     <div class="form-group">
         <label for="position">Position</label>
-        <input type="text" id="position" name="position" required>
+        <div class="input-icon-group">
+            <i class="bi bi-briefcase-fill"></i>
+            <input type="text" id="position" name="position" required>
+        </div>
     </div>
 
     <div class="form-group">
         <label for="campus">Campus</label>
-        <input type="text" id="campus" name="campus" required>
+        <div class="input-icon-group">
+            <i class="bi bi-building"></i>
+            <input type="text" id="campus" name="campus" required>
+        </div>
     </div>
 
     <div class="form-group">
         <label for="password">Password</label>
-        <input type="password" id="password" name="password" required>
+        <div class="input-icon-group">
+            <i class="bi bi-lock-fill"></i>
+            <input type="password" id="password" name="password" required>
+        </div>
     </div>
 
     <div class="form-group">
         <label for="confirm_password">Confirm Password</label>
-        <input type="password" id="confirm_password" name="confirm_password" required>
+        <div class="input-icon-group">
+            <i class="bi bi-shield-lock-fill"></i>
+            <input type="password" id="confirm_password" name="confirm_password" required>
+        </div>
         <span id="passwordFeedback"></span>
     </div>
 
@@ -375,10 +409,9 @@ footer img.footer-logo {
     </div>
 
     <div class="form-group full-width">
-        <button type="submit">Add Admin</button>
+        <button type="submit"><i class="bi bi-plus-circle"></i> Add Admin</button>
     </div>
 </form>
-
         </div>
 
         <!-- ✅ Org-Chart (Now on the right) -->
