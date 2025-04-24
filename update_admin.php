@@ -231,6 +231,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         text-align: center;
         font-weight: 600;
         color: #f8f9fa;
+        width: 900px;
     }
 
         /* Fixed Footer */
