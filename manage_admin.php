@@ -268,6 +268,10 @@ table tr:nth-child(even) td {
     font-size: 1rem;
     z-index: 2;
 }
+.input-icon-group input:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0,123,255,0.25);
+}
 
 .input-icon-group input {
     width: 100%;
