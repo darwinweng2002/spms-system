@@ -102,7 +102,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <?php endif; ?>
 
     <form method="POST">
-        <label for="status">Select Status:</label>
+        <label for="status">Select Status</label>
         <select name="status" id="status">
             <option value="Pending" <?= ($request['status'] == 'Pending') ? 'selected' : '' ?>>Pending</option>
             <option value="Approved" <?= ($request['status'] == 'Approved') ? 'selected' : '' ?>>Approved</option>
