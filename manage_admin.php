@@ -254,19 +254,29 @@ table tr:nth-child(even) td {
 }
 .input-icon-group {
     position: relative;
+    display: flex;
+    align-items: center;
 }
 
 .input-icon-group i {
     position: absolute;
-    top: 50%;
     left: 12px;
+    top: 50%;
     transform: translateY(-50%);
     color: #888;
+    pointer-events: none; /* Allows clicking input even over icon */
     font-size: 1rem;
+    z-index: 2;
 }
 
 .input-icon-group input {
-    padding-left: 2.2rem;
+    width: 100%;
+    padding-left: 2.5rem; /* Ensures space for icon */
+    padding-right: 0.75rem;
+    height: 38px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
 }
 
 /* --- Avatar Image in Table --- */
