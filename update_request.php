@@ -112,6 +112,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <a href="manage_request.php" class="btn btn-secondary">← Back to Requests</a>
     </form>
 </div>
-<?php require_once 'includes/admin_footer.php'; ?>
 </body>
+<?php require_once 'includes/admin_footer.php'; ?>
 </html>
