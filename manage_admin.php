@@ -363,7 +363,6 @@ footer img.footer-logo {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 5px;
 }
     </style>
 </head>
