@@ -4,7 +4,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Admin Login | Supply and Property Management</title>
-        <meta name="description" content="Official Property Management System for President Ramon Magsaysay State University (PRMSU). Track, manage, and request property summaries easily.">
+        <meta name="description" content="Official Property Management System for President Ramon Magsaysay State University Iba Main Campus (PRMSU). Track, manage, and request property summaries easily.">
         <meta name="keywords" content="PRMSU, Property Management, SPMS, Zambales, University, Government Assets">
         <?php require_once 'includes/header_nav2.php'; ?>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
