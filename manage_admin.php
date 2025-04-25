@@ -365,6 +365,40 @@ footer img.footer-logo {
     justify-content: center;
     gap: 5px;
 }
+.custom-file-upload {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #f1f1f1;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    padding: 10px 12px;
+    cursor: pointer;
+    font-size: 14px;
+    color: #555;
+    transition: 0.3s;
+}
+
+.custom-file-upload:hover {
+    background-color: #e6f0ff;
+    border-color: #007bff;
+}
+
+.custom-file-upload i {
+    font-size: 1.1rem;
+    color: #007bff;
+}
+
+.custom-file-upload input[type="file"] {
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
+    height: 100%;
+    width: 100%;
+    cursor: pointer;
+}
     </style>
 </head>
 <body>
