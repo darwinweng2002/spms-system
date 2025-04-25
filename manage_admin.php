@@ -350,7 +350,21 @@ footer img.footer-logo {
     height: 60px;
     width: auto;
 }
-
+.card-header {
+    background: #0080ff;
+    font-size: 1.2rem;
+    padding: 15px 20px;
+    text-align: center;
+    font-weight: 600;
+    color: #f8f9fa;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
     </style>
 </head>
 <body>
@@ -366,7 +380,9 @@ footer img.footer-logo {
         <div class="admin-section">
         <!-- ✅ Add Admin Form -->
         <div class="admin-form">
-            <h1>Add New Admin</h1>
+        <div class="card-header">
+        <i class="bi bi-person-plus-fill"></i> Add New Admin
+    </div>
             <form id="addAdminForm" class="admin-grid">
     <div class="form-group">
         <label for="name">Admin Name</label>
