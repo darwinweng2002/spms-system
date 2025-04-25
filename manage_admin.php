@@ -363,6 +363,7 @@ footer img.footer-logo {
     display: flex;
     align-items: center;
     justify-content: center;
+    gap: 5px;
 }
     </style>
 </head>
@@ -550,9 +551,13 @@ document.addEventListener("DOMContentLoaded", function () {
                         <td>${admin.position}</td>
                         <td>${admin.campus}</td>
                         <td>
-                            <button class="update-btn" data-id="${admin.id}">Update</button>
-                            <button class="delete-btn" data-id="${admin.id}">Delete</button>
-                        </td>
+                        <button class="update-btn" data-id="${admin.id}">
+                            <i class="bi bi-pencil-square"></i> Update
+                        </button>
+                        <button class="delete-btn" data-id="${admin.id}">
+                            <i class="bi bi-trash-fill"></i> Delete
+                        </button>
+                    </td>
                     </tr>`;
             });
 
