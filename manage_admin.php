@@ -435,9 +435,14 @@ footer img.footer-logo {
     </div>
 
     <div class="form-group full-width">
-        <label for="avatar">Profile Picture</label>
+    <label for="avatar">Profile Picture</label>
+    <div class="custom-file-upload">
+        <i class="bi bi-upload"></i>
+        <span id="file-name">Choose a file...</span>
         <input type="file" id="avatar" name="avatar" accept="image/png, image/jpeg, image/jpg">
     </div>
+</div>
+
 
     <div class="form-group full-width">
         <button type="submit"><i class="bi bi-plus-circle"></i> Add Admin</button>
