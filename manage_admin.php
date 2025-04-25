@@ -363,7 +363,7 @@ footer img.footer-logo {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 10px;
+    gap: 5px;
 }
     </style>
 </head>
@@ -380,6 +380,7 @@ footer img.footer-logo {
         <div class="admin-section">
         <!-- ✅ Add Admin Form -->
         <div class="admin-form">
+            <br>
         <div class="card-header">
         <i class="bi bi-person-plus-fill"></i> Add New Admin
     </div>
