@@ -149,12 +149,15 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
             box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
         }
         .dropstart .dropdown-menu {
-        max-height: 180px; /* adjust if you want smaller or bigger */
-        overflow-x: auto;  /* adds scroll if needed */
+        max-height: 180px;   /* Control height for vertical overflow */
+        overflow-y: auto;    /* Enable vertical scroll ONLY */
+        overflow-x: hidden;  /* Prevent side scroll */
         margin-top: 0;
         margin-right: 0;
-        font-size: 14px; /* Optional: Make text smaller for better fit */
+        font-size: 14px;     /* Optional for compact look */
+        min-width: 180px;    /* Set a nice minimum width */
     }
+
         @media (max-width: 768px) {
             .table {
                 font-size: 14px;
