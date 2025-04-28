@@ -182,6 +182,10 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
             height: 60px;
             width: auto;
         }
+        .dropstart .dropdown-menu {
+            margin-top: 0;
+            margin-right: 0;
+        }
     </style>
 </head>
 <body>
@@ -228,9 +232,10 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
                                     <td><?= htmlspecialchars($employee['campus']) ?></td>
                                     <td class="text-center action-buttons">
                                     <div class="dropup">
+                                    <div class="dropstart">
                                     <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                            Actions
-                                        </button>
+                                        Actions
+                                    </button>
                                         <ul class="dropdown-menu">
                                             <li>
                                                 <a class="dropdown-item" href="summary_form.php?employee_id=<?= $employee['id'] ?>">
