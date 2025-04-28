@@ -245,7 +245,7 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
                                     <td><?= htmlspecialchars($employee['campus']) ?></td>
                                     <td class="text-center action-buttons">
                                     <div class="dropup">
-                                    <div class="dropdown">
+                                    <div class="dropstart">
                                     <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                         Actions
                                     </button>
