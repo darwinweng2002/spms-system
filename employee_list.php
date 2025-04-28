@@ -142,6 +142,10 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
             border: 1px solid #ccc;
             transition: 0.3s;
         }
+        .table-responsive {
+            min-height: 400px; /* ✅ Adjust if you want taller */
+            position: relative;
+        }
 
         .search-container input:focus {
             outline: none;
