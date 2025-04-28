@@ -150,7 +150,7 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
         }
         .dropstart .dropdown-menu {
         max-height: 180px; /* adjust if you want smaller or bigger */
-        overflow-y: auto;  /* adds scroll if needed */
+        overflow-x: auto;  /* adds scroll if needed */
         margin-top: 0;
         margin-right: 0;
         font-size: 14px; /* Optional: Make text smaller for better fit */
