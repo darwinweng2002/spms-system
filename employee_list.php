@@ -149,14 +149,18 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
             box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
         }
         .dropstart .dropdown-menu {
-        max-height: 180px;   /* Control height for vertical overflow */
-        overflow-y: auto;    /* Enable vertical scroll ONLY */
-        overflow-x: hidden;  /* Prevent side scroll */
-        margin-top: 0;
-        margin-right: 0;
-        font-size: 14px;     /* Optional for compact look */
-        min-width: 180px;    /* Set a nice minimum width */
+        display: block;
+        max-height: 200px;     /* 👈 taller so scroll appears */
+        overflow-y: auto;      /* 👈 vertical scroll enabled */
+        overflow-x: hidden;    /* 👈 no sideways */
+        width: 220px;          /* 👈 better readable width */
+        position: absolute;
+        z-index: 1050;         /* 👈 make sure it's above */
+        background: #fff;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        border-radius: 6px;
     }
+
 
         @media (max-width: 768px) {
             .table {
@@ -241,7 +245,7 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
                                     <td><?= htmlspecialchars($employee['campus']) ?></td>
                                     <td class="text-center action-buttons">
                                     <div class="dropup">
-                                    <div class="dropstart">
+                                    <div class="dropdown">
                                     <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                         Actions
                                     </button>
