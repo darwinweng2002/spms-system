@@ -88,7 +88,7 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
         .card {
             border-radius: 12px;
             box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-            
+            overflow: hidden;
         }
         .card-header {
             background: #0080ff;
@@ -240,36 +240,34 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
                                     <td><?= htmlspecialchars($employee['position']) ?></td>
                                     <td><?= htmlspecialchars($employee['campus']) ?></td>
                                     <td class="text-center action-buttons">
-                                    <div class="dropup">
-                                    <div class="dropstart">
-                                    <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <div class="dropdown">
+                                        <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                         Actions
-                                    </button>
-                                        <ul class="dropdown-menu">
-                                            <li>
-                                                <a class="dropdown-item" href="summary_form.php?employee_id=<?= $employee['id'] ?>">
-                                                    <i class="bi bi-pencil-square text-success"></i> Create Summary
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a class="dropdown-item" href="view_summary.php?employee_id=<?= $employee['id'] ?>">
-                                                    <i class="bi bi-eye-fill text-primary"></i> View Summary
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a class="dropdown-item" href="upload_excel.php?employee_id=<?= $employee['id'] ?>">
-                                                    <i class="bi bi-upload text-warning"></i> Upload Excel
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a class="dropdown-item" href="view_excel_files.php?id=<?= $employee['id'] ?>">
-                                                    <i class="bi bi-table text-info"></i> View Excel
-                                                </a>
-                                            </li>
+                                        </button>
+                                        <ul class="dropdown-menu dropdown-menu-end" style="max-height: 200px; overflow-y: auto; min-width: 200px;">
+                                        <li>
+                                            <a class="dropdown-item" href="summary_form.php?employee_id=<?= $employee['id'] ?>">
+                                            <i class="bi bi-pencil-square text-success"></i> Create Summary
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="view_summary.php?employee_id=<?= $employee['id'] ?>">
+                                            <i class="bi bi-eye-fill text-primary"></i> View Summary
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="upload_excel.php?employee_id=<?= $employee['id'] ?>">
+                                            <i class="bi bi-cloud-upload-fill text-warning"></i> Upload Excel
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="view_excel_files.php?id=<?= $employee['id'] ?>">
+                                            <i class="bi bi-table text-info"></i> View Excel
+                                            </a>
+                                        </li>
                                         </ul>
                                     </div>
-                                </td>
-
+                                    </td>
                                 </tr>
                             <?php endforeach; ?>
                         </tbody>
