@@ -88,7 +88,7 @@ $totalPages = ceil($totalRecords / $recordsPerPage);
         .card {
             border-radius: 12px;
             box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
+            
         }
         .card-header {
             background: #0080ff;
