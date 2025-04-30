@@ -201,7 +201,19 @@ $files = $stmt->fetchAll(PDO::FETCH_ASSOC);
     padding: 12px;
     border: 1px solid #e0e0e0;
 }
+footer {
+    text-align: center;
+    padding: 10px;
+    background: #2C3E50;
+    color: #fff;
+    font-size: 12px;
+    margin-top: auto;
+}
 
+footer img.footer-logo {
+    height: 60px;
+    width: auto;
+}
     </style>
 </head>
 <body>
@@ -353,5 +365,6 @@ function searchFiles() {
 }
 
 </script>
+<?php require_once 'includes/admin_footer.php'; ?>
 </body>
 </html>
