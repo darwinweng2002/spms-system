@@ -222,6 +222,8 @@ footer img.footer-logo {
 <br>
 
 <div class="container mt-5">
+    <br>
+    <br>
     <h3>Property Record Files of <?= htmlspecialchars($employee["first_name"] . " " . $employee["last_name"]) ?></h3>
 
     <!-- Search bar -->
