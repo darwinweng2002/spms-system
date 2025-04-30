@@ -227,8 +227,12 @@ footer img.footer-logo {
     <h3>Property Record Files of <?= htmlspecialchars($employee["first_name"] . " " . $employee["last_name"]) ?></h3>
 
     <!-- Search bar -->
-    <input type="text" id="searchInput" class="form-control mb-3" placeholder="Search files..." onkeyup="searchFiles()">
-    
+    <div class="input-group">
+                    <span class="input-group-text bg-primary text-white">
+                        <i class="bi bi-search"></i>
+                    </span>
+                    <input type="text" id="searchInput" class="form-control mb-3" placeholder="Search files..." onkeyup="searchFiles()">
+                </div>
     <?php if (!empty($files)): ?>
         <table class="table table-striped file-table">
             <thead>
