@@ -267,7 +267,7 @@ footer img.footer-logo {
 
 
 <!-- Modal -->
-<div class="modal" id="excelModal">
+<div id="excelModal">
     <div id="excelModalContent">
         <button onclick="closeExcelModal()" class="btn btn-danger float-end mb-3">Close</button>
         <h4>Excel Preview</h4>
@@ -378,6 +378,13 @@ function searchFiles() {
             row.style.display = 'none'; // Hide row if it doesn't match
         }
     });
+}
+function closeExcelModal() {
+    const modal = document.getElementById("excelModal");
+    if (modal) {
+        modal.style.display = "none";
+        document.getElementById("spreadsheetContainer").innerHTML = ""; // Optional: clear content
+    }
 }
 
 </script>
