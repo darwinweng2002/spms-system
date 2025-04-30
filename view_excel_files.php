@@ -274,6 +274,9 @@ footer img.footer-logo {
 function viewExcel(fileName) {
     const filePath = `./uploads/${encodeURIComponent(fileName)}`;
 
+    // 🌀 Show loading overlay
+    document.getElementById("loadingOverlay").style.display = "flex";
+
     fetch(filePath)
         .then(res => {
             if (!res.ok) throw new Error("File not found.");
@@ -291,17 +294,19 @@ function viewExcel(fileName) {
             const container = document.getElementById("spreadsheetContainer");
             container.innerHTML = html;
 
+            // ✅ Show modal and hide loader
             document.getElementById("excelModal").style.display = "flex";
         })
         .catch(err => {
             console.error(err);
             alert("Error: " + err.message);
+        })
+        .finally(() => {
+            // ✅ Hide loading spinner
+            document.getElementById("loadingOverlay").style.display = "none";
         });
 }
 
-function closeExcelModal() {
-    document.getElementById("excelModal").style.display = "none";
-}
 
 // Delete Function
 function deleteExcel(fileId, fileName) {
@@ -371,6 +376,12 @@ function searchFiles() {
 }
 
 </script>
+<!-- 🔄 Loading Overlay -->
+<div id="loadingOverlay" style="display:none; position:fixed; inset:0; background:rgba(255,255,255,0.7); z-index:9999; justify-content:center; align-items:center;">
+    <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+        <span class="visually-hidden">Loading...</span>
+    </div>
+</div>
 <?php require_once 'includes/admin_footer.php'; ?>
 </body>
 </html>
