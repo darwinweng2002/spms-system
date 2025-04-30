@@ -217,6 +217,11 @@ footer img.footer-logo {
     </style>
 </head>
 <body>
+<div id="loadingOverlay" style="display:none; position:fixed; inset:0; background:rgba(255,255,255,0.7); z-index:9999; justify-content:center; align-items:center;">
+    <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+        <span class="visually-hidden">Loading...</span>
+    </div>
+</div>
 <?php require_once 'includes/side_nav.php'; ?>
 <br>
 <br>
@@ -377,11 +382,7 @@ function searchFiles() {
 
 </script>
 <!-- 🔄 Loading Overlay -->
-<div id="loadingOverlay" style="display:none; position:fixed; inset:0; background:rgba(255,255,255,0.7); z-index:9999; justify-content:center; align-items:center;">
-    <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
-        <span class="visually-hidden">Loading...</span>
-    </div>
-</div>
+
 <?php require_once 'includes/admin_footer.php'; ?>
 </body>
 </html>
