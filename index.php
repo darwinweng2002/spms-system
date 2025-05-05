@@ -171,61 +171,56 @@
 <div id="loadingOverlay">
     <div class="spinner"></div>
 </div>
-
-<!-- 🔐 Login Card -->
-<div class="login-container">
-    <div class="login-header">
-        <img src="upload/prmsu_logo.png" alt="PRMSU Logo">
-        <h1>Admin Login</h1>
+        <div class="container">
+            <header>
+                <h1>Supply and Property Management Services System</h1>
+            </header>
+            <div class="login-box">
+                <h2>Administrator Login</h2>
+                <form id="login-form">
+       <!-- Username Field with Icon -->
+<div class="input-group">
+    <label for="username">Username</label>
+    <div class="input-icon-wrapper">
+        <i class="bi bi-person-fill"></i>
+        <input type="text" id="username" name="username" required>
     </div>
-    <form id="login-form">
-        <div class="input-group">
-            <label for="username">Username</label>
-            <div class="input-icon-wrapper">
-                <i class="bi bi-person-fill"></i>
-                <input type="text" id="username" name="username" required>
-            </div>
-        </div>
-        <div class="input-group">
-            <label for="password">Password</label>
-            <div class="input-icon-wrapper">
-                <i class="bi bi-lock-fill"></i>
-                <input type="password" id="password" name="password" required>
-                <i class="bi bi-eye toggle-password" onclick="togglePassword()"></i>
-            </div>
-        </div>
-        <button type="submit">Log In</button>
-    </form>
 </div>
-
-<script>
-function togglePassword() {
-    const passwordInput = document.getElementById("password");
-    const toggleIcon = document.querySelector(".toggle-password");
-
-    const isPassword = passwordInput.type === "password";
-    passwordInput.type = isPassword ? "text" : "password";
-    toggleIcon.classList.toggle("bi-eye-slash", isPassword);
-    toggleIcon.classList.toggle("bi-eye", !isPassword);
-}
-
-document.addEventListener("DOMContentLoaded", () => {
+<!-- Password Field with Icon and Toggle Eye -->
+<div class="input-group">
+    <label for="password">Password</label>
+    <div class="input-icon-wrapper">
+        <i class="bi bi-lock-fill"></i>
+        <input type="password" id="password" name="password" required>
+        <span class="toggle-password" onclick="togglePassword()">
+            
+        </span>
+    </div>
+</div>
+        </div>
+        <button type="submit">Login</button>
+    </form>
+            </div>
+        </div>
+        <script>
+document.addEventListener("DOMContentLoaded", function () {
     const loginForm = document.querySelector("#login-form");
     const loadingOverlay = document.getElementById("loadingOverlay");
 
-    loginForm.addEventListener("submit", function (e) {
-        e.preventDefault();
-        loadingOverlay.style.display = "flex";
+    loginForm.addEventListener("submit", function (event) {
+        event.preventDefault();
 
-        const formData = new FormData(loginForm);
+        loadingOverlay.style.display = "flex"; // 🔄 Show spinner
+
+        let formData = new FormData(loginForm);
 
         fetch("admin_login.php", {
             method: "POST",
             body: formData
         })
-        .then(res => res.json())
+        .then(response => response.json())
         .then(data => {
-            loadingOverlay.style.display = "none";
+            loadingOverlay.style.display = "none"; // ✅ Hide spinner
             if (data.status === "success") {
                 Swal.fire({
                     icon: "success",
@@ -244,19 +239,19 @@ document.addEventListener("DOMContentLoaded", () => {
                 });
             }
         })
-        .catch(err => {
-            console.error("Login Error:", err);
-            loadingOverlay.style.display = "none";
+        .catch(error => {
+            loadingOverlay.style.display = "none"; // ❌ Hide on error
+            console.error("Fetch Error:", error);
             Swal.fire({
                 icon: "error",
                 title: "Server Error",
-                text: "Please try again later."
+                text: "Unable to process request. Try again later."
             });
         });
     });
 });
-</script>
+    </script>
+    <?php require_once 'includes/admin_footer.php'; ?>
+    </body>
+    </html>
 
-<?php require_once 'includes/admin_footer.php'; ?>
-</body>
-</html>
