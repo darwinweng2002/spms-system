@@ -33,8 +33,6 @@ if ($existing_data) {
 }
 $spreadsheet_json = json_encode($spreadsheet_data);
 
-// ✅ Update logic
-// ✅ Update logic with deletion handling
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $updatedData = json_decode($_POST['updatedData'], true);
 
